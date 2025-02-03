@@ -8,5 +8,8 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'front_to_do_list_angular';
+  title = 'ToDo List';
+  abrirLogin(){
+    console.log('Abriendo login');
+  }
 }
