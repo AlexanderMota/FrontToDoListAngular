@@ -57,7 +57,7 @@
       </svg>
       <h1>{{ title }}</h1>
       <p>Work in progress ⚠️</p>
-      <button class="pill openloginbutton" (click)="abrirLogin()">Acceder</button>
+      <button class="pill openloginbutton" (click)="toggleFormLogIn()">Acceder</button>
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>
     <div class="right-side">
@@ -153,6 +153,7 @@
       </div>
     </div>
   </div>
+  <app-login-form *ngIf="boolFormLogIn"></app-login-form>
 </main>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
