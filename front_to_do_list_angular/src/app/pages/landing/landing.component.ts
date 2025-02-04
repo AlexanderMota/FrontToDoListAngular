@@ -32,5 +32,8 @@ export class LandingComponent {
 
   closeOnOutsideClick(event: Event) {
     this.boolFormLogIn = false;
+setTimeout(() => {
+      this.boolFormLogIn = false;
+    }, 40);
   }
 }
