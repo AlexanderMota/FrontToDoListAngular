@@ -155,10 +155,8 @@
         </div>
       </div>
       <div *ngIf="boolFormLogIn" class="loginForm"  @fadeBlur (click)="closeOnOutsideClick($event)">
-        <div (click)="$event.stopPropagation()">
-            <app-login-form ></app-login-form>
-
-        </div>
+       
+            <app-login-form (click)="$event.stopPropagation()"></app-login-form>
 
       </div>
     </div>
