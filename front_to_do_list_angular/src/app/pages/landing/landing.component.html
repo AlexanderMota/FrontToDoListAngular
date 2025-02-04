@@ -10,7 +10,7 @@
 
 
 <main class="main">
-    <div class="content">
+    <div class="content" >
       <div class="left-side">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -154,8 +154,14 @@
           </a>
         </div>
       </div>
+      <div *ngIf="boolFormLogIn" class="loginForm"  @fadeBlur (click)="closeOnOutsideClick($event)">
+        <div (click)="$event.stopPropagation()">
+            <app-login-form ></app-login-form>
+
+        </div>
+
+      </div>
     </div>
-    <app-login-form *ngIf="boolFormLogIn" class="loginForm"></app-login-form>
   </main>
   
   <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->

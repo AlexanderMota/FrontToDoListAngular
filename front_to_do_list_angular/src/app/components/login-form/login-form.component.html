@@ -8,7 +8,7 @@
           <!-- Email -->
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Email</mat-label>
-            <input matInput formControlName="email" type="email" required />
+            <input matInput formControlName="email" type="email" required placeholder="Enter your email" />
             <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
               El correo es obligatorio y debe ser válido
             </mat-error>
@@ -17,7 +17,7 @@
           <!-- Password -->
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Password</mat-label>
-            <input matInput formControlName="password" type="password" required />
+            <input matInput formControlName="password" type="password" required placeholder="Enter your password" />
             <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
               La contraseña es obligatoria y debe tener al menos 6 caracteres
             </mat-error>
