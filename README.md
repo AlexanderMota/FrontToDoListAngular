@@ -1,6 +1,6 @@
 # Front To-Do List - Angular
 
-Este proyecto es un frontend desarrollado en **Angular** que implementa autenticación mediante **cookies** para interactuar con un backend basado en **Node.js y Awilix**.  
+Este proyecto es un frontend desarrollado en **Angular** que implementa autenticación mediante **cookies** para interactuar con un backend basado en **Node.js y Awilix** (para la inyeccción de dependencias).  
 
 Su objetivo es proporcionar una interfaz amigable y escalable para gestionar tareas, integrándose con un microservicio de autenticación y otro de gestión de tareas.  
 
