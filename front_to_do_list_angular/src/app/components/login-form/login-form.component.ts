@@ -34,7 +34,7 @@ export class LoginFormComponent {
 
   onLogin() {
     if (this.loginForm.valid) {
-      console.log('Datos de login:', this.loginForm.value);
+
       this.authServ.login({ email: this.loginForm.value.email, password: this.loginForm.value.password })
       .subscribe({ next : response => {
         console.log('Login exitoso', response);

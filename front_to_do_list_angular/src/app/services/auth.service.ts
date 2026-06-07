@@ -10,7 +10,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  login(user: { /*email: string; password: string*/ }): Observable<any> {
+  login(user: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}login`, {user:user}, { withCredentials: true });
   }
 }
