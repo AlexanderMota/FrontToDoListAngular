@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Router } from '@angular/router';
+import { AuthStateService } from '../../services/auth-state.service';
 
 
 @Component({
@@ -26,8 +28,23 @@ export class LandingComponent {
   boolFormLogIn: boolean = false;
   title = 'ToDo List';
   
+  constructor(private authState: AuthStateService, private router: Router) {}
+
+
   toggleFormLogIn(){
     this.boolFormLogIn = true;
+  }
+
+  ngOnInit(): void {
+
+    this.authState.user$.subscribe(user => {
+
+      if (user) {
+        this.router.navigate(['/private']);
+      }
+
+    });
+
   }
 
   closeOnOutsideClick(event: Event) {
