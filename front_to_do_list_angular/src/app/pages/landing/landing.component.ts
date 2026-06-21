@@ -40,7 +40,7 @@ export class LandingComponent {
     this.authState.user$.subscribe(user => {
 
       if (user) {
-        this.router.navigate(['/private']);
+        this.router.navigate(['/home']);
       }
 
     });
