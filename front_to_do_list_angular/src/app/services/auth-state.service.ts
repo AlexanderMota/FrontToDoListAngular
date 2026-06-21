@@ -3,13 +3,14 @@ import { BehaviorSubject } from "rxjs";
 import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
 import { Router } from "@angular/router";
+import { User } from "../models/user.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthStateService {
 
-  private userSubject = new BehaviorSubject<any | null>(null);
+  private userSubject = new BehaviorSubject<User | null>(null);
 
   user$ = this.userSubject.asObservable();
 

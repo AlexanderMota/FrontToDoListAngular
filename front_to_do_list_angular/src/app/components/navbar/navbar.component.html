@@ -1,0 +1,33 @@
+<nav class="navbar">
+
+
+
+  @if (user$ | async; as user) {
+
+  <a routerLink="/home">
+    ToDoList
+  </a>
+    <div>
+      <span>
+        {{user.email}}
+      </span>
+
+      <a routerLink="/private">
+        Mi perfil
+      </a>
+
+      <button (click)="logout()">
+        Cerrar sesión
+      </button>
+    </div>
+
+  }
+  @else {
+
+  <a routerLink="/">
+    ToDoList
+  </a>
+
+  }
+
+</nav>

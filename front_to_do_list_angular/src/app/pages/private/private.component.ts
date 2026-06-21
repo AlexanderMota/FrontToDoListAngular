@@ -1,8 +1,6 @@
 import { ChangeDetectorRef, Component, inject, PLATFORM_ID } from '@angular/core';
 //import { isPlatformBrowser } from '@angular/common';
 import { AuthStateService } from '../../services/auth-state.service';
-import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-private',
@@ -16,8 +14,8 @@ export class PrivateComponent {
   public email: string = ''; // Variable para almacenar los datos del perfil
   public mensaje: string = ''; // Variable para almacenar los datos del perfil
 
-  constructor( private authState: AuthStateService, private authServ: AuthService, private router: Router,
-  private cd: ChangeDetectorRef) {
+  constructor( private authState: AuthStateService,
+    private cd: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -29,22 +27,8 @@ export class PrivateComponent {
       } else {
         this.email = '';
         this.mensaje = 'Usuario no autenticado';
-        this.router.navigate(['/']);
       }
     });
   }
 
-  logout() {
-    this.authServ.logout().subscribe({
-
-      next: () => {
-
-        this.authState.clearUser();
-      },
-
-      error: err => {
-        console.error("Error en Logout(): ",err);
-      }
-    });
-  }
 }

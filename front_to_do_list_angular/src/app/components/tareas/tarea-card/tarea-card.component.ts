@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Tarea } from '../../../models/tarea.model';
 
 @Component({
   selector: 'app-tarea-card',
@@ -9,5 +10,5 @@ import { Component, Input } from '@angular/core';
 export class TareaCardComponent {
 
   @Input()
-  public tarea: any; // Variable para almacenar los datos de la tarea
+  public tarea!: Tarea; // Variable para almacenar los datos de la tarea
 }
