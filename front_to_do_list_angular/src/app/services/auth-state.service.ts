@@ -1,0 +1,42 @@
+import { AuthService } from "./auth.service";
+import { BehaviorSubject } from "rxjs";
+import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
+import { Router } from "@angular/router";
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthStateService {
+
+  private userSubject = new BehaviorSubject<any | null>(null);
+
+  user$ = this.userSubject.asObservable();
+
+  constructor(private authService: AuthService, private router: Router,
+  @Inject(PLATFORM_ID) private platformId: Object) {}
+
+  loadUser() {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+  console.log('LOAD USER EJECUTADO');
+    this.authService.getMe().subscribe({
+      next: (response) => {
+      console.log('USUARIO RECIBIDO', response);
+        this.userSubject.next(response.user);
+      },
+      error: () => {
+        this.userSubject.next(null);
+      }
+    });
+  }
+
+  get currentUser() {
+    return this.userSubject.value;
+  }
+
+  clearUser() {
+    this.userSubject.next(null);
+  }
+}

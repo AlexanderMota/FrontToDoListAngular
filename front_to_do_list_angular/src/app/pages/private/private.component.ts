@@ -1,6 +1,8 @@
-import { Component, inject, PLATFORM_ID } from '@angular/core';
-import { UserService } from '../../services/user.service';
-import { isPlatformBrowser } from '@angular/common';
+import { ChangeDetectorRef, Component, inject, PLATFORM_ID } from '@angular/core';
+//import { isPlatformBrowser } from '@angular/common';
+import { AuthStateService } from '../../services/auth-state.service';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-private',
@@ -9,29 +11,39 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrl: './private.component.scss'
 })
 export class PrivateComponent {
-  private platformId = inject(PLATFORM_ID);
+  //private platformId = inject(PLATFORM_ID);
   
-  public user: string = ''; // Variable para almacenar los datos del perfil
+  public email: string = ''; // Variable para almacenar los datos del perfil
   public mensaje: string = ''; // Variable para almacenar los datos del perfil
 
-  constructor(private userServ:UserService) {
- }
-  
-  ngOnInit(): void {
-    /* La siguiente linea es mejorable. Provisional para simplificar el uso de los tokens en cookies con SSR activo */
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
+  constructor( private authState: AuthStateService, private authServ: AuthService, private router: Router,
+  private cd: ChangeDetectorRef) {
+  }
 
-    this.userServ.getPerfil().subscribe({
-      next: (response) => {
-        this.user = response.user;
-        this.mensaje = response.message;
-        console.log('Perfil obtenido:', response);
+  ngOnInit(): void {
+    this.authState.user$.subscribe(user => {
+
+      if (user) {
+        this.email = user.email;
+        this.mensaje = 'Usuario autenticado';
+      } else {
+        this.email = '';
+        this.mensaje = 'Usuario no autenticado';
+        this.router.navigate(['/']);
+      }
+    });
+  }
+
+  logout() {
+    this.authServ.logout().subscribe({
+
+      next: () => {
+
+        this.authState.clearUser();
       },
-      error: (error) => {
-        this.mensaje = error.message;
-        console.error('Error al obtener el perfil:', error);
+
+      error: err => {
+        console.error("Error en Logout(): ",err);
       }
     });
   }
