@@ -1,1 +1,30 @@
-<p>tarea-card works! >> {{ tarea.titulo }} - {{ tarea.descripcion }} - {{ tarea.completada }}</p>
+<div class="task-card" (click)="abrirTarea()">
+
+  <div class="task-header">
+
+    <h3>{{ tarea.name }}</h3>
+
+    <span class="priority"
+      [ngClass]="tarea.priority">
+      {{ tarea.priority }}
+    </span>
+
+  </div>
+
+  <p class="description">
+    {{ tarea.description }}
+  </p>
+
+  <div class="task-footer">
+
+    <span class="status" [ngClass]="tarea.status">
+        {{ tarea.status }}
+    </span>
+
+    <span class="date">
+      {{ tarea.updated_at | date:'dd/MM/yyyy' }}
+    </span>
+
+  </div>
+
+</div>

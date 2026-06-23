@@ -1,0 +1,97 @@
+<div class="task-detail-container">
+
+  <div class="task-detail-card">
+
+    <div class="task-header">
+
+      <div>
+        <h1>{{ tarea.name }}</h1>
+
+        <p class="task-id">
+          Tarea #{{ tarea.task_id }}
+        </p>
+      </div>
+
+      <span
+        class="priority"
+        [ngClass]="tarea.priority">
+
+        {{ tarea.priority }}
+
+      </span>
+
+    </div>
+
+    <div class="task-section">
+
+      <h3>Descripción</h3>
+
+      <p>
+        {{ tarea.description }}
+      </p>
+
+    </div>
+
+    <div class="task-info-grid">
+
+      <div class="info-card">
+
+        <span class="label">Estado</span>
+
+        <span
+          class="status"
+          [ngClass]="tarea.status">
+
+          {{ tarea.status }}
+
+        </span>
+
+      </div>
+
+      <div class="info-card">
+
+        <span class="label">Creada</span>
+
+        <span>
+          {{ tarea.created_at | date:'dd/MM/yyyy HH:mm' }}
+        </span>
+
+      </div>
+
+      <div class="info-card">
+
+        <span class="label">Actualizada</span>
+
+        <span>
+          {{ tarea.updated_at | date:'dd/MM/yyyy HH:mm' }}
+        </span>
+
+      </div>
+
+      <div class="info-card" *ngIf="tarea.parent_task_id">
+
+        <span class="label">Tarea padre</span>
+
+        <span>
+          #{{ tarea.parent_task_id }}
+        </span>
+
+      </div>
+
+    </div>
+
+    <div class="task-actions">
+
+      <button class="btn-edit">
+        Editar
+      </button>
+
+      <button class="btn-delete">
+        Eliminar
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

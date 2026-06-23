@@ -2,3 +2,18 @@
 <app-tarea-card
   *ngFor="let tarea of tareas"
   [tarea]="tarea"></app-tarea-card>
+<div class="tasks-container">
+
+  <div class="tasks-header">
+    <h1>Mis tareas</h1>
+    <p>Gestiona tus tareas y mantén el control de tu trabajo.</p>
+  </div>
+
+  <div class="tasks-grid">
+    <app-tarea-card
+      *ngFor="let tarea of tareas"
+      [tarea]="tarea">
+    </app-tarea-card>
+  </div>
+
+</div>
