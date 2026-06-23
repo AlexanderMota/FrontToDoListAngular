@@ -1,3 +1,5 @@
+<!--
+
 <nav class="navbar">
 
 
@@ -27,6 +29,49 @@
   <a routerLink="/">
     ToDoList
   </a>
+
+  }
+
+</nav>  -->
+
+<nav class="navbar">
+
+  <div class="logo" routerLink="/home">
+    TaskApp
+  </div>
+
+
+  @if (user$ | async; as user) {
+
+    <div class="nav-links">
+
+      <a routerLink="/private">
+        Mis tareas
+      </a>
+
+      <a routerLink="/perfil">
+        Perfil
+      </a>
+
+      <span class="user-email">
+        {{ user.email }}
+      </span>
+
+      <button (click)="logout()">
+        Cerrar sesión
+      </button>
+
+    </div>
+
+  } @else {
+
+    <div class="nav-links">
+
+      <a routerLink="/">
+        Login
+      </a>
+
+    </div>
 
   }
 

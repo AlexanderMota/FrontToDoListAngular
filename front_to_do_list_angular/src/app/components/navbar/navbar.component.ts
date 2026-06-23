@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+/*import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthStateService } from '../../services/auth-state.service';
 import { AuthService } from '../../services/auth.service';
@@ -39,7 +39,7 @@ export class NavbarComponent {
         this.mensaje = 'Usuario no autenticado';
       }
     });*/
-  }
+ /* }
   logout(){
 
     this.authService.logout()
@@ -54,6 +54,57 @@ export class NavbarComponent {
           this.router.navigate(['/']).then(result => {
             console.log('Resultado navegación:', result);
           });
+        },
+
+        error: err => {
+          console.error('Error logout:', err);
+        }
+
+      });
+
+  }
+
+}*/
+
+import { Component } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
+import { AuthStateService } from '../../services/auth-state.service';
+import { AuthService } from '../../services/auth.service';
+
+@Component({
+  selector: 'app-navbar',
+  standalone: true,
+  imports: [
+    RouterLink,
+    AsyncPipe
+  ],
+  templateUrl: './navbar.component.html',
+  styleUrl: './navbar.component.scss'
+})
+export class NavbarComponent {
+
+  user$;
+
+  constructor(
+    private authState: AuthStateService,
+    private authService: AuthService,
+    private router: Router
+  ) {
+
+    this.user$ = this.authState.user$;
+
+  }
+
+
+  logout(){
+
+    this.authService.logout()
+      .subscribe({
+
+        next: () => {
+          this.authState.clearUser();
+          this.router.navigate(['/']);
         },
 
         error: err => {
