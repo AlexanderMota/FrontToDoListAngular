@@ -1,3 +1,6 @@
+
+
+
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
 <!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
@@ -59,7 +62,10 @@
         </svg>
         <h1>{{ title }}</h1>
         <p>Work in progress ⚠️</p>
-        <button class="pill openloginbutton" (click)="toggleFormLogIn()">Acceder</button>
+        <div class="button-group">
+          <button class="pill openloginbutton" (click)="toggleFormLogIn()">Acceder</button>
+          <button class="pill openloginbutton" (click)="toggleFormRegister()">Registrarse</button>
+        </div>
       </div>
       <div class="divider" role="separator" aria-label="Divider"></div>
       <div class="right-side">
@@ -160,7 +166,13 @@
         <app-login-form class="appLoginForm" [class.show]="boolFormLogIn" 
           (click)="$event.stopPropagation()">
         </app-login-form>
+      </div>
+      <div [class.show]="boolFormRegister" class="registerForm" 
+        (click)="closeOnOutsideClick($event)">
         
+        <app-register-form class="appRegisterForm" [class.show]="boolFormRegister" 
+          (click)="$event.stopPropagation()">
+        </app-register-form>
       </div>
     </div>
   </main>

@@ -21,10 +21,8 @@ export class AuthStateService {
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
-  console.log('LOAD USER EJECUTADO');
     this.authService.getMe().subscribe({
       next: (response) => {
-      console.log('USUARIO RECIBIDO', response);
         this.userSubject.next(response.user);
       },
       error: () => {

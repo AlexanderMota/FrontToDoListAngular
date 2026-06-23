@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root' // Hace que el servicio esté disponible en toda la aplicación
@@ -13,6 +14,11 @@ export class AuthService {
   getMe(): Observable<UserResponse> {
     return this.http.get<UserResponse>(
       `${this.apiUrl}me`, { withCredentials: true }
+    );
+  }
+  register(user: { email: string; password: string }): Observable<UserResponse> {
+    return this.http.post<UserResponse>(
+      `${this.apiUrl}register`, {user:user}, { withCredentials: true }
     );
   }
   login(user: { email: string; password: string }): Observable<UserResponse> {
@@ -29,8 +35,5 @@ export class AuthService {
 
 export interface UserResponse {
   message: string;
-  user: {
-    email: string;
-    role: number;
-  };
+  user: User;
 }

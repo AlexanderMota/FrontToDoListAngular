@@ -4,11 +4,12 @@ import { LoginFormComponent } from '../../components/login-form/login-form.compo
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router } from '@angular/router';
 import { AuthStateService } from '../../services/auth-state.service';
+import { RegisterFormComponent } from '../../components/register-form/register-form.component';
 
 
 @Component({
   selector: 'app-landing',
-  imports: [CommonModule, LoginFormComponent],
+  imports: [CommonModule, LoginFormComponent, RegisterFormComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
   animations: [
@@ -26,6 +27,7 @@ import { AuthStateService } from '../../services/auth-state.service';
 export class LandingComponent {
 
   boolFormLogIn: boolean = false;
+  boolFormRegister: boolean = false;
   title = 'ToDo List';
   
   constructor(private authState: AuthStateService, private router: Router) {}
@@ -33,6 +35,10 @@ export class LandingComponent {
 
   toggleFormLogIn(){
     this.boolFormLogIn = true;
+  }
+
+  toggleFormRegister(){
+    this.boolFormRegister = true;
   }
 
   ngOnInit(): void {
@@ -50,6 +56,7 @@ export class LandingComponent {
   closeOnOutsideClick(event: Event) {
     setTimeout(() => {
       this.boolFormLogIn = false;
+      this.boolFormRegister = false;
     }, 40);
   }
 }
