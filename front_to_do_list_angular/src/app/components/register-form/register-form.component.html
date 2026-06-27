@@ -1,1 +1,30 @@
-<p>register-form works!</p>
+<div class="register-box">
+        <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+          
+          <h2>Nuevo usuario</h2>
+  
+          <!-- Email -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" required placeholder="Enter your email" />
+            <mat-error *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+              El correo es obligatorio y debe ser válido
+            </mat-error>
+          </mat-form-field>
+  
+          <!-- Password -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password" required placeholder="Enter your password" />
+            <mat-error *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+              La contraseña es obligatoria y debe tener al menos 6 caracteres
+            </mat-error>
+          </mat-form-field>
+          
+          <!-- Botón de Enviar -->
+          <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">
+            Registrarse
+          </button>
+        </form>
+  </div>
+  
