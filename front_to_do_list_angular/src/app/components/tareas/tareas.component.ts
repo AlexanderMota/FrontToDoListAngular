@@ -41,7 +41,7 @@ export class TareasComponent {
   ngOnInit() {
     this.tarServ.getAll().subscribe({
       next: (response) => {
-        this.tareas = response; // Asignar las tareas obtenidas a la propiedad tareas
+        this.tareas = response.tareas!; // Asignar las tareas obtenidas a la propiedad tareas
       },
       error: (err) => {
         console.error('Error al obtener las tareas:', err);

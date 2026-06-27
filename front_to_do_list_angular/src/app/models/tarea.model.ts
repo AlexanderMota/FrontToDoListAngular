@@ -35,3 +35,10 @@
 
   parent_task_id?: string | number;
 }
+
+
+export interface TareaResponse {
+  message: string;
+  tarea: Tarea | null;
+  tareas: Tarea[] | null;
+}

@@ -1,12 +1,12 @@
 import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { isPlatformBrowser, DatePipe, NgClass } from '@angular/common';
+import { isPlatformBrowser, DatePipe, NgClass, NgIf } from '@angular/common';
 import { TaskService } from '../../services/task.service';
 import { Tarea } from '../../models/tarea.model';
 
 @Component({
   selector: 'app-tarea',
-  imports: [DatePipe, NgClass ],
+  imports: [DatePipe, NgClass, NgIf ],
   templateUrl: './tarea.component.html',
   styleUrl: './tarea.component.scss'
 })
@@ -21,8 +21,13 @@ export class TareaComponent {
       return;
     }
 
-    this.tarServ.getTaskById(this.route.snapshot.paramMap.get('id')!).subscribe((tarea) => {
-      this.tarea = tarea;
+    this.tarServ.getTaskById(this.route.snapshot.paramMap.get('id')!).subscribe({
+      next: (response) => {
+        this.tarea = response.tarea!;
+      },
+      error: (err) => {
+        console.error('Error al obtener la tarea:', err);
+      }
     });
   }
 }

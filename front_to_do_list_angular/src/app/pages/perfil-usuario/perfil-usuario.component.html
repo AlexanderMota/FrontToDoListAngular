@@ -16,7 +16,7 @@
 
         <div class="avatar avatar-placeholder">
 
-          {{ user?.username?.charAt(0)?.toUpperCase() }}
+          {{ user.username?.charAt(0)?.toUpperCase() }}
 
         </div>
 
@@ -24,9 +24,9 @@
 
       <div class="profile-title">
 
-        <h1>{{ user?.username }}</h1>
+        <h1>{{ user.username }}</h1>
 
-        <p>{{ user?.email }}</p>
+        <p>{{ user.email }}</p>
 
       </div>
 
@@ -41,7 +41,7 @@
         </span>
 
         <span>
-          {{ user?.name || 'No especificado' }}
+          {{ user.name || 'No especificado' }}
         </span>
 
       </div>
@@ -53,7 +53,7 @@
         </span>
 
         <span>
-          {{ user?.lastname || 'No especificado' }}
+          {{ user.lastname || 'No especificado' }}
         </span>
 
       </div>
@@ -65,7 +65,7 @@
         </span>
 
         <span>
-          {{ user?.email }}
+          {{ user.email }}
         </span>
 
       </div>
@@ -77,7 +77,7 @@
         </span>
 
         <span>
-          {{ user?.role }}
+          {{ user.role_id }}
         </span>
 
       </div>

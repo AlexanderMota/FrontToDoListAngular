@@ -18,7 +18,7 @@ export class PerfilUsuarioComponent {
       lastname: '',
       username: '',
       email: '',
-      role: 0,
+      role_id: 6,
       phone: '',
       avatar_url: ''
     }
@@ -26,10 +26,10 @@ export class PerfilUsuarioComponent {
 
   ngOnInit(): void {
     this.userService.getPerfil().subscribe({
-      next: (user) => {
-        this.user = user;
-        console.log('Datos del backend:', user); 
-        console.log('Datos del frontend:', this.user); 
+      next: (response) => {
+        this.user = response.user;
+        /*console.log('Datos del backend:', response.user); 
+        console.log('Datos del frontend:', this.user); */
       },
       error: (error) => {
         console.error('Error al obtener el perfil:', error);
