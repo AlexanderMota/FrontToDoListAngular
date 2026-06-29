@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -8,12 +8,11 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { AuthStateService } from '../../services/auth-state.service';
 
 @Component({
   selector: 'app-register-form',
   imports: [
-    CommonModule,
+    NgIf,
     ReactiveFormsModule,
     MatButtonModule,
     MatCheckboxModule,
@@ -28,7 +27,7 @@ export class RegisterFormComponent {
   
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authServ:AuthService, private router: Router, private authState: AuthStateService ) {
+  constructor(private fb: FormBuilder, private authServ:AuthService, private router: Router ) {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -41,7 +40,7 @@ export class RegisterFormComponent {
       this.authServ.register({ email: this.registerForm.value.email, password: this.registerForm.value.password })
       .subscribe({ next : response => {
         console.log('Registro exitoso', response.user.email);
-        this.authState.loadUser();
+        this.authServ.login({ email: this.registerForm.value.email, password: this.registerForm.value.password });
         this.router.navigate(['/private']);
       }, error: err => {
         console.error('Error en el registro', err);

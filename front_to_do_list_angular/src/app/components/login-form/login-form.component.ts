@@ -1,7 +1,7 @@
 import { AuthService } from '../../services/auth.service';
 import { AuthStateService } from '../../services/auth-state.service';
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login-form',
   imports: [
-    CommonModule,
+    NgIf,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,

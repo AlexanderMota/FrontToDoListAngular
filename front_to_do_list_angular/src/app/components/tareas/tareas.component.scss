@@ -5,6 +5,9 @@
 }
 
 .tasks-header {
+  display: flex;
+  justify-content: space-between;
+
   margin-bottom: 2rem;
 
   h1 {
@@ -23,4 +26,58 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 1.5rem;
+}
+
+.btn-new-task {
+  height: 50px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+
+  padding: .9rem 1.6rem;
+
+  background: #1976d2;
+  color: white;
+
+  border: none;
+  border-radius: 12px;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+
+  cursor: pointer;
+
+  box-shadow:
+    0 6px 14px rgba(25, 118, 210, .25);
+
+  transition:
+    background .2s ease,
+    transform .15s ease,
+    box-shadow .2s ease;
+
+}
+
+
+.btn-new-task:hover {
+
+  background: #1565c0;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 20px rgba(25, 118, 210, .3);
+
+}
+
+
+.btn-new-task:active {
+
+  transform: translateY(0);
+
+  box-shadow:
+    0 4px 10px rgba(25, 118, 210, .2);
+
 }

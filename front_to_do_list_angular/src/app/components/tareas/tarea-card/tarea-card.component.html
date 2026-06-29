@@ -6,19 +6,35 @@
 
     <span class="priority"
       [ngClass]="tarea.priority">
-      {{ tarea.priority }}
+      {{ getPriorityLabel(tarea.priority) }}
     </span>
 
   </div>
+  
 
-  <p class="description">
+   
+   <div class="description_container" >
+
+  <p class="description"
+  [class.expanded]="expanded">
     {{ tarea.description }}
   </p>
+<button
+  class="expand-btn"
+  [class.expanded]="expanded"
+  (click)="toggleDescription($event)">
+  {{ expanded ? '▲' : '▼' }}
+</button>
+   </div>
+
+
 
   <div class="task-footer">
 
-    <span class="status" [ngClass]="tarea.status">
-        {{ tarea.status }}
+    <span 
+      class="status" 
+      [ngClass]="tarea.status">
+      {{ getStatusLabel(tarea.status) }}
     </span>
 
     <span class="date">

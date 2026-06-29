@@ -118,3 +118,42 @@
 .btn-secondary {
   background: #eceff1;
 }
+
+.edit-input {
+
+  width:100%;
+
+  border:1px solid #ddd;
+
+  border-radius:10px;
+
+  padding:.75rem 1rem;
+
+  font-size:1rem;
+
+  font-family:inherit;
+
+  background:white;
+
+}
+
+
+.edit-input:focus {
+
+  outline:none;
+
+  border-color:#1976d2;
+
+  box-shadow:
+    0 0 0 3px rgba(25,118,210,.15);
+
+}
+
+
+.title-input {
+
+  font-size:1.8rem;
+
+  font-weight:700;
+
+}
