@@ -1,0 +1,98 @@
+
+/*
+.lista_comentarios {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}*/
+
+.comentario-card {
+
+  margin-top: 10px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,.06);
+
+  transition: .2s ease;
+
+  &:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,.10);
+  }
+}
+
+.comentario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: .75rem;
+}
+
+.comentario-usuario {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  background: #1976d2;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+  font-size: 1rem;
+
+  flex-shrink: 0;
+}
+
+.username {
+  font-weight: 600;
+  color: #333;
+}
+
+.fecha {
+  color: #888;
+  font-size: .8rem;
+}
+
+.comentario-content {
+  color: #444;
+  line-height: 1.6;
+
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+/*
+.comentario-footer {
+  margin-top: 1rem;
+
+  display: flex;
+  gap: 1rem;
+}
+
+.comentario-footer button {
+  background: none;
+  border: none;
+
+  cursor: pointer;
+
+  color: #666;
+
+  transition: .2s;
+
+  &:hover {
+    color: #1976d2;
+  }
+}
+
+*/

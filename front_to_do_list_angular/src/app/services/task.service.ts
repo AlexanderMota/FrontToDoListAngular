@@ -26,13 +26,13 @@ export class TaskService {
   }
   getTaskById(taskId: string): Observable<TareaResponse> {
     return this.http.get<TareaResponse>(`${this.apiUrl}tarea/${taskId}`, { withCredentials: true });
-  }
+  }/*
   private getTaskPriorities(): Observable<TareaResponse> {
     return this.http.get<TareaResponse>(`${this.apiUrl}prioridades`, { withCredentials: true });
   }
   private getTaskStatus(): Observable<TareaResponse> {
     return this.http.get<TareaResponse>(`${this.apiUrl}estatus`, { withCredentials: true });
-  }
+  }*/
   postTask(tarea: Tarea): Observable<TareaResponse> {
     return this.http.post<TareaResponse>(`${this.apiUrl}`, { tarea: tarea }, { withCredentials: true });
   }

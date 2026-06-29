@@ -4,11 +4,11 @@ import { isPlatformBrowser, DatePipe, NgClass, NgIf, CommonModule } from '@angul
 import { TaskService } from '../../services/task.service';
 import { PRIORITIES, STATUS, Tarea, getPriorityLabel, getStatusLabel } from '../../models/tarea.model';
 import { FormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { CommentsComponent } from './comments/comments.component';
 
 @Component({
   selector: 'app-tarea',
-  imports: [DatePipe, NgClass, NgIf, CommonModule, FormsModule ],
+  imports: [DatePipe, NgClass, NgIf, CommonModule, FormsModule, CommentsComponent],
   templateUrl: './tarea.component.html',
   styleUrl: './tarea.component.scss'
 })
@@ -17,7 +17,7 @@ export class TareaComponent {
   tarea!: Tarea;
   editing = false;
   modoCreacion = false;
-  id = "";
+  idTarea = "";
 
   prioridades = PRIORITIES;
   estatus = STATUS;
@@ -33,9 +33,9 @@ export class TareaComponent {
       return;
     }
 
-    this.id = this.route.snapshot.paramMap.get('id')!;
+    this.idTarea = this.route.snapshot.paramMap.get('id')!;
 
-    if (this.id === 'nueva') {
+    if (this.idTarea === 'nueva') {
 
       this.modoCreacion = true;
       this.editing = true;
@@ -45,14 +45,14 @@ export class TareaComponent {
         description: '',
         status: 'pending',
         priority: 'low',
-        created_at: undefined,
-        updated_at: undefined
+        created_at: null,
+        updated_at: null
       };
 
       return;
     }
 
-    this.taskServ.getTaskById(this.id).subscribe({
+    this.taskServ.getTaskById(this.idTarea).subscribe({
       next: (response) => {
         this.tarea = response.tarea!;
       },
@@ -106,7 +106,7 @@ export class TareaComponent {
   }
 
   deleteTask(){
-    this.taskServ.deleteTask(this.id).subscribe({
+    this.taskServ.deleteTask(this.idTarea).subscribe({
       next: (res) =>{
         console.log(res);
         this.router.navigate(['/home']);

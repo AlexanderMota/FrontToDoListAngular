@@ -1,0 +1,82 @@
+<div class="comments_container">
+  <div class="comments-card">
+    <div class="comments-header">
+
+      <div class="comments_header">
+        <p class="comments_title" >
+            comentarios
+        </p>
+  <button
+    *ngIf="!addingComment"
+    class="btn-new-comment"
+    (click)="addingComment = true">
+
+    💬 Añadir comentario
+
+  </button>
+      </div>
+
+        <div class="new-comment">
+
+
+  <div
+    *ngIf="addingComment"
+    class="comment-editor">
+
+    <textarea
+      [(ngModel)]="newComment"
+      placeholder="Escribe un comentario...">
+    </textarea>
+
+    <div class="editor-actions">
+
+      <button
+        class="btn-cancel"
+        (click)="cancelComment()">
+
+        Cancelar
+
+      </button>
+
+      <button
+        class="btn-save"
+        (click)="saveComment()">
+
+        Publicar
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+    </div>
+    
+<div class="comments-section">
+
+  <ng-container *ngIf="comentarios == undefined || comentarios.length < 1; else muestraComentarios">
+
+    <h2>Sin comentarios</h2>
+
+  </ng-container>
+
+  <ng-template #muestraComentarios>
+
+    <div class="lista_comentarios">
+
+      <app-comment-card
+        *ngFor="let comentario of comentarios"
+        [comentario] = "comentario">
+
+      </app-comment-card>
+
+    </div>
+
+  </ng-template>
+
+</div>
+
+  </div>
+
+</div>

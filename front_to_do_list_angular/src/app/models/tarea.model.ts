@@ -35,9 +35,9 @@ export interface Tarea {
 
   priority: TaskPriority;
 
-  created_at: Date | undefined;
+  created_at: Date | null;
 
-  updated_at: Date | undefined;
+  updated_at: Date | null;
 
   parent_task_id?: string | number;
   

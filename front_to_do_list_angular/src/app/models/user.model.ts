@@ -1,11 +1,11 @@
 export interface User {
-  name:string | undefined;
-  lastname:string | undefined;
-  username:string | undefined;
+  name:string | null;
+  lastname:string | null;
+  username:string | null;
   email:string;
   role_id:number;
-  phone:string | undefined;
-  avatar_url:string | undefined;
+  phone:string | null;
+  avatar_url:string | null;
 }
 
 
