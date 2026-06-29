@@ -7,8 +7,17 @@
 <div class="tasks-container">
 
   <div class="tasks-header">
-    <h1>Mis tareas</h1>
-    <p>Gestiona tus tareas y mantén el control de tu trabajo.</p>
+    <div>
+      <h1>Mis tareas</h1>
+      <p>Gestiona tus tareas y mantén el control de tu trabajo.</p>
+    </div>
+
+    <button
+      class="btn-new-task"
+      (click)="newTask()">
+      <span>+</span>
+      Nueva tarea
+    </button>
   </div>
 
   <div class="tasks-grid">
@@ -17,5 +26,4 @@
       [tarea]="tarea">
     </app-tarea-card>
   </div>
-
 </div>

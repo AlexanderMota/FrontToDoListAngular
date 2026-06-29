@@ -1,24 +1,60 @@
 <div class="task-detail-container">
 
-  <div class="task-detail-card">
+  <div class="task-detail-card" *ngIf="tarea">
 
     <div class="task-header">
 
       <div>
-        <h1>{{ tarea.name }}</h1>
 
-        <p class="task-id">
+        <ng-container *ngIf="!editing; else editName">
+
+          <h1>{{ tarea.name }}</h1>
+
+        </ng-container>
+
+        <ng-template #editName>
+
+          <input
+            placeholder="Nombre de la tarea"
+            class="edit-input title-input"
+            [(ngModel)]="tarea.name">
+
+        </ng-template>
+
+        <p class="task-id" >
           Tarea #{{ tarea.task_id }}
         </p>
+
       </div>
 
-      <span
-        class="priority"
-        [ngClass]="tarea.priority">
+      <ng-container *ngIf="!editing; else editPriority">
 
-        {{ tarea.priority }}
+        <span
+          class="priority"
+          [ngClass]="tarea.priority">
 
-      </span>
+          {{ getPriorityLabel(tarea.priority) }}
+
+        </span>
+
+      </ng-container>
+
+      <ng-template #editPriority>
+
+        <select
+          title="Prioridad"
+          class="edit-select"
+          [(ngModel)]="tarea.priority">
+
+            <option
+              *ngFor="let priority of prioridades"
+              [value]="priority.value">
+
+              {{ priority.label }}
+
+        </select>
+
+      </ng-template>
 
     </div>
 
@@ -26,9 +62,22 @@
 
       <h3>Descripción</h3>
 
-      <p>
-        {{ tarea.description }}
-      </p>
+      <ng-container *ngIf="!editing; else editDescription">
+
+        <p>{{ tarea.description }}</p>
+
+      </ng-container>
+
+      <ng-template #editDescription>
+
+        <textarea
+          placeholder="Descripción de la tarea"
+          rows="6"
+          class="edit-textarea"
+          [(ngModel)]="tarea.description">
+        </textarea>
+
+      </ng-template>
 
     </div>
 
@@ -38,13 +87,34 @@
 
         <span class="label">Estado</span>
 
-        <span
-          class="status"
-          [ngClass]="tarea.status">
+        <ng-container *ngIf="!editing; else editStatus">
 
-          {{ tarea.status }}
+          <span
+            class="status"
+            [ngClass]="tarea.status">
 
-        </span>
+            {{ getStatusLabel(tarea.status) }}
+
+          </span>
+
+        </ng-container>
+
+        <ng-template #editStatus>
+
+          <select
+            title="status"
+            class="edit-select"
+            [(ngModel)]="tarea.status">
+
+            <option
+              *ngFor="let status of estatus"
+              [value]="status.value">
+
+              {{ status.label }}
+
+          </select>
+
+        </ng-template>
 
       </div>
 
@@ -68,13 +138,13 @@
 
       </div>
 
-      <div class="info-card" *ngIf="tarea.parent_task_id">
+      <div
+        class="info-card"
+        *ngIf="tarea.parent_task_id">
 
         <span class="label">Tarea padre</span>
 
-        <span>
-          #{{ tarea.parent_task_id }}
-        </span>
+        <span>#{{ tarea.parent_task_id }}</span>
 
       </div>
 
@@ -82,12 +152,42 @@
 
     <div class="task-actions">
 
-      <button class="btn-edit">
+      <button
+        *ngIf="!editing"
+        class="btn-edit"
+        (click)="editTask()">
+
         Editar
+
       </button>
 
-      <button class="btn-delete">
+      <ng-container *ngIf="editing">
+
+        <button
+          class="btn-save"
+          (click)="saveTask()">
+
+          Guardar
+
+        </button>
+
+        <button
+          class="btn-cancel"
+          (click)="cancelEdit()">
+
+          Cancelar
+
+        </button>
+
+      </ng-container>
+
+      <button
+        *ngIf="!editing"
+        class="btn-delete"
+        (click)="deleteTask()">
+
         Eliminar
+
       </button>
 
     </div>

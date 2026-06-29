@@ -14,4 +14,7 @@ export class UserService {
   getPerfil(): Observable<UserResponse> {
     return this.http.get<UserResponse>(`${this.apiUrl}ver`, { withCredentials: true });
   }
+  updatePerfil(perfil:User): Observable<UserResponse> {
+    return this.http.put<UserResponse>(`${this.apiUrl}`, {perfil:perfil},{ withCredentials: true });
+  }
 }

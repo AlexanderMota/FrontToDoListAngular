@@ -24,9 +24,20 @@
 
       <div class="profile-title">
 
-        <h1>{{ user.username }}</h1>
+        @if(!editing){
 
-        <p>{{ user.email }}</p>
+          <h1>{{ user.username }}</h1>
+
+          <p>{{ user.email }}</p>
+
+        } @else {
+
+          <input
+            placeholder="Nick del usuario"
+            class="edit-input title-input"
+            [(ngModel)]="user.username">
+
+        }
 
       </div>
 
@@ -40,9 +51,20 @@
           Nombre
         </span>
 
-        <span>
-          {{ user.name || 'No especificado' }}
-        </span>
+        @if(!editing){
+
+          <span>
+            {{ user.name || 'No especificado' }}
+          </span>
+
+        } @else {
+
+          <input
+            placeholder="Nombre completo del usuario"
+            class="edit-input"
+            [(ngModel)]="user.name">
+
+        }
 
       </div>
 
@@ -52,9 +74,20 @@
           Apellidos
         </span>
 
-        <span>
+        @if(!editing){
+
+          <span>
           {{ user.lastname || 'No especificado' }}
-        </span>
+          </span>
+
+        } @else {
+
+          <input
+          placeholder="Apellidos del usuario"
+          class="edit-input"
+          [(ngModel)]="user.lastname">
+
+        }
 
       </div>
 
@@ -73,6 +106,33 @@
       <div class="info-card">
 
         <span class="label">
+          Teléfono
+        </span>
+
+        
+        @if(!editing){
+
+          <span>
+          {{ user.phone || 'No especificado' }}
+          </span>
+
+        } @else {
+
+          <input
+          placeholder="Teléfono del usuario"
+          class="edit-input"
+          [(ngModel)]="user.phone">
+
+        }
+
+      </div>
+      <div class="info-card">
+
+
+      </div>
+      <div class="info-card">
+
+        <span class="label">
           Rol
         </span>
 
@@ -86,13 +146,42 @@
 
     <div class="profile-actions">
 
-      <button class="btn-primary">
-        Editar perfil
-      </button>
+      @if(!editing){
 
-      <button class="btn-secondary">
-        Cambiar contraseña
-      </button>
+        <button
+          class="btn-primary"
+          (click)="editProfile()">
+
+          Editar perfil
+
+        </button>
+
+        <button
+          class="btn-secondary">
+
+          Cambiar contraseña
+
+        </button>
+
+      } @else {
+
+        <button
+          class="btn-save"
+          (click)="saveProfile()">
+
+          Guardar
+
+        </button>
+
+        <button
+          class="btn-cancel"
+          (click)="cancelEdit()">
+
+          Cancelar
+
+        </button>
+
+      }
 
     </div>
 
