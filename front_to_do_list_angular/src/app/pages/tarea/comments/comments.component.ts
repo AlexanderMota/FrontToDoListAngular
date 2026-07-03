@@ -16,6 +16,7 @@ export class CommentsComponent {
   @Input()
   idTarea : string="";
 
+  openedMenu: number | null = null;
   addingComment = false;
   newComment = '';
   comentarios:Comment[]=[];
@@ -32,6 +33,7 @@ export class CommentsComponent {
 
     this.comServ.getCommentsByIdTarea(this.idTarea).subscribe({
       next: (res) => {
+        console.log(res);
         this.comentarios = res.comments!;
       },
       error: (err) => {
@@ -40,32 +42,37 @@ export class CommentsComponent {
     });
   }
 
-cancelComment() {
-  this.newComment = '';
-  this.addingComment = false;
-}
-
-saveComment() {
-
-  if (!this.newComment.trim()) {
-    return;
+  cancelComment() {
+    this.newComment = '';
+    this.addingComment = false;
   }
 
-  console.log(this.newComment);
+  saveComment() {
 
-  // Llamar al servicio POST
-  this.comentarios.push({
-    comment_id:22,
-    task_id:"",
-    username:"amith", 
-    avatar_url:"", 
-    content:this.newComment, 
-    created_at:new Date(),
-    updated_at:new Date(), 
-    parent_comment_id:0
-  });
-  console.log("lista comentarios act: ", this.comentarios);
-  this.newComment = '';
-  this.addingComment = false;
-}
+    if (!this.newComment.trim()) {
+      return;
+    }
+
+    this.comServ.createComment(this.idTarea, this.newComment).subscribe({
+      next: (res) => {
+        this.comentarios.push(res.comment!);
+      },
+      error : (err) => {
+        console.log(err);
+      }
+    });
+
+    this.newComment = '';
+    this.addingComment = false;
+  }
+  deleteComment( id :number ){
+    this.comentarios = this.comentarios.filter(
+        c => c.comment_id !== id
+    );
+  }
+  toggleMenu(id: number) {
+    //console.log(id);
+    this.openedMenu =
+      this.openedMenu === id ? null : id;
+  }
 }

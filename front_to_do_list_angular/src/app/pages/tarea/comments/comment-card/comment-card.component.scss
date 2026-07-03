@@ -7,6 +7,8 @@
 }*/
 
 .comentario-card {
+  position: relative;
+  max-height: 360px;
 
   margin-top: 10px;
   background: #fff;
@@ -71,7 +73,12 @@
 
   white-space: pre-wrap;
   word-break: break-word;
-}
+
+  overflow-y: auto;
+  overflow: hidden;
+
+  margin-bottom: 0px;
+}/**/
 /*
 .comentario-footer {
   margin-top: 1rem;
@@ -95,4 +102,109 @@
   }
 }
 
-*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.comment-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    position:relative;
+}*/
+.menu-container{
+
+  display: flex;
+  flex-direction: row-reverse;
+
+
+    position:relative;
+}
+.menu-btn{
+
+    border:none;
+
+    background:none;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    color:#666;
+
+    width:36px;
+
+    height:36px;
+
+    border-radius:50%;
+
+    transition:.2s;
+
+    &:hover{
+
+        background:#f3f4f6;
+
+        color:#111;
+
+    }
+
+}
+
+.comment-menu{
+
+    position:absolute;
+
+    top:42px;
+
+    right:0;
+
+    background:white;
+
+    border-radius:10px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
+
+    min-width:160px;
+
+    overflow:hidden;
+
+    z-index:20;
+
+}
+.comment-menu button:hover{
+
+    background:#f5f5f5;
+
+}
+.comment-menu .delete{
+
+    color:#d32f2f;
+
+}
+.comment-menu .delete:hover{
+
+    background:#ffebee;
+
+}

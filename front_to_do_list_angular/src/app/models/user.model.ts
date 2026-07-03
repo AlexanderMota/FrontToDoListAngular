@@ -1,4 +1,5 @@
 export interface User {
+  user_id:string;
   name:string | null;
   lastname:string | null;
   username:string | null;

@@ -19,6 +19,7 @@ export class PerfilUsuarioComponent {
 
   constructor(private userService: UserService) { 
     this.user = {
+      user_id:'',
       name: '',
       lastname: '',
       username: '',

@@ -1,4 +1,5 @@
 export interface Comment {
+  user_id:string;
   comment_id:number;
   task_id:string;
   username:string;

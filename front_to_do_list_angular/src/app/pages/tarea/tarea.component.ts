@@ -74,16 +74,16 @@ export class TareaComponent {
   }
 
   saveTask() {
-    // Llamar al servicio PUT
     this.editing = false;
 
      if (this.modoCreacion) {
 
     this.taskServ.postTask(this.tarea).subscribe({
       next: res => {
+        this.tarea = res.tarea!;
         this.router.navigate([
           '/tarea',
-          res.tarea!.task_id
+          this.tarea.task_id
         ]);
       },
       error: err => {

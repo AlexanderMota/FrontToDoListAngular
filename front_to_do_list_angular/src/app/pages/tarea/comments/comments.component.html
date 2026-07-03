@@ -67,7 +67,10 @@
 
       <app-comment-card
         *ngFor="let comentario of comentarios"
-        [comentario] = "comentario">
+        [comentario] = "comentario"
+        [openedMenu]="openedMenu"
+        (menuOpened)="toggleMenu($event)"
+        (idCommentDeleted)="deleteComment($event)">
 
       </app-comment-card>
 
