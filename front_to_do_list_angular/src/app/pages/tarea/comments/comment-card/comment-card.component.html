@@ -6,29 +6,78 @@
     <div class="comentario-usuario">
 
       <div class="avatar">
-        {{ comentario.username.charAt(0).toUpperCase() }}
+        {{ comentario.comment.username.charAt(0).toUpperCase() }}
       </div>
 
       <span class="username">
-        {{ comentario.username }}
+        {{ comentario.comment.username }}
       </span>
 
     </div>
 
     <span class="fecha">
-      {{ comentario.created_at | date:'dd/MM/yyyy HH:mm' }}
+      {{ comentario.comment.created_at | date:'dd/MM/yyyy HH:mm' }}
     </span>
 
   </div>
 
-  <p class="comentario-content">
-    {{ comentario.content }}
-  </p>
+  <div class="description_container" >
+
+    <ng-container *ngIf="!editingComment; else editMode">
+
+      <p
+        class="comentario-content"
+        [class.expanded]="expanded">
+
+        {{ comentario.comment.content }}
+
+      </p>
+
+    </ng-container>
+
+    <ng-template #editMode>
+      
+      <app-create-comment 
+        class="new-comment"
+        [newComment]="comentario.comment.content"
+        [editingComment]="true"
+        [addingComment]="editingComment"
+        (sendComment)="saveEdit($event)"
+        (cancelAddingComment)="cancelEdit()">
+      </app-create-comment>
+
+    </ng-template>
+    
+    <button
+      *ngIf="!editingComment"
+      class="expand-btn"
+      [class.expanded]="expanded"
+      (click)="toggleDescription($event)">
+      {{ expanded ? '▲' : '▼' }}
+    </button>
+
+  </div>
 
 
-  <div class="menu-container">
+  <div class="menu-container"
+      *ngIf="!editingComment">
+    
+    <div>
+      <button
+        *ngIf="comentario.replies.length > 0"
+        class="toggle-replies-btn"
+        (click)="toggleReplies($event)">
+
+        {{ expandedReplays
+            ? '▼ Ocultar respuestas'
+            : '▶ Mostrar respuestas (' + comentario.replies.length + ')' }}
+
+      </button>
+
+    </div>
 
     <button
+      *ngIf = "!editingComment && !addingComment"
       class="menu-btn"
       (click)="toggleMenu($event)">
 
@@ -38,28 +87,28 @@
 
     <div
       class="comment-menu"
-      *ngIf="openedMenu === comentario.comment_id">
+      *ngIf="openedMenu === comentario.comment.comment_id">
 
-      <button (click)="editComment(comentario)"
-       *ngIf="comentario.user_id == currentUser">
+      <button
+        class="btn-replay"
+        (click)="toggleReplayComment(true)">
+
+        ✏ Responder
+
+      </button>
+
+      <button (click)="editComment()"
+        class="btn-save"
+       *ngIf="comentario.comment.user_id == currentUser">
         ✏ Editar
       </button>
 
       <button
-        class="delete"
-        (click)="deleteComment(comentario.comment_id!)"
-       *ngIf="comentario.user_id == currentUser">
+        class="btn-cancel"
+        (click)="deleteComment(comentario.comment.comment_id!)"
+       *ngIf="comentario.comment.user_id == currentUser">
 
         🗑 Eliminar
-
-      </button>
-
-      <button
-        class="delete"
-        (click)="deleteComment(comentario.comment_id!)"
-       *ngIf="comentario.user_id != currentUser">
-
-        🗑 Responder
 
       </button>
 
@@ -75,5 +124,24 @@
         </div>
         
 -->
-        
+
+      <app-create-comment 
+        class="new-comment"
+        [editingComment]="false"
+        [addingComment]="addingComment"
+        (sendComment)="replayComment($event)"
+        (cancelAddingComment)="cancelComment($event)">
+      </app-create-comment>
+
+      <div  *ngIf="expandedReplays">
+        <app-comment-card
+          *ngFor="let reply of comentario.replies"
+          [comentario]="reply"
+          [openedMenu]="openedMenu"
+
+          (menuOpened)="menuOpened.emit($event)"
+          (sendComment)="sendComment.emit($event)"
+          (idCommentDeleted)="idCommentDeleted.emit($event)">
+        </app-comment-card>
+      </div>
 </div>

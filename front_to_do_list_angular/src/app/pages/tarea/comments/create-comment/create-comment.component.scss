@@ -1,0 +1,86 @@
+.new-comment {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.comment-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  background: white;
+
+  border-radius: 14px;
+
+  padding: 1rem;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,.06);
+}
+
+.comment-editor textarea {
+
+  resize: vertical;
+
+  min-height: 120px;
+  max-height: 300px;
+
+  padding: 1rem;
+
+  border: 1px solid #ddd;
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-size: .95rem;
+
+  outline: none;
+
+  transition: 1s;
+
+  &:focus {
+    border-color: #1976d2;
+    box-shadow: 0 0 0 3px rgba(25,118,210,.15);
+  }
+}
+
+.editor-actions {
+
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 1rem;
+}
+
+.btn-cancel,
+.btn-save {
+
+  border: none;
+
+  border-radius: 10px;
+
+  padding: .8rem 1.3rem;
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  transition: .2s;
+}
+
+.btn-cancel {
+
+  background: #f1f3f5;
+
+  &:hover {
+    background: #dee2e6;
+  }
+}
+
+.btn-save {
+
+  background: #1976d2;
+  color: white;
+
+  &:hover {
+    background: #1565c0;
+  }
+}

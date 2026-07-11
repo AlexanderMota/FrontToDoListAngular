@@ -23,8 +23,6 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './register-form.component.scss'
 })
 export class RegisterFormComponent {
-
-  
   registerForm: FormGroup;
 
   constructor(private fb: FormBuilder, private authServ:AuthService, private router: Router ) {

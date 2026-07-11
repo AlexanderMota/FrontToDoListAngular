@@ -16,31 +16,25 @@
 
 
 .logo {
-
   font-size: 1.4rem;
   font-weight: 700;
-
 }
 
 
 .nav-links {
-
   display: flex;
   align-items: center;
   gap: 1.5rem;
-
 }
 
 
 a {
-
   text-decoration: none;
   color: #555;
 
   &:hover {
     color: #1976d2;
   }
-
 }
 
 
@@ -53,7 +47,6 @@ a {
 
 
 button {
-
   border: none;
   padding: .5rem 1rem;
 
@@ -70,5 +63,4 @@ button {
   &:hover {
     transform: translateY(-2px);
   }
-
 }

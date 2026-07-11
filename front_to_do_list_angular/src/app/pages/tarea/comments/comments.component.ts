@@ -1,25 +1,26 @@
 import { Component, inject, Input, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, DatePipe, NgClass, NgIf, NgFor, CommonModule } from '@angular/common';
-import { Comment } from '../../../models/comment.model';
+import { Comment, CommentTree, buildTree } from '../../../models/comment.model';
 import { CommentService } from '../../../services/comment.service';
 import { CommentCardComponent } from './comment-card/comment-card.component';
 import { FormsModule } from '@angular/forms';
+import { CreateCommentComponent } from "./create-comment/create-comment.component";
 
 @Component({
   selector: 'app-comments',
-  imports: [NgIf, NgFor, CommentCardComponent, FormsModule ],
+  imports: [NgIf, NgFor, FormsModule, CommentCardComponent, CreateCommentComponent],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.scss'
 })
 export class CommentsComponent {
 
   @Input()
-  idTarea : string="";
+  task_id : string = "";
 
+  private commentsFlat : Comment[]= [];
+  comentarios: CommentTree[] = [];
   openedMenu: number | null = null;
   addingComment = false;
-  newComment = '';
-  comentarios:Comment[]=[];
 
   private platformId = inject(PLATFORM_ID);
 
@@ -31,10 +32,10 @@ export class CommentsComponent {
       return;
     }
 
-    this.comServ.getCommentsByIdTarea(this.idTarea).subscribe({
+    this.comServ.getCommentsByIdTarea(this.task_id).subscribe({
       next: (res) => {
-        console.log(res);
-        this.comentarios = res.comments!;
+        this.commentsFlat = res.comments!;
+        this.comentarios = buildTree(this.commentsFlat);
       },
       error: (err) => {
         console.log(err);
@@ -42,37 +43,41 @@ export class CommentsComponent {
     });
   }
 
-  cancelComment() {
-    this.newComment = '';
-    this.addingComment = false;
-  }
+  saveComment(commentToSend:{content:string, parent_comment_id: number | null}){ 
+    this.openedMenu = null;
 
-  saveComment() {
-
-    if (!this.newComment.trim()) {
+    if (!commentToSend.content.trim()) {
       return;
     }
 
-    this.comServ.createComment(this.idTarea, this.newComment).subscribe({
+    this.comServ.createComment(this.task_id, commentToSend).subscribe({
       next: (res) => {
-        this.comentarios.push(res.comment!);
+        this.commentsFlat.push(res.comment!);
+        this.comentarios = buildTree(this.commentsFlat);
       },
       error : (err) => {
         console.log(err);
       }
     });
 
-    this.newComment = '';
     this.addingComment = false;
+    
   }
-  deleteComment( id :number ){
-    this.comentarios = this.comentarios.filter(
-        c => c.comment_id !== id
-    );
+  deleteComment(id:string){
+
+    this.commentsFlat =
+        this.commentsFlat.filter(
+            c => c.comment_id !== Number(id)
+        );
+
+    this.comentarios = buildTree(this.commentsFlat);
   }
+
+  cancelComment(addComment:boolean){ 
+    this.addingComment = addComment;
+  }
+
   toggleMenu(id: number) {
-    //console.log(id);
-    this.openedMenu =
-      this.openedMenu === id ? null : id;
+    this.openedMenu = this.openedMenu === id ? null : id;
   }
 }

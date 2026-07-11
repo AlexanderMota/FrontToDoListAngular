@@ -82,9 +82,7 @@
     </div>
 
     <div class="task-info-grid">
-
       <div class="info-card">
-
         <span class="label">Estado</span>
 
         <ng-container *ngIf="!editing; else editStatus">
@@ -115,7 +113,6 @@
           </select>
 
         </ng-template>
-
       </div>
 
       <div class="info-card">
@@ -147,7 +144,6 @@
         <span>#{{ tarea.parent_task_id }}</span>
 
       </div>
-
     </div>
 
     <div class="task-actions">
@@ -191,10 +187,9 @@
       </button>
 
     </div>
-
   </div>
-
 </div>
 
 <app-comments 
-      [idTarea]="idTarea"></app-comments>
+  [task_id]="task_id">
+</app-comments>

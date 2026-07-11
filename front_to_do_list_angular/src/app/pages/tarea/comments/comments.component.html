@@ -6,80 +6,47 @@
         <p class="comments_title" >
             comentarios
         </p>
-  <button
-    *ngIf="!addingComment"
-    class="btn-new-comment"
-    (click)="addingComment = true">
+        <button
+          *ngIf="!addingComment"
+          class="btn-new-comment"
+          (click)="addingComment = true">
 
-    💬 Añadir comentario
+          💬 Añadir comentario
 
-  </button>
+        </button>
       </div>
 
-        <div class="new-comment">
-
-
-  <div
-    *ngIf="addingComment"
-    class="comment-editor">
-
-    <textarea
-      [(ngModel)]="newComment"
-      placeholder="Escribe un comentario...">
-    </textarea>
-
-    <div class="editor-actions">
-
-      <button
-        class="btn-cancel"
-        (click)="cancelComment()">
-
-        Cancelar
-
-      </button>
-
-      <button
-        class="btn-save"
-        (click)="saveComment()">
-
-        Publicar
-
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
+      <app-create-comment 
+        class="new-comment"
+        [addingComment]="addingComment"
+        (sendComment)="saveComment({content:$event,parent_comment_id:null})"
+        (cancelAddingComment)="cancelComment($event)">
+      </app-create-comment>
     </div>
     
-<div class="comments-section">
+    <div class="comments-section">
 
-  <ng-container *ngIf="comentarios == undefined || comentarios.length < 1; else muestraComentarios">
+      <ng-container *ngIf="comentarios == undefined || comentarios.length < 1; else muestraComentarios">
 
-    <h2>Sin comentarios</h2>
+        <h2>Sin comentarios</h2>
 
-  </ng-container>
+      </ng-container>
 
-  <ng-template #muestraComentarios>
+      <ng-template #muestraComentarios>
+        <div class="lista_comentarios">
 
-    <div class="lista_comentarios">
+          <app-comment-card
+            *ngFor="let comentario of comentarios"
+            [comentario] = "comentario"
+            [openedMenu]="openedMenu"
+            (idCommentDeleted)="deleteComment($event)"
+            (menuOpened)="toggleMenu($event)"
+            (sendComment)="saveComment($event)">
+          </app-comment-card>
 
-      <app-comment-card
-        *ngFor="let comentario of comentarios"
-        [comentario] = "comentario"
-        [openedMenu]="openedMenu"
-        (menuOpened)="toggleMenu($event)"
-        (idCommentDeleted)="deleteComment($event)">
-
-      </app-comment-card>
+        </div>
+      </ng-template>
 
     </div>
-
-  </ng-template>
-
-</div>
-
   </div>
-
 </div>

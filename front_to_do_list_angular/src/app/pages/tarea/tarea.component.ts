@@ -17,7 +17,7 @@ export class TareaComponent {
   tarea!: Tarea;
   editing = false;
   modoCreacion = false;
-  idTarea = "";
+  task_id = "";
 
   prioridades = PRIORITIES;
   estatus = STATUS;
@@ -33,9 +33,9 @@ export class TareaComponent {
       return;
     }
 
-    this.idTarea = this.route.snapshot.paramMap.get('id')!;
+    this.task_id = this.route.snapshot.paramMap.get('id')!;
 
-    if (this.idTarea === 'nueva') {
+    if (this.task_id === 'nueva') {
 
       this.modoCreacion = true;
       this.editing = true;
@@ -52,7 +52,7 @@ export class TareaComponent {
       return;
     }
 
-    this.taskServ.getTaskById(this.idTarea).subscribe({
+    this.taskServ.getTaskById(this.task_id).subscribe({
       next: (response) => {
         this.tarea = response.tarea!;
       },
@@ -76,27 +76,27 @@ export class TareaComponent {
   saveTask() {
     this.editing = false;
 
-     if (this.modoCreacion) {
+    if (this.modoCreacion) {
 
-    this.taskServ.postTask(this.tarea).subscribe({
-      next: res => {
-        this.tarea = res.tarea!;
-        this.router.navigate([
-          '/tarea',
-          this.tarea.task_id
-        ]);
-      },
-      error: err => {
-        console.log(err);
-      }
-    });
+      this.taskServ.postTask(this.tarea).subscribe({
+        next: res => {
+          this.tarea = res.tarea!;
+          this.router.navigate([
+            '/tarea',
+            this.tarea.task_id
+          ]);
+        },
+        error: err => {
+          console.log(err);
+        }
+      });
 
-    return;
-  }
+      return;
+    }
 
     this.taskServ.updateTask(this.tarea).subscribe({
       next: (res) => {
-        console.log(res.message);
+        //console.log(res.message);
         this.tarea = res.tarea!;
       },
       error: (err) => {
@@ -106,9 +106,9 @@ export class TareaComponent {
   }
 
   deleteTask(){
-    this.taskServ.deleteTask(this.idTarea).subscribe({
+    this.taskServ.deleteTask(this.task_id).subscribe({
       next: (res) =>{
-        console.log(res);
+        //console.log(res);
         this.router.navigate(['/home']);
       },
       error: (err) => {

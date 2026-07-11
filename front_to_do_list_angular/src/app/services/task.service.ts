@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { /*BehaviorSubject, */Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Tarea, TareaResponse } from '../models/tarea.model';
 
 @Injectable({
@@ -9,17 +9,7 @@ import { Tarea, TareaResponse } from '../models/tarea.model';
 export class TaskService {
   private apiUrl = 'http://localhost:4300/tareas/'; // URL del backend
 
-  /*private prioridades: string[]=[];
-  private estatus: string[] = [];*/
-  /*private prioridadesSubject = new BehaviorSubject<string[]>([]);
-  prioridades$ = this.prioridadesSubject.asObservable();
-  
-  private estatusSubject = new BehaviorSubject<string[]>([]);
-  estatus$ = this.estatusSubject.asObservable();*/
-
-  constructor(private http: HttpClient) {
-    //this.loadOptions();
-  }
+  constructor(private http: HttpClient) { }
 
   getAll(): Observable<TareaResponse> {
     return this.http.get<TareaResponse>(`${this.apiUrl}all`, { withCredentials: true });
@@ -60,6 +50,4 @@ export class TaskService {
       }
     });
   }*/
-  /*getPriorities(){ return this.prioridades; }
-  getEstatus() { return this.estatus; }*/
 }

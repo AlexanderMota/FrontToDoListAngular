@@ -1,0 +1,30 @@
+
+<div
+    *ngIf="addingComment"
+    class="comment-editor">
+
+    <textarea
+        [(ngModel)]="newComment"
+        placeholder="Escribe un comentario...">
+    </textarea>
+
+    <div 
+        class="editor-actions">
+        <button
+            class="btn-cancel"
+            (click)="cancelComment()">
+
+            Cancelar
+
+        </button>
+
+        <button
+            class="btn-save"
+            (click)="saveComment()">
+
+            {{ editingComment ? 'Guardar' : 'Publicar' }}
+
+        </button>
+
+    </div>
+</div>

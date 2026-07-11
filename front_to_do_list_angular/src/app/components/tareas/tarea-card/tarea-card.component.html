@@ -1,7 +1,6 @@
 <div class="task-card" (click)="abrirTarea()">
-
   <div class="task-header">
-
+    
     <h3>{{ tarea.name }}</h3>
 
     <span class="priority"
@@ -10,23 +9,21 @@
     </span>
 
   </div>
-  
 
    
-   <div class="description_container" >
+  <div class="description_container" >
+    <p class="description"
+    [class.expanded]="expanded">
+      {{ tarea.description }}
+    </p>
 
-  <p class="description"
-  [class.expanded]="expanded">
-    {{ tarea.description }}
-  </p>
-<button
-  class="expand-btn"
-  [class.expanded]="expanded"
-  (click)="toggleDescription($event)">
-  {{ expanded ? '▲' : '▼' }}
-</button>
-   </div>
-
+    <button
+      class="expand-btn"
+      [class.expanded]="expanded"
+      (click)="toggleDescription($event)">
+      {{ expanded ? '▲' : '▼' }}
+    </button>
+  </div>
 
 
   <div class="task-footer">
@@ -42,5 +39,4 @@
     </span>
 
   </div>
-
 </div>
