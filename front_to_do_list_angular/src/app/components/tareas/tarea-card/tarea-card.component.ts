@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { getStatusLabel, getPriorityLabel, Tarea } from '../../../models/tarea.model';
+import { getStatusLabel, getPriorityLabel, Task } from '../../../models/tarea.model';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -12,14 +12,14 @@ import { Router } from '@angular/router';
 export class TareaCardComponent {
 
   @Input()
-  tarea!: Tarea; // Variable para almacenar los datos de la tarea
+  task!: Task; // Variable para almacenar los datos de la tarea
   expanded = false;
 
   constructor(private router: Router) {
   }
 
   abrirTarea() {
-    this.router.navigate(['/tarea', this.tarea.task_id]);
+    this.router.navigate(['/tarea', this.task.task_id]);
   }
   getStatusLabel = getStatusLabel;
   getPriorityLabel = getPriorityLabel;

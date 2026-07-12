@@ -2,19 +2,20 @@ import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser, DatePipe, NgClass, NgIf, CommonModule } from '@angular/common';
 import { TaskService } from '../../services/task.service';
-import { PRIORITIES, STATUS, Tarea, getPriorityLabel, getStatusLabel } from '../../models/tarea.model';
+import { PRIORITIES, STATUS, Task, getPriorityLabel, getStatusLabel } from '../../models/tarea.model';
 import { FormsModule } from '@angular/forms';
 import { CommentsComponent } from './comments/comments.component';
+import { SubtareasComponent } from './subtareas/subtareas.component';
 
 @Component({
   selector: 'app-tarea',
-  imports: [DatePipe, NgClass, NgIf, CommonModule, FormsModule, CommentsComponent],
+  imports: [DatePipe, NgClass, NgIf, CommonModule, FormsModule, CommentsComponent, SubtareasComponent],
   templateUrl: './tarea.component.html',
   styleUrl: './tarea.component.scss'
 })
 export class TareaComponent {
 
-  tarea!: Tarea;
+  task!: Task;
   editing = false;
   modoCreacion = false;
   task_id = "";
@@ -33,18 +34,31 @@ export class TareaComponent {
       return;
     }
 
+    this.route.paramMap.subscribe(() => {
+
+      this.loadTasks();
+
+    });
+
+  }
+  
+  loadTasks(){
+
     this.task_id = this.route.snapshot.paramMap.get('id')!;
+
+    const parent = this.route.snapshot.queryParamMap.get('parent');
 
     if (this.task_id === 'nueva') {
 
       this.modoCreacion = true;
       this.editing = true;
 
-      this.tarea = {
+      this.task = {
         name: '',
         description: '',
         status: 'pending',
         priority: 'low',
+        parent_task_id: parent ? parseInt(parent) : null,
         created_at: null,
         updated_at: null
       };
@@ -54,14 +68,14 @@ export class TareaComponent {
 
     this.taskServ.getTaskById(this.task_id).subscribe({
       next: (response) => {
-        this.tarea = response.tarea!;
+        this.task = response.task!;
       },
       error: (err) => {
         console.error('Error al obtener la tarea:', err);
       }
     });
   }
-  
+
   editTask() {
     this.editing = true;
   }
@@ -78,12 +92,12 @@ export class TareaComponent {
 
     if (this.modoCreacion) {
 
-      this.taskServ.postTask(this.tarea).subscribe({
+      this.taskServ.postTask(this.task).subscribe({
         next: res => {
-          this.tarea = res.tarea!;
+          this.task = res.task!;
           this.router.navigate([
             '/tarea',
-            this.tarea.task_id
+            this.task.task_id
           ]);
         },
         error: err => {
@@ -94,10 +108,9 @@ export class TareaComponent {
       return;
     }
 
-    this.taskServ.updateTask(this.tarea).subscribe({
+    this.taskServ.updateTask(this.task).subscribe({
       next: (res) => {
-        //console.log(res.message);
-        this.tarea = res.tarea!;
+        this.task = res.task!;
       },
       error: (err) => {
         console.log(err);
@@ -118,6 +131,10 @@ export class TareaComponent {
   }
   getPriorityLabel = getPriorityLabel;
   getStatusLabel = getStatusLabel;
+
+  volverAlPadre(){
+    this.router.navigate(['/tarea/',this.task.parent_task_id]);
+  }
 }
 
  

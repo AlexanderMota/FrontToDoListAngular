@@ -72,7 +72,7 @@ export class CommentCardComponent {
 
     this.comServ.updateComment(
       this.comentario.comment.comment_id.toString()!, 
-      editedContent
+      {content: editedContent}
     ).subscribe({
 
       next: res => {
@@ -105,8 +105,6 @@ export class CommentCardComponent {
   toggleMenu(event: MouseEvent){
 
     event.stopPropagation();
-
-    //console.log('id del comentario: ', this.comentario.comment.comment_id);
 
     this.menuOpened.emit(this.comentario.comment.comment_id!);
   }

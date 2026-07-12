@@ -23,9 +23,9 @@ export type TaskStatus =
   | 'paused'
   | 'canceled';
 
-export interface Tarea {
+export interface Task {
 
-  task_id?: string | number; //Esto debe ser string. Number solo para la data dumi en pruebas. Lo mismo con parent_task_id.
+  task_id?: number; 
   
   name: string;
 
@@ -39,14 +39,14 @@ export interface Tarea {
 
   updated_at: Date | null;
 
-  parent_task_id?: string | number;
+  parent_task_id: number | null;
   
 }
 
-export interface TareaResponse {
+export interface TaskResponse {
   message: string;
-  tarea: Tarea | null;
-  tareas: Tarea[] | null;
+  task: Task | null;
+  tasks: Task[] | null;
   options: string[] | null;
 }
 

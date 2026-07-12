@@ -17,8 +17,8 @@ export class CommentService {
   createComment(task_id:string, comment:{content:string, parent_comment_id: number | null}): Observable<CommentResponse> {
     return this.http.post<CommentResponse>(`${this.apiUrl}${task_id}`, {comment},{ withCredentials: true });
   }
-  updateComment(comment_id:string, content:string): Observable<CommentResponse> {
-    return this.http.put<CommentResponse>(`${this.apiUrl}${comment_id}`, { content }, { withCredentials: true });
+  updateComment(comment_id:string, comment:{content:string}): Observable<CommentResponse> {
+    return this.http.put<CommentResponse>(`${this.apiUrl}${comment_id}`, { comment }, { withCredentials: true });
   }
   deleteComment(idComment: string): Observable<CommentResponse> {
     return this.http.delete<CommentResponse>(`${this.apiUrl}${idComment}`, { withCredentials: true });

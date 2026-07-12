@@ -1,0 +1,39 @@
+<div class="subtasks_container">
+    <div class="subtasks_card">
+
+        <div>
+            <div class="subtasks-header">
+                <p class="subtasks-title" >
+                    Tareas derivadas
+                </p>
+                <button class="btn-new-task"
+                    (click)="createSubtask()">
+
+                    + Añadir tarea derivada
+                </button>
+            </div>
+        </div>
+
+        <div class="subtasks-section">
+
+            <ng-container *ngIf="subtasks == undefined || subtasks.length < 1; else muestraSubtasks">
+
+                <h2>No hay tareas derivadas de esta</h2>
+
+            </ng-container>
+
+            <ng-template #muestraSubtasks>
+                <div class="tasks_list">
+
+                    <app-tarea-card
+                        *ngFor="let task of subtasks"
+                        [task]="task">
+                    </app-tarea-card>
+
+                </div>
+            </ng-template>
+
+        </div>
+
+    </div>
+</div>

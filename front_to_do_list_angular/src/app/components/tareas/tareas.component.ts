@@ -1,14 +1,14 @@
 import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { TareaCardComponent } from "./tarea-card/tarea-card.component";
 import { NgFor, isPlatformBrowser } from '@angular/common';
-import { Tarea } from '../../models/tarea.model';
+import { Task } from '../../models/tarea.model';
 import { TaskService } from '../../services/task.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tareas',
   imports: [NgFor, TareaCardComponent],
-  templateUrl: './tareas.component.html',
+  templateUrl:  './tareas.component.html',
   styleUrl: './tareas.component.scss'
 })
 export class TareasComponent {
@@ -17,7 +17,7 @@ export class TareasComponent {
 
   
   private platformId = inject(PLATFORM_ID);
-  public tareas : Tarea[] = [];
+  public tasks : Task[] = [];
 
   ngOnInit() {
     
@@ -25,9 +25,9 @@ export class TareasComponent {
       return;
     }
 
-    this.tarServ.getAll().subscribe({
+    this.tarServ.getParentTasks().subscribe({
       next: (response) => {
-        this.tareas = response.tareas!; // Asignar las tareas obtenidas a la propiedad tareas
+        this.tasks = response.tasks!; // Asignar las tareas obtenidas a la propiedad tareas
       },
       error: (err) => {
         console.error('Error al obtener las tareas:', err);

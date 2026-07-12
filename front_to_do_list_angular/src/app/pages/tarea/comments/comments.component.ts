@@ -26,12 +26,31 @@ export class CommentsComponent {
 
   constructor(private comServ:CommentService){ }
 
-  ngOnInit(){
+  ngOnInit() {
 
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
+      if (!isPlatformBrowser(this.platformId)) {
+          return;
+      }
 
+      if (this.task_id) {
+
+          this.loadComments();
+
+      }
+
+  }
+
+  ngOnChanges() {
+
+      if (this.task_id) {
+
+          this.loadComments();
+
+      }
+
+  }
+
+  loadComments(){
     this.comServ.getCommentsByIdTarea(this.task_id).subscribe({
       next: (res) => {
         this.commentsFlat = res.comments!;
@@ -41,8 +60,8 @@ export class CommentsComponent {
         console.log(err);
       }
     });
-  }
 
+  }
   saveComment(commentToSend:{content:string, parent_comment_id: number | null}){ 
     this.openedMenu = null;
 

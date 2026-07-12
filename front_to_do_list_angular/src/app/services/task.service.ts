@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Tarea, TareaResponse } from '../models/tarea.model';
+import { Task, TaskResponse } from '../models/tarea.model';
 
 @Injectable({
   providedIn: 'root' // Hace que el servicio esté disponible en toda la aplicación
@@ -11,11 +11,17 @@ export class TaskService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<TareaResponse> {
-    return this.http.get<TareaResponse>(`${this.apiUrl}all`, { withCredentials: true });
+  /*getAll(): Observable<TaskResponse> {
+    return this.http.get<TaskResponse>(`${this.apiUrl}all`, { withCredentials: true });
+  }*/
+  getParentTasks(): Observable<TaskResponse> {
+    return this.http.get<TaskResponse>(`${this.apiUrl}principales`, { withCredentials: true });
   }
-  getTaskById(taskId: string): Observable<TareaResponse> {
-    return this.http.get<TareaResponse>(`${this.apiUrl}tarea/${taskId}`, { withCredentials: true });
+  getSubTasks(parent_task_id : string): Observable<TaskResponse> {
+    return this.http.get<TaskResponse>(`${this.apiUrl}derivadas/${parent_task_id}`, { withCredentials: true });
+  }
+  getTaskById(taskId: string): Observable<TaskResponse> {
+    return this.http.get<TaskResponse>(`${this.apiUrl}tarea/${taskId}`, { withCredentials: true });
   }/*
   private getTaskPriorities(): Observable<TareaResponse> {
     return this.http.get<TareaResponse>(`${this.apiUrl}prioridades`, { withCredentials: true });
@@ -23,14 +29,14 @@ export class TaskService {
   private getTaskStatus(): Observable<TareaResponse> {
     return this.http.get<TareaResponse>(`${this.apiUrl}estatus`, { withCredentials: true });
   }*/
-  postTask(tarea: Tarea): Observable<TareaResponse> {
-    return this.http.post<TareaResponse>(`${this.apiUrl}`, { tarea: tarea }, { withCredentials: true });
+  postTask(task: Task): Observable<TaskResponse> {
+    return this.http.post<TaskResponse>(`${this.apiUrl}`, { task: task }, { withCredentials: true });
   }
-  updateTask(tarea: Tarea): Observable<TareaResponse> {
-    return this.http.put<TareaResponse>(`${this.apiUrl}tarea/${tarea.task_id}`, { tarea: tarea }, { withCredentials: true });
+  updateTask(task: Task): Observable<TaskResponse> {
+    return this.http.put<TaskResponse>(`${this.apiUrl}tarea/${task.task_id}`, { task: task }, { withCredentials: true });
   }
-  deleteTask(taskId: string): Observable<TareaResponse> {
-    return this.http.delete<TareaResponse>(`${this.apiUrl}tarea/${taskId}`, { withCredentials: true });
+  deleteTask(taskId: string): Observable<TaskResponse> {
+    return this.http.delete<TaskResponse>(`${this.apiUrl}tarea/${taskId}`, { withCredentials: true });
   }
   /*private loadOptions(){
     this.getTaskPriorities().subscribe({

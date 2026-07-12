@@ -1,0 +1,85 @@
+
+.subtasks_container {
+  display: flex;
+  justify-content: center;
+
+  margin-bottom: 32px;
+}
+.subtasks_card {
+
+  width: 100%;
+  max-width: 900px;
+  max-height: 340px;
+
+
+  margin-left: 32px;
+  margin-right: 32px;
+
+  padding: 2rem;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  
+  background: #ffffff;
+  border-radius: 18px;
+  
+}
+
+.subtasks-header{
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+  max-width: 900px;
+}
+.subtasks-title{
+
+  margin: 0px;
+  color: #777;
+}
+
+.btn-new-task {
+  background: #1976d2;
+  color: white;
+
+  border: none;
+  border-radius: 10px;
+
+  padding: .8rem 1.4rem;
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  transition: .2s;
+
+  &:hover {
+    background: #1565c0;
+  }
+}
+
+.subtasks-section{
+
+  h2 {
+    color: #666;
+    font-weight: 500;
+    text-align: start;
+    margin: 10px 0px;
+  }
+}
+.tasks_list{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+
+    margin-bottom: 10px;
+
+    padding: 30px 20px;
+
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-behavior: smooth;
+
+    app-tarea-card{
+        flex: 0 0 400px; // ancho fijo
+    }
+}

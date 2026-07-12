@@ -1,6 +1,6 @@
 <div class="task-detail-container">
 
-  <div class="task-detail-card" *ngIf="tarea">
+  <div class="task-detail-card" *ngIf="task">
 
     <div class="task-header">
 
@@ -8,7 +8,7 @@
 
         <ng-container *ngIf="!editing; else editName">
 
-          <h1>{{ tarea.name }}</h1>
+          <h1>{{ task.name }}</h1>
 
         </ng-container>
 
@@ -17,12 +17,12 @@
           <input
             placeholder="Nombre de la tarea"
             class="edit-input title-input"
-            [(ngModel)]="tarea.name">
+            [(ngModel)]="task.name">
 
         </ng-template>
 
         <p class="task-id" >
-          Tarea #{{ tarea.task_id }}
+          Tarea #{{ task.task_id }}
         </p>
 
       </div>
@@ -31,9 +31,9 @@
 
         <span
           class="priority"
-          [ngClass]="tarea.priority">
+          [ngClass]="task.priority">
 
-          {{ getPriorityLabel(tarea.priority) }}
+          {{ getPriorityLabel(task.priority) }}
 
         </span>
 
@@ -44,7 +44,7 @@
         <select
           title="Prioridad"
           class="edit-select"
-          [(ngModel)]="tarea.priority">
+          [(ngModel)]="task.priority">
 
             <option
               *ngFor="let priority of prioridades"
@@ -64,7 +64,7 @@
 
       <ng-container *ngIf="!editing; else editDescription">
 
-        <p>{{ tarea.description }}</p>
+        <p>{{ task.description }}</p>
 
       </ng-container>
 
@@ -74,7 +74,7 @@
           placeholder="Descripción de la tarea"
           rows="6"
           class="edit-textarea"
-          [(ngModel)]="tarea.description">
+          [(ngModel)]="task.description">
         </textarea>
 
       </ng-template>
@@ -89,9 +89,9 @@
 
           <span
             class="status"
-            [ngClass]="tarea.status">
+            [ngClass]="task.status">
 
-            {{ getStatusLabel(tarea.status) }}
+            {{ getStatusLabel(task.status) }}
 
           </span>
 
@@ -102,7 +102,7 @@
           <select
             title="status"
             class="edit-select"
-            [(ngModel)]="tarea.status">
+            [(ngModel)]="task.status">
 
             <option
               *ngFor="let status of estatus"
@@ -120,7 +120,7 @@
         <span class="label">Creada</span>
 
         <span>
-          {{ tarea.created_at | date:'dd/MM/yyyy HH:mm' }}
+          {{ task.created_at | date:'dd/MM/yyyy HH:mm' }}
         </span>
 
       </div>
@@ -130,18 +130,19 @@
         <span class="label">Actualizada</span>
 
         <span>
-          {{ tarea.updated_at | date:'dd/MM/yyyy HH:mm' }}
+          {{ task.updated_at | date:'dd/MM/yyyy HH:mm' }}
         </span>
 
       </div>
 
       <div
-        class="info-card"
-        *ngIf="tarea.parent_task_id">
+        class="info-card parent_task_card"
+        *ngIf="task.parent_task_id"
+        (click)="volverAlPadre()">
 
         <span class="label">Tarea padre</span>
 
-        <span>#{{ tarea.parent_task_id }}</span>
+        <span>#{{ task.parent_task_id }}</span>
 
       </div>
     </div>
@@ -190,6 +191,12 @@
   </div>
 </div>
 
+<app-subtareas
+  *ngIf="!editing && !modoCreacion"
+  [parent_task_id]="task_id">
+</app-subtareas>
+
 <app-comments 
+  *ngIf="!editing && !modoCreacion"
   [task_id]="task_id">
 </app-comments>
