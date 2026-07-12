@@ -6,6 +6,7 @@ import { PRIORITIES, STATUS, Task, getPriorityLabel, getStatusLabel } from '../.
 import { FormsModule } from '@angular/forms';
 import { CommentsComponent } from './comments/comments.component';
 import { SubtareasComponent } from './subtareas/subtareas.component';
+import { AuthStateService } from '../../services/auth-state.service';
 
 @Component({
   selector: 'app-tarea',
@@ -19,13 +20,17 @@ export class TareaComponent {
   editing = false;
   modoCreacion = false;
   task_id = "";
+  currentUser = '';
 
   prioridades = PRIORITIES;
   estatus = STATUS;
 
   private platformId = inject(PLATFORM_ID);
 
-  constructor(private taskServ: TaskService, private router: Router, private route: ActivatedRoute) 
+  constructor(private taskServ: TaskService, 
+    private authState : AuthStateService,
+    private router: Router, 
+    private route: ActivatedRoute) 
   { }
 
   ngOnInit() {
@@ -34,15 +39,21 @@ export class TareaComponent {
       return;
     }
 
+    this.authState.user$.subscribe(user => {
+
+      this.currentUser = user?.user_id ?? '';
+
+    });
+
     this.route.paramMap.subscribe(() => {
 
-      this.loadTasks();
+      this.loadTask();
 
     });
 
   }
   
-  loadTasks(){
+  loadTask(){
 
     this.task_id = this.route.snapshot.paramMap.get('id')!;
 

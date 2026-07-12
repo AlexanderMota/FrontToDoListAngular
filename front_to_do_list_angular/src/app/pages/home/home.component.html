@@ -1,1 +1,10 @@
-<app-tareas></app-tareas>
+<app-tareas
+    [tasks]="myTasks"
+    [title]="title1"
+    [paragraph]="paragraph1"
+    [myTasks]="true"></app-tareas>
+<app-tareas
+    [tasks]="colTasks"
+    [title]="title2"
+    [paragraph]="paragraph2"
+    [myTasks]="false"></app-tareas>

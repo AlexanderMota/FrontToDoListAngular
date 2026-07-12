@@ -124,9 +124,9 @@
 
   position: absolute;
 
-  top: .25rem;
+  top: -25px;
 
-  right: .25rem;
+  right: -5px;
 
   border: none;
 
@@ -159,11 +159,6 @@
 
 }
 
-
-.expand-btn.expanded {
-
-  right: 10px;
-}
 .description.expanded {
 
   -webkit-line-clamp: unset;

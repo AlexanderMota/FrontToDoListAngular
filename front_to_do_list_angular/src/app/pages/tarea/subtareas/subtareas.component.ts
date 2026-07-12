@@ -55,7 +55,6 @@ export class SubtareasComponent {
     
     this.taskServ.getSubTasks(this.parent_task_id).subscribe({
       next: (response) => {
-        console.log(response);
         this.subtasks = response.tasks!;
       },
       error: (err) => {

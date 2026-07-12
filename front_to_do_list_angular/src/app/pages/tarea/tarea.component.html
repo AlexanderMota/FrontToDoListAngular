@@ -147,7 +147,8 @@
       </div>
     </div>
 
-    <div class="task-actions">
+    <div class="task-actions"
+       *ngIf="task.created_by == currentUser || editing || modoCreacion">
 
       <button
         *ngIf="!editing"

@@ -24,6 +24,7 @@ export type TaskStatus =
   | 'canceled';
 
 export interface Task {
+  created_by?: string;
 
   task_id?: number; 
   

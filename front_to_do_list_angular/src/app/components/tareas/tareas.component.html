@@ -2,11 +2,12 @@
 <div class="tasks-container">
   <div class="tasks-header">
     <div>
-      <h1>Mis tareas</h1>
-      <p>Gestiona tus tareas y mantén el control de tu trabajo.</p>
+      <h1>{{title}}</h1>
+      <p>{{paragraph}}</p>
     </div>
 
     <button
+      *ngIf="myTasks"
       class="btn-new-task"
       (click)="newTask()">
       <span>+</span>
