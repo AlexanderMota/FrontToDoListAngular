@@ -3,6 +3,7 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { isPlatformBrowser } from '@angular/common'
 import { FormsModule } from '@angular/forms';
+import { getAvatarUrl } from '../../models/user.model';
 
 @Component({
   selector: 'app-perfil-usuario',
@@ -60,15 +61,16 @@ export class PerfilUsuarioComponent {
 
   }
   saveProfile() {
+    
+    /*if(this.user.avatar_url == null){
+      this.user.avatar_url = this.backupUser.avatar_url;
+    }*/
 
-  this.userService.updatePerfil(this.user)
-    .subscribe({
+    this.userService.updatePerfil(this.user).subscribe({
 
       next: response => {
 
         console.log(response.message);
-
-        this.user = response.user;
 
         this.editing = false;
 
@@ -79,4 +81,34 @@ export class PerfilUsuarioComponent {
       }
     });
   }
+
+  onAvatarSelected(event: Event) {
+
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files?.length) {
+
+        return;
+
+    }
+
+    const file = input.files[0];
+
+    this.userService.uploadAvatar(file).subscribe({
+
+      next: res => {
+
+        console.log(res);
+        this.user.avatar_url = res.user.avatar_url;
+
+      },
+      error: err => {
+        console.error(err);
+      }
+    });
+  }
+  deleteAvatar(){
+    console.log("falta implementar. Id a borrar: ", this.user.avatar_url);
+  }
+  getAvatarUrl = getAvatarUrl;
 }

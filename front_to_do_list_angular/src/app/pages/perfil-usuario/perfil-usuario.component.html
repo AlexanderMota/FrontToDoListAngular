@@ -3,24 +3,56 @@
   <div class="profile-card">
 
     <div class="profile-header">
+      @if (editing) {
+        <div
+            class="avatar-wrapper">
 
-      @if (user.avatar_url) {
+            <img
+                class="avatar"
+                [src]="getAvatarUrl(user.avatar_url)"
+                (click)="avatarInput.click()">
 
-        <img
-          [src]="user.avatar_url"
-          [alt]="user.username"
-          [title]="user.username"
-          class="avatar">
+            <div
+                class="avatar-overlay"
+                (click)="avatarInput.click()">
 
-      } @else {
+                📷
+                <span>Cambiar foto</span>
 
-        <div class="avatar avatar-placeholder">
+            </div>
 
-          {{ user.username?.charAt(0)?.toUpperCase() }}
+            <input
+                #avatarInput
+                hidden
+                type="file"
+                accept="image/*"
+                (change)="onAvatarSelected($event)">
 
         </div>
 
+      } @else {
+
+         @if (user.avatar_url) {
+
+          <img
+            [src]="getAvatarUrl(user.avatar_url)"
+            [alt]="user.username"
+            [title]="user.username"
+            class="avatar">
+
+        } @else {
+
+
+          <div class="avatar">
+
+            {{ user.username?.charAt(0)?.toUpperCase() }}
+
+          </div>
+
+        }
+
       }
+      
 
       <div class="profile-title">
 
@@ -28,18 +60,18 @@
 
           <h1>{{ user.username }}</h1>
 
-          <p>{{ user.email }}</p>
-
         } @else {
 
           <input
+            name="Nombre"
             placeholder="Nick del usuario"
-            class="edit-input title-input"
+            class="title-input"
             [(ngModel)]="user.username">
 
         }
 
       </div>
+
 
     </div>
 
@@ -53,13 +85,14 @@
 
         @if(!editing){
 
-          <span>
+          <span class="info-card-dato">
             {{ user.name || 'No especificado' }}
           </span>
 
         } @else {
 
           <input
+            name="Nombre"
             placeholder="Nombre completo del usuario"
             class="edit-input"
             [(ngModel)]="user.name">
@@ -76,7 +109,7 @@
 
         @if(!editing){
 
-          <span>
+          <span class="info-card-dato">
           {{ user.lastname || 'No especificado' }}
           </span>
 
@@ -97,7 +130,7 @@
           Email
         </span>
 
-        <span>
+        <span class="info-card-dato">
           {{ user.email }}
         </span>
 
@@ -112,7 +145,7 @@
         
         @if(!editing){
 
-          <span>
+          <span class="info-card-dato">
           {{ user.phone || 'No especificado' }}
           </span>
 
@@ -136,7 +169,7 @@
           Rol
         </span>
 
-        <span>
+        <span class="info-card-dato">
           {{ user.role_id }}
         </span>
 

@@ -1,9 +1,10 @@
 import { AuthService } from "./auth.service";
 import { BehaviorSubject } from "rxjs";
 import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
-import { isPlatformBrowser } from "@angular/common";
 import { Router } from "@angular/router";
 import { User } from "../models/user.model";
+import { isPlatformBrowser } from "@angular/common";
+
 
 @Injectable({
   providedIn: 'root'

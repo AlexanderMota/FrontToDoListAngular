@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
+import { CommentResponse } from '../models/comment.model';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {  CommentResponse } from '../models/comment.model';
+import { environment } from '../../enviroments/enviroment';
 
 @Injectable({
   providedIn: 'root' // Hace que el servicio esté disponible en toda la aplicación
 })
 export class CommentService {
-  private apiUrl = 'http://localhost:4300/tareas/comentarios/'; // URL del backend
+  private apiUrl = `${environment.apiUrl}/tareas/comentarios/`; // URL del backend
 
   constructor(private http: HttpClient) {}
 

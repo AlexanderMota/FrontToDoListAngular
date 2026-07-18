@@ -1,42 +1,47 @@
 <div class="task-card" (click)="abrirTarea()">
-  <div class="task-header">
+
+  <div class="task-container"
+      [class.expanded]="expanded">
+    <div class="task-header">
+      
+      <h3>{{ task.name }}</h3>
+
+      <span class="priority"
+        [ngClass]="task.priority">
+        {{ getPriorityLabel(task.priority) }}
+      </span>
+
+    </div>
+
     
-    <h3>{{ task.name }}</h3>
+    <div class="description_container" >
+      <p class="description"
+      [class.expanded]="expanded">
+        {{ task.description }}
+      </p>
 
-    <span class="priority"
-      [ngClass]="task.priority">
-      {{ getPriorityLabel(task.priority) }}
-    </span>
-
-  </div>
-
-   
-  <div class="description_container" >
-    <p class="description"
-    [class.expanded]="expanded">
-      {{ task.description }}
-    </p>
-
-    <button
-      class="expand-btn"
-      [class.expanded]="expanded"
-      (click)="toggleDescription($event)">
-      {{ expanded ? '▲' : '▼' }}
-    </button>
-  </div>
+      <button
+        class="expand-btn"
+        [class.expanded]="expanded"
+        (click)="toggleDescription($event)">
+        {{ expanded ? '▲' : '▼' }}
+      </button>
+    </div>
 
 
-  <div class="task-footer">
+    <div class="task-footer">
 
-    <span 
-      class="status" 
-      [ngClass]="task.status">
-      {{ getStatusLabel(task.status) }}
-    </span>
+      <span 
+        class="status" 
+        [ngClass]="task.status">
+        {{ getStatusLabel(task.status) }}
+      </span>
 
-    <span class="date">
-      {{ task.updated_at | date:'dd/MM/yyyy' }}
-    </span>
+      <span class="date">
+        {{ task.updated_at | date:'dd/MM/yyyy' }}
+      </span>
+
+    </div>
 
   </div>
 </div>

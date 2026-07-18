@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User, UserResponse } from '../models/user.model';
+import { UserResponse } from '../models/user.model';
+import { environment } from '../../enviroments/enviroment';
 
 @Injectable({
   providedIn: 'root' // Hace que el servicio esté disponible en toda la aplicación
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:4300/auth/'; // URL del backend
+  private apiUrl = `${environment.apiUrl}/auth/`; // URL del backend
 
   constructor(private http: HttpClient) {}
 

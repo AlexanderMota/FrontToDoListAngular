@@ -8,6 +8,8 @@
     transform .2s ease,
     box-shadow .2s ease;
 
+    position: relative;
+    overflow: visible;
   cursor: pointer;
 
   &:hover {
