@@ -27,7 +27,8 @@ export class PerfilUsuarioComponent {
       email: '',
       role_id: 6,
       phone: '',
-      avatar_url: ''
+      avatar_url: '',
+      sender_user_id: ''
     }
   }
 
@@ -39,7 +40,7 @@ export class PerfilUsuarioComponent {
 
     this.userService.getPerfil().subscribe({
       next: (response) => {
-        this.user = response.user;
+        this.user = response.user!;
       },
       error: (error) => {
         console.error('Error al obtener el perfil:', error);
@@ -99,7 +100,7 @@ export class PerfilUsuarioComponent {
       next: res => {
 
         console.log(res);
-        this.user.avatar_url = res.user.avatar_url;
+        this.user.avatar_url = res.user!.avatar_url;
 
       },
       error: err => {

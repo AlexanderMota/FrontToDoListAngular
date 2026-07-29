@@ -17,8 +17,12 @@ export class HomeComponent {
   title2 = "Tareas en las que estas colaborando";
   paragraph2 = "Avanza en los proyectos en los que colaboras.";
 
+  title3 = "Tareas en las que solicitan tu colaboración";
+  paragraph3 = "Entra en la tarea para decidir si colaboras en ella";
+
   myTasks : Task[] = [];
   colTasks : Task[] = [];
+  reqTasks : Task[] = [];
 
   private platformId = inject(PLATFORM_ID);
 
@@ -38,9 +42,17 @@ export class HomeComponent {
         console.error('Error al obtener las tareas:', err);
       }
     }); 
-    this.tarServ.getColabTasks().subscribe({
+    this.tarServ.getCollabTasks().subscribe({
       next: (response) => {
         this.colTasks = response.tasks!; // Asignar las tareas obtenidas a la propiedad tareas
+      },
+      error: (err) => {
+        console.error('Error al obtener las tareas:', err);
+      }
+    });
+    this.tarServ.getInvitedTasks().subscribe({
+      next: (response) => {
+        this.reqTasks = response.tasks!; // Asignar las tareas obtenidas a la propiedad tareas
       },
       error: (err) => {
         console.error('Error al obtener las tareas:', err);

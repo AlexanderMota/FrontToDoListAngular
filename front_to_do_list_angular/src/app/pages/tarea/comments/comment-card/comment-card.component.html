@@ -5,9 +5,22 @@
 
     <div class="comentario-usuario">
 
+      @if (comentario.comment.avatar_url) {
+
+        <img
+          [src]="getAvatarUrl(comentario.comment.avatar_url)"
+          [alt]="comentario.comment.username"
+          [title]="comentario.comment.username"
+          class="avatar">
+
+      } @else {
+
       <div class="avatar">
         {{ comentario.comment.username.charAt(0).toUpperCase() }}
       </div>
+      }
+
+
 
       <span class="username">
         {{ comentario.comment.username }}

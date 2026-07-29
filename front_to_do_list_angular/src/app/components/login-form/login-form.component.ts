@@ -40,7 +40,7 @@ export class LoginFormComponent {
 
       this.authServ.login({ email: this.loginForm.value.email, password: this.loginForm.value.password })
       .subscribe({ next : response => {
-        console.log('Login exitoso', response.user.email);
+        console.log('Login exitoso', response.user!.email);
         this.authState.loadUser();
         this.router.navigate(['/home']);
       }, error: err => {

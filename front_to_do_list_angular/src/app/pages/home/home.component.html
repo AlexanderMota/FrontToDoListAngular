@@ -1,10 +1,20 @@
-<app-tareas
-    [tasks]="myTasks"
-    [title]="title1"
-    [paragraph]="paragraph1"
-    [myTasks]="true"></app-tareas>
-<app-tareas
-    [tasks]="colTasks"
-    [title]="title2"
-    [paragraph]="paragraph2"
-    [myTasks]="false"></app-tareas>
+<div class="home_comp">
+    <app-tareas
+        class="app_tareas_cont"
+        [tasks]="myTasks"
+        [title]="title1"
+        [paragraph]="paragraph1"
+        [myTasks]="true"></app-tareas>
+    <app-tareas
+        class="app_tareas_cont"
+        [tasks]="colTasks"
+        [title]="title2"
+        [paragraph]="paragraph2"
+        [myTasks]="false"></app-tareas>
+    <app-tareas
+        class="app_tareas_cont"
+        [tasks]="reqTasks"
+        [title]="title3"
+        [paragraph]="paragraph3"
+        [myTasks]="false"></app-tareas>
+</div>

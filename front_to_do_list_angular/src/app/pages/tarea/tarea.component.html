@@ -4,7 +4,7 @@
 
     <div class="task-header">
 
-      <div>
+      <div class="task-name-priority">
 
         <ng-container *ngIf="!editing; else editName">
 
@@ -15,47 +15,57 @@
         <ng-template #editName>
 
           <input
+            name="Tasks name"
             placeholder="Nombre de la tarea"
             class="edit-input title-input"
             [(ngModel)]="task.name">
 
         </ng-template>
 
-        <p class="task-id" >
-          Tarea #{{ task.task_id }}
-        </p>
+        
+        <div *ngIf="!editing"
+            class="priority_label">
+          <span>
 
-      </div>
+            Prioridad: 
 
-      <ng-container *ngIf="!editing; else editPriority">
+          </span>
+          <span
+            class="priority"
+            [ngClass]="task.priority">
 
-        <span
-          class="priority"
-          [ngClass]="task.priority">
+            {{ getPriorityLabel(task.priority) }}
 
-          {{ getPriorityLabel(task.priority) }}
+          </span>
+        </div>
 
-        </span>
 
-      </ng-container>
+    </div>
 
-      <ng-template #editPriority>
+        <div class="comentario-usuario" *ngIf="!editing">
 
-        <select
-          title="Prioridad"
-          class="edit-select"
-          [(ngModel)]="task.priority">
+          @if (task.avatar_url) {
 
-            <option
-              *ngFor="let priority of prioridades"
-              [value]="priority.value">
+            <img
+              [src]="getAvatarUrl(task.avatar_url)"
+              [alt]="task.username"
+              [title]="task.username"
+              class="avatar">
 
-              {{ priority.label }}
+          } @else {
 
-        </select>
+          <div class="avatar">
+            {{ task.username?.charAt(0)?.toUpperCase() }}
+          </div>
+          }
 
-      </ng-template>
 
+
+          <span class="username">
+            {{ task.username }}
+          </span>
+
+        </div>
     </div>
 
     <div class="task-section">
@@ -81,114 +91,172 @@
 
     </div>
 
-    <div class="task-info-grid">
-      <div class="info-card">
-        <span class="label">Estado</span>
+    <div [class.task-info]="!editing">
+      
+      <div class="task-info-grid">
+        <p class="infos_title" >
+            Información
+        </p>
 
-        <ng-container *ngIf="!editing; else editStatus">
+        <div  class="info-card-container">
+          <div class="info-card"  *ngIf="editing">
 
-          <span
-            class="status"
-            [ngClass]="task.status">
+            <span class="label">Prioridad</span>
 
-            {{ getStatusLabel(task.status) }}
+            <select
+              name="priority"
+              title="Prioridad"
+              class="edit-select"
+              [(ngModel)]="task.priority">
 
-          </span>
+              <option
+                *ngFor="let priority of prioridades"
+                [value]="priority.value">
 
-        </ng-container>
+                {{ priority.label }}
 
-        <ng-template #editStatus>
+            </select>
+              
+          </div>
 
-          <select
-            title="status"
-            class="edit-select"
-            [(ngModel)]="task.status">
+          <div class="info-card">
+            <span class="label">Estado</span>
 
-            <option
-              *ngFor="let status of estatus"
-              [value]="status.value">
+            <ng-container *ngIf="!editing; else editStatus">
 
-              {{ status.label }}
+              <span
+                class="status"
+                [ngClass]="task.status">
 
-          </select>
+                {{ getStatusLabel(task.status) }}
 
-        </ng-template>
+              </span>
+
+            </ng-container>
+
+            <ng-template #editStatus>
+
+              <select
+                title="status"
+                class="edit-select"
+                [(ngModel)]="task.status">
+
+                <option
+                  *ngFor="let status of estatus"
+                  [value]="status.value">
+
+                  {{ status.label }}
+
+              </select>
+
+            </ng-template>
+          </div>
+          <div class="info-card">
+
+            <span class="label">Creada</span>
+
+            <span class="info-card-dato">
+              {{ task.created_at | date:'dd/MM/yyyy HH:mm' }}
+            </span>
+
+          </div>
+
+          <div class="info-card">
+
+            <span class="label">Actualizada</span>
+
+            <span class="info-card-dato">
+              {{ task.updated_at | date:'dd/MM/yyyy HH:mm' }}
+            </span>
+
+          </div>
+
+          <div
+            class="info-card parent_task_card"
+            *ngIf="task.parent_task_id"
+            (click)="volverAlPadre()">
+
+            <span class="label">Tarea padre</span>
+
+            <span class="info-card-dato">#{{ task.parent_task_id }}</span>
+
+          </div>
+        </div>
+
+            
+        <div class="task-actions"
+          *ngIf="task.created_by == currentUser || editing || modoCreacion">
+
+          <button
+            *ngIf="!editing"
+            class="btn-edit"
+            (click)="editTask()">
+
+            Editar
+
+          </button>
+
+          <ng-container *ngIf="editing">
+
+            <button
+              class="btn-save"
+              (click)="saveTask()">
+
+              Guardar
+
+            </button>
+
+            <button
+              class="btn-cancel"
+              (click)="cancelEdit()">
+
+              Cancelar
+
+            </button>
+
+          </ng-container>
+
+          <button
+            *ngIf="!editing"
+            class="btn-delete"
+            (click)="deleteTask()">
+
+            Eliminar
+
+          </button>
+
+        </div>
       </div>
 
-      <div class="info-card">
+      <div class="collaborators" >
 
-        <span class="label">Creada</span>
+          <p class="collabs_title" >
+              Colaboradores
+          </p>
+          <ng-container *ngIf="currentUser == task.created_by; else muestraInvitado">
+            <app-collaborators
+              *ngIf="!editing"
+              [task_id]="task_id"
+              [currentUser]="currentUser">
+            </app-collaborators>
+          </ng-container>
 
-        <span>
-          {{ task.created_at | date:'dd/MM/yyyy HH:mm' }}
-        </span>
+          <ng-template #muestraInvitado>
 
+              <app-invitation
+                  [task_id]="task_id">
+
+              </app-invitation>
+
+          </ng-template>
       </div>
 
-      <div class="info-card">
 
-        <span class="label">Actualizada</span>
+      
 
-        <span>
-          {{ task.updated_at | date:'dd/MM/yyyy HH:mm' }}
-        </span>
 
-      </div>
-
-      <div
-        class="info-card parent_task_card"
-        *ngIf="task.parent_task_id"
-        (click)="volverAlPadre()">
-
-        <span class="label">Tarea padre</span>
-
-        <span>#{{ task.parent_task_id }}</span>
-
-      </div>
     </div>
 
-    <div class="task-actions"
-       *ngIf="task.created_by == currentUser || editing || modoCreacion">
-
-      <button
-        *ngIf="!editing"
-        class="btn-edit"
-        (click)="editTask()">
-
-        Editar
-
-      </button>
-
-      <ng-container *ngIf="editing">
-
-        <button
-          class="btn-save"
-          (click)="saveTask()">
-
-          Guardar
-
-        </button>
-
-        <button
-          class="btn-cancel"
-          (click)="cancelEdit()">
-
-          Cancelar
-
-        </button>
-
-      </ng-container>
-
-      <button
-        *ngIf="!editing"
-        class="btn-delete"
-        (click)="deleteTask()">
-
-        Eliminar
-
-      </button>
-
-    </div>
   </div>
 </div>
 

@@ -1,11 +1,10 @@
 .tasks-container {
+  width: 100%;
   max-width: 1400px;
   padding: 50px 1.5rem;
 }
 
 .tasks-header {
-  display: flex;
-  justify-content: space-between;
 
   margin-bottom: 2rem;
 
@@ -19,6 +18,11 @@
     margin-top: .5rem;
     color: #666;
   }
+}
+.primer{
+  display: flex;
+  justify-content: space-between;
+
 }
 
 .tasks-grid {

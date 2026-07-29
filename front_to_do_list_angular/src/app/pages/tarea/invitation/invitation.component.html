@@ -1,0 +1,122 @@
+<div 
+    class="invitation-card"
+    *ngIf="invitacion">
+
+    <button
+    class="menu-btn"
+    (click)="toggleMenu($event)">
+
+    ⋮
+
+    </button>
+
+    <div class="invitation-header">
+
+        @if (invitacion.user.avatar_url) {
+
+        <img
+            [src]="getAvatarUrl(invitacion.user.avatar_url)"
+            [alt]="invitacion.user.username"
+            [title]="invitacion.user.username"
+            class="avatar">
+
+        } @else {
+
+        <div class="avatar">
+            {{ invitacion.user.username?.charAt(0)?.toUpperCase() }}
+        </div>
+
+        }
+
+        <div class="invitation-user">
+
+        <span class="username">
+            {{ invitacion.user.username }}
+        </span>
+
+        @if (invitacion.request_task.status == 'pending') {
+
+        <span class="status pending">
+
+            Invitación pendiente
+
+        </span>
+
+        } @else {
+
+        <span class="status pending">
+
+            Colaborando
+
+        </span>
+
+        }
+
+        </div>
+
+
+    </div>
+
+
+    <div class="invitation-body">
+
+        <div class="info-row">
+
+        <span class="label">
+            Tarea
+        </span>
+
+        <span class="info">
+            {{ invitacion.task.name }}
+        </span>
+
+        </div>
+
+        <div class="info-row">
+
+        <span class="label">
+            Recibida
+        </span>
+
+        <span class="info">
+            {{ invitacion.request_task.created_at | date:'dd/MM/yyyy HH:mm' }}
+        </span>
+
+        </div>
+
+    </div>
+
+    <div
+        #menuContainer
+        class="menu_solicitud_colab"
+        *ngIf="openedMenu"
+        (click)="$event.stopPropagation()">
+
+        <button *ngIf="(invitacion.request_task.status == 'pending')"
+            [class.btn-visible]="(invitacion.request_task.status == 'pending')"
+            class="btn-save"
+            (click)="aceptarColab(invitacion.request_task.request_id)">
+
+            👈 Aceptar
+
+        </button>
+
+        <button  *ngIf="(invitacion.request_task.status == 'pending')"  
+            class="btn-cancel"
+            (click)="cancelarColab(invitacion.request_task.request_id)">
+
+            🗑 Rechazar
+
+        </button>
+
+        <button  *ngIf="(invitacion.request_task.status == 'accepted')"  
+            [class.btn-visible]="(invitacion.request_task.status == 'accepted')"
+            class="btn-cancel"
+            (click)="eliminarColab(invitacion.request_task.request_id)">
+
+            🗑 Terminar colaboración
+
+        </button>
+    </div>
+            
+</div>

@@ -37,7 +37,7 @@ export class RegisterFormComponent {
 
       this.authServ.register({ email: this.registerForm.value.email, password: this.registerForm.value.password })
       .subscribe({ next : response => {
-        console.log('Registro exitoso', response.user.email);
+        console.log('Registro exitoso', response.user!.email);
         this.authServ.login({ email: this.registerForm.value.email, password: this.registerForm.value.password });
         this.router.navigate(['/private']);
       }, error: err => {

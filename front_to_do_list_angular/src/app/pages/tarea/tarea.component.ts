@@ -5,16 +5,33 @@ import { TaskService } from '../../services/task.service';
 import { PRIORITIES, STATUS, Task, getPriorityLabel, getStatusLabel } from '../../models/tarea.model';
 import { FormsModule } from '@angular/forms';
 import { CommentsComponent } from './comments/comments.component';
+import { CollaboratorsComponent } from './collaborators/collaborators.component';
 import { SubtareasComponent } from './subtareas/subtareas.component';
 import { AuthStateService } from '../../services/auth-state.service';
+import { getAvatarUrl, User } from '../../models/user.model';
+import { ReactiveFormsModule } from '@angular/forms';
+import { InvitationComponent } from './invitation/invitation.component';
 
 @Component({
   selector: 'app-tarea',
-  imports: [DatePipe, NgClass, NgIf, CommonModule, FormsModule, CommentsComponent, SubtareasComponent],
+  imports: [
+    DatePipe, 
+    NgClass, 
+    NgIf, 
+    CommonModule, 
+    FormsModule, 
+    ReactiveFormsModule, 
+    CommentsComponent, 
+    SubtareasComponent,
+    CollaboratorsComponent,
+    InvitationComponent
+  ],
   templateUrl: './tarea.component.html',
   styleUrl: './tarea.component.scss'
 })
 export class TareaComponent {
+
+  selectedUsers:User[] = [];
 
   task!: Task;
   editing = false;
@@ -50,7 +67,6 @@ export class TareaComponent {
       this.loadTask();
 
     });
-
   }
   
   loadTask(){
@@ -65,13 +81,16 @@ export class TareaComponent {
       this.editing = true;
 
       this.task = {
+        created_by: "",
         name: '',
         description: '',
         status: 'pending',
         priority: 'low',
         parent_task_id: parent ? parseInt(parent) : null,
         created_at: null,
-        updated_at: null
+        updated_at: null,
+        username: null,
+        avatar_url: null
       };
 
       return;
@@ -79,6 +98,7 @@ export class TareaComponent {
 
     this.taskServ.getTaskById(this.task_id).subscribe({
       next: (response) => {
+        console.log(response);
         this.task = response.task!;
       },
       error: (err) => {
@@ -142,10 +162,9 @@ export class TareaComponent {
   }
   getPriorityLabel = getPriorityLabel;
   getStatusLabel = getStatusLabel;
+  getAvatarUrl = getAvatarUrl;
 
   volverAlPadre(){
     this.router.navigate(['/tarea/',this.task.parent_task_id]);
   }
 }
-
- 

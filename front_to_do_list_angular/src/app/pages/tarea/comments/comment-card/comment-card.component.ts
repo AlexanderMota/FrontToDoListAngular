@@ -6,6 +6,8 @@ import { CommentService } from '../../../../services/comment.service';
 import { CreateCommentComponent } from '../create-comment/create-comment.component';
 import { FormsModule } from '@angular/forms';
 
+import { getAvatarUrl } from '../../../../models/user.model';
+
 @Component({
   selector: 'app-comment-card',
   imports: [DatePipe, NgIf, NgFor, FormsModule, CreateCommentComponent],
@@ -117,4 +119,6 @@ export class CommentCardComponent {
     //console.log("expanded replays: ", this.expandedReplays);
     event.stopPropagation();
   }
+
+  getAvatarUrl = getAvatarUrl;
 }

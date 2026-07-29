@@ -1,0 +1,206 @@
+.collaborators{
+    position:relative;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.collabs_title{
+
+  margin: 0px;
+  color: #777;
+  padding-bottom: 20px;
+}
+
+.buscadorCol{
+  padding: 10px;
+}
+.search-results{
+
+    position:absolute;
+
+    top:40px;
+
+    left:0;
+
+    right:0;
+
+    background:white;
+
+    border-radius: 1px 1px 12px 12px;
+
+    box-shadow:0 12px 24px rgba(0,0,0,.15);
+
+    max-height:250px;
+
+    overflow-y:auto;
+
+    z-index:100;
+}
+.search-user{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.8rem;
+
+    padding:.8rem;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.search-user:hover{
+
+  background:#f5f7fa;
+
+  .search-info .username{
+
+      color:#777;
+
+  }
+}
+.search-info{
+
+    display:flex;
+
+    flex-direction:column;
+    
+    .name{
+
+        font-weight:600;
+    }
+    .username{
+
+        transition: .3s;
+        font-size:.85rem;
+    }
+}
+
+.colList{
+
+  margin-top: 10px;
+}
+.colaborador {
+  position: relative;
+  padding: 0px 0px 5px 0px;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  cursor: pointer;
+}
+.colaboradorPending{
+  position: relative;
+  opacity: .6;
+  cursor: pointer;
+  hover {
+    opacity: 1;
+
+  }
+}
+.separadorPeding{
+  margin: 5px 0px 10px 0px;
+  border: 1px solid red;
+  border-color: #d32f2f;
+  opacity: .6;
+}
+.avatar {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  background: #1976d2;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+  font-size: 1rem;
+
+  flex-shrink: 0;
+}
+
+.username {
+  font-weight: 600;
+  color: #333;
+  overflow: hidden;
+  margin-left: 10px;
+}
+
+.menu_solicitud_colab{
+  width: 115px;
+  display:flex;
+  flex-direction:column;
+
+  position:absolute;
+
+  top:20px;
+
+  right:255px;
+
+  z-index:100;
+
+}
+.menu_solicitud_colab button:hover{
+
+    background:#5c5b5b;
+
+}
+
+// Botones edición
+
+.btn-cancel,
+.btn-save,
+.btn-delete {
+
+  border: none;
+
+
+  padding: .8rem 1.3rem;
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  transition: .2s;
+  
+  border-radius: 10px;
+
+  hover{
+
+    background:#f5f5f5;
+
+}
+}
+
+
+.btn-save {
+
+  background: #1976d2;
+  color: white;
+
+}
+.btn-cancel {
+
+  background: #757575;
+
+  color: white;
+
+}
+
+.btn-delete{
+  background: #d43a13;
+  color: white;
+
+}
+
+.btn-visible{
+    
+  border-radius: 10px 0px 10px 10px;
+
+}

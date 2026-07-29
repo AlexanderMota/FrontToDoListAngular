@@ -41,7 +41,10 @@ export interface Task {
   updated_at: Date | null;
 
   parent_task_id: number | null;
-  
+
+  username: string | null;
+
+  avatar_url: string | null;
 }
 
 export interface TaskResponse {
