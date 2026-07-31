@@ -6,12 +6,14 @@
         [paragraph]="paragraph1"
         [myTasks]="true"></app-tareas>
     <app-tareas
+        *ngIf="colTasks.length > 0"
         class="app_tareas_cont"
         [tasks]="colTasks"
         [title]="title2"
         [paragraph]="paragraph2"
         [myTasks]="false"></app-tareas>
     <app-tareas
+        *ngIf="reqTasks.length > 0"
         class="app_tareas_cont"
         [tasks]="reqTasks"
         [title]="title3"

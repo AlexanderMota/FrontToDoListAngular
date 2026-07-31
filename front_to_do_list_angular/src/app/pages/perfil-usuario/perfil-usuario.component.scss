@@ -29,7 +29,7 @@
 
     display:flex;
 
-    align-items:center;
+    align-items:start;
 
     gap:32px;
 
@@ -156,8 +156,12 @@
 
 }
 .profile-title{
+  display: flex;
+  flex-direction: column;
 
-  flex:1;
+  margin-top: 30px;
+
+
 
   h1{
       padding: 12px 16px;
@@ -239,20 +243,6 @@
     flex-wrap:wrap;
 
 }
-.btn-primary,
-.btn-save{
-
-    background:#1976d2;
-
-    color:white;
-
-}
-.btn-secondary,
-.btn-cancel{
-
-    background:#eceff1;
-
-}
 .profile-actions button{
 
     padding:14px 24px;
@@ -330,6 +320,7 @@
 
   padding: 11px 15px;
 
+  margin-bottom: 10px;
 
   font-weight:700;
   font-size: 2.2rem;
@@ -539,10 +530,11 @@
 
 .btn-save,
 .btn-cancel {
+  max-width: 130px;
 
   border: none;
 
-  padding: .9rem 1.4rem;
+  padding: .6rem 1.4rem;
 
   border-radius: 10px;
 

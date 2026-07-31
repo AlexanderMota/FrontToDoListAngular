@@ -73,4 +73,7 @@ export class UserService {
   deleteColaboracion(request_Id: string): Observable<UserResponse> {
     return this.http.delete<UserResponse>(`${this.apiUrl}colaboradores/${request_Id}`, { withCredentials: true });
   }
+  deleteFotoDePerfil(): Observable<UserResponse> {
+    return this.http.delete<UserResponse>(`${this.apiUrl}avatar`, { withCredentials: true });
+  }
 }

@@ -68,6 +68,13 @@
   font-weight: 600;
   color: #333;
 }
+.task-section {
+  display: flex;
+  flex-direction: column;
+}
+.task-section-edicion {
+  padding-top: 20px;
+}
 .task-section h3 {
   margin-bottom: .75rem;
 }
@@ -315,13 +322,6 @@
 // Descripción
 
 .edit-textarea {
-  width: 100%;
-
-  resize: vertical;
-
-  min-height: 120px;
-
-  line-height: 1.6;
 
 }
 

@@ -1,12 +1,12 @@
 import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { TareasComponent } from '../../components/tareas/tareas.component';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, NgIf } from '@angular/common';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/tarea.model';
 
 @Component({
   selector: 'app-home',
-  imports: [TareasComponent],
+  imports: [NgIf, TareasComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

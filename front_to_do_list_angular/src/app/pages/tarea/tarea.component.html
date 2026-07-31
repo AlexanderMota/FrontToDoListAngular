@@ -68,7 +68,7 @@
         </div>
     </div>
 
-    <div class="task-section">
+    <div class="task-section" [class.task-section-edicion]="editing">
 
       <h3>Descripción</h3>
 
@@ -81,6 +81,7 @@
       <ng-template #editDescription>
 
         <textarea
+          name="descripcion"
           placeholder="Descripción de la tarea"
           rows="6"
           class="edit-textarea"
@@ -228,14 +229,14 @@
         </div>
       </div>
 
-      <div class="collaborators" >
+      <div class="collaborators" 
+            *ngIf="!editing">
 
           <p class="collabs_title" >
               Colaboradores
           </p>
           <ng-container *ngIf="currentUser == task.created_by; else muestraInvitado">
             <app-collaborators
-              *ngIf="!editing"
               [task_id]="task_id"
               [currentUser]="currentUser">
             </app-collaborators>
@@ -250,10 +251,6 @@
 
           </ng-template>
       </div>
-
-
-      
-
 
     </div>
 

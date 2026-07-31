@@ -1,7 +1,7 @@
 import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
-import { isPlatformBrowser } from '@angular/common'
+import { isPlatformBrowser, NgIf } from '@angular/common'
 import { FormsModule } from '@angular/forms';
 import { getAvatarUrl } from '../../models/user.model';
 
@@ -98,18 +98,28 @@ export class PerfilUsuarioComponent {
     this.userService.uploadAvatar(file).subscribe({
 
       next: res => {
-
-        console.log(res);
         this.user.avatar_url = res.user!.avatar_url;
-
       },
       error: err => {
         console.error(err);
       }
     });
   }
-  deleteAvatar(){
+  eliminarFoto(){
     console.log("falta implementar. Id a borrar: ", this.user.avatar_url);
+
+
+    this.userService.deleteFotoDePerfil().subscribe({
+
+      next: res => {
+        console.log(res);
+        this.user.avatar_url = null;
+      },
+      error: err => {
+        console.error(err);
+      }
+    });
   }
+  
   getAvatarUrl = getAvatarUrl;
 }
