@@ -1,14 +1,24 @@
+.login-box {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  background: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 
-  .login-box {
-    width: 100%;
-    max-width: 400px;
-    padding: 2rem;
-    background: white;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+  form h2{
+    margin-top: 0px;
   }
-  
-  .full-width {
-    width: 100%;
-  }
-  
+}
+
+
+
+.full-width {
+  width: 100%;
+}
+
+.actions{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

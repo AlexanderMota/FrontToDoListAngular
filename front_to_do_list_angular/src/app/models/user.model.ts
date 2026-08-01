@@ -10,12 +10,12 @@ export interface User {
   user_id:string;
   name:string | null;
   lastname:string | null;
-  username:string | null;
+  username:string;
   email:string;
   role_id:number;
   phone:string | null;
   avatar_url:string | null;
-  sender_user_id : string | null;
+  password:string | null;
 }
 
 

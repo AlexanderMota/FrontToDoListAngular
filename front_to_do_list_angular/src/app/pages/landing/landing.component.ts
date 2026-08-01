@@ -5,11 +5,13 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { Router } from '@angular/router';
 import { AuthStateService } from '../../services/auth-state.service';
 import { RegisterFormComponent } from '../../components/register-form/register-form.component';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
   selector: 'app-landing',
-  imports: [CommonModule, LoginFormComponent, RegisterFormComponent],
+  imports: [CommonModule, LoginFormComponent, RegisterFormComponent,
+      MatButtonModule],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
   animations: [

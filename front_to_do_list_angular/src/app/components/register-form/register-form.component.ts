@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { User } from '../../models/user.model';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-register-form',
@@ -27,22 +29,80 @@ export class RegisterFormComponent {
 
   constructor(private fb: FormBuilder, private authServ:AuthService, private router: Router ) {
     this.registerForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+  name: ['', [ Validators.maxLength(45) ]],
+
+  lastname: ['', [ Validators.maxLength(45) ]],
+
+  username: ['', [
+    Validators.required, 
+    Validators.minLength(3),
+    Validators.maxLength(30)
+  ]],
+
+  email: ['', [
+    Validators.required, 
+    Validators.email
+  ]],
+
+  phone: ['', [ Validators.pattern(/^[0-9]{9}$/) ]],
+
+  password: ['', [Validators.required, Validators.minLength(6)]],
+
       rememberMe: [false]
     });
   }
-  onRegister() {
-    if (this.registerForm.valid) {
+  onRegister(): void {
 
-      this.authServ.register({ email: this.registerForm.value.email, password: this.registerForm.value.password })
-      .subscribe({ next : response => {
-        console.log('Registro exitoso', response.user!.email);
-        this.authServ.login({ email: this.registerForm.value.email, password: this.registerForm.value.password });
-        this.router.navigate(['/private']);
-      }, error: err => {
-        console.error('Error en el registro', err);
-      }});
+    if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
+      return;
     }
+
+    const formValue = this.registerForm.getRawValue();
+
+    const newUser : User = {
+      user_id: "",
+      name: formValue.name?.trim() || null,
+      lastname: formValue.lastname?.trim() || null,
+      username: formValue.username.trim(),
+      email: formValue.email.trim().toLowerCase(),
+      password: formValue.password,
+      phone: formValue.phone?.trim() || null,
+      avatar_url: null,
+      role_id: 5
+    };
+
+    this.authServ.register(newUser).pipe(
+
+      switchMap(() =>
+        this.authServ.login({
+          email: newUser.email,
+          password: newUser.password!
+        })
+      )
+
+    ).subscribe({
+
+      next: () => this.router.navigate(['/perfil']),
+      error: err => console.error(err)
+
+    });
+/*
+    this.authServ.register(newUser).subscribe({
+
+      next: response => {
+        console.log('Registro exitoso', response.user);
+
+        this.authServ.login({
+          email: newUser.email,
+          password: newUser.password
+        }).subscribe({
+          next: () => this.router.navigate(['/private']),
+          error: err => console.error('Error iniciando sesión automáticamente', err)
+        });
+      },
+      error: err => console.error('Error en el registro', err)
+    });
+*/
   }
 }

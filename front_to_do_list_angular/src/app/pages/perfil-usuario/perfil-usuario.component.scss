@@ -243,7 +243,7 @@
     flex-wrap:wrap;
 
 }
-.profile-actions button{
+.btn, .btn-delete {
 
     padding:14px 24px;
 
@@ -258,8 +258,15 @@
     transition:.2s;
 
 }
-.profile-actions button:hover{
+.btn:hover{
 
+    transform:translateY(-2px);
+
+}
+.btn-delete:hover{
+
+  background: #d32f2f;
+  color: white;
     transform:translateY(-2px);
 
 }
@@ -474,10 +481,6 @@
   color: white;
 }
 
-.btn-delete {
-  background: #d32f2f;
-  color: white;
-}
 
 
 

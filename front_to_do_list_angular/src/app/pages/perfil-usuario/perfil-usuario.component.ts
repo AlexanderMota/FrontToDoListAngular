@@ -14,7 +14,7 @@ import { getAvatarUrl } from '../../models/user.model';
 export class PerfilUsuarioComponent {
 
   private platformId =  inject(PLATFORM_ID);
-  user : User;
+  user! : User;
   editing = false;
   backupUser!: User;
 
@@ -28,7 +28,7 @@ export class PerfilUsuarioComponent {
       role_id: 6,
       phone: '',
       avatar_url: '',
-      sender_user_id: ''
+      password: ""
     }
   }
 
@@ -40,6 +40,7 @@ export class PerfilUsuarioComponent {
 
     this.userService.getPerfil().subscribe({
       next: (response) => {
+        console.log(response.message);
         this.user = response.user!;
       },
       error: (error) => {
@@ -63,23 +64,14 @@ export class PerfilUsuarioComponent {
   }
   saveProfile() {
     
-    /*if(this.user.avatar_url == null){
-      this.user.avatar_url = this.backupUser.avatar_url;
-    }*/
-
     this.userService.updatePerfil(this.user).subscribe({
 
       next: response => {
 
         console.log(response.message);
-
         this.editing = false;
-
       },
-
-      error: err => {
-        console.error(err);
-      }
+      error: err => console.error(err)
     });
   }
 
@@ -105,14 +97,13 @@ export class PerfilUsuarioComponent {
       }
     });
   }
+  
   eliminarFoto(){
-    console.log("falta implementar. Id a borrar: ", this.user.avatar_url);
-
 
     this.userService.deleteFotoDePerfil().subscribe({
 
       next: res => {
-        console.log(res);
+        console.log(res.message);
         this.user.avatar_url = null;
       },
       error: err => {

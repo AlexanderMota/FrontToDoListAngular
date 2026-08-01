@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserResponse } from '../models/user.model';
+import { User, UserResponse } from '../models/user.model';
 import { environment } from '../../enviroments/enviroment';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class AuthService {
       `${this.apiUrl}me`, { withCredentials: true }
     );
   }
-  register(user: { email: string; password: string }): Observable<UserResponse> {
+  register(user: User): Observable<UserResponse> {
     return this.http.post<UserResponse>(
       `${this.apiUrl}register`, {user:user}, { withCredentials: true }
     );

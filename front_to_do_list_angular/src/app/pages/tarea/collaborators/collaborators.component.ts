@@ -48,14 +48,17 @@ export class CollaboratorsComponent {
   loadCollabs(){
 
     this.userServ.getCollabsConfirmed(this.task_id).subscribe({
-      next : (res) => {this.colaboradores = res.collaborators!
+      next : (res) => {
 
-    console.log("this.colaboradores:", res);},
+        console.log(res.message);
+        this.colaboradores = res.collaborators!
+      },
       error : (err) => console.log(err)
     });
     
     this.userServ.getCollabsPending(this.task_id).subscribe({
       next : (res) => {
+        console.log(res.message);
         this.colaboradoresPendientes = res.collaborators!;
 
         this.isCollaborator = this.colaboradoresPendientes.some(
@@ -107,7 +110,10 @@ export class CollaboratorsComponent {
   selectUser(usuario: User) {
     
     this.userServ.postSolicitudColaboracion(usuario.user_id, this.task_id).subscribe({
-      next : (res) =>  this.colaboradoresPendientes.push(res.collaborator!), 
+      next : (res) =>  {
+        console.log(res.message);
+        this.colaboradoresPendientes.push(res.collaborator!);
+      }, 
       error : (err) => console.log(err)
     });
     this.searchResultsVisible = false;
@@ -117,7 +123,6 @@ export class CollaboratorsComponent {
   openSearch(){ if(this.results.length) this.searchResultsVisible = true; }
 
   toggleMenuCollab(event: MouseEvent, id: number){
-    console.log("toggleMenuCollab:", id);
     event.stopPropagation();
 
     if (this.openedMenu === id) {
@@ -136,7 +141,7 @@ export class CollaboratorsComponent {
     this.openedMenu = null;
 
     this.userServ.updateSolicitudColaboracion(request_id.toString()).subscribe({
-      next : (res) => console.log(res),
+      next : (res) => console.log(res.message),
       error : (err) => console.log(err)
     });
   }

@@ -100,25 +100,6 @@
         </p>
 
         <div  class="info-card-container">
-          <div class="info-card"  *ngIf="editing">
-
-            <span class="label">Prioridad</span>
-
-            <select
-              name="priority"
-              title="Prioridad"
-              class="edit-select"
-              [(ngModel)]="task.priority">
-
-              <option
-                *ngFor="let priority of prioridades"
-                [value]="priority.value">
-
-                {{ priority.label }}
-
-            </select>
-              
-          </div>
 
           <div class="info-card">
             <span class="label">Estado</span>
@@ -138,6 +119,7 @@
             <ng-template #editStatus>
 
               <select
+                name="estatus"
                 title="status"
                 class="edit-select"
                 [(ngModel)]="task.status">
@@ -151,6 +133,25 @@
               </select>
 
             </ng-template>
+          </div>
+          <div class="info-card"  *ngIf="editing">
+
+            <span class="label">Prioridad</span>
+
+            <select
+              name="priority"
+              title="Prioridad"
+              class="edit-select"
+              [(ngModel)]="task.priority">
+
+              <option
+                *ngFor="let priority of prioridades"
+                [value]="priority.value">
+
+                {{ priority.label }}
+
+            </select>
+              
           </div>
           <div class="info-card">
 
@@ -258,11 +259,11 @@
 </div>
 
 <app-subtareas
-  *ngIf="!editing && !modoCreacion"
+  *ngIf="!editing && !modoCreacion && task"
   [parent_task_id]="task_id">
 </app-subtareas>
 
 <app-comments 
-  *ngIf="!editing && !modoCreacion"
+  *ngIf="!editing && !modoCreacion && task"
   [task_id]="task_id">
 </app-comments>

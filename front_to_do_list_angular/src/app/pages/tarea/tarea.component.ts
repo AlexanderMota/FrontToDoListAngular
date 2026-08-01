@@ -98,7 +98,7 @@ export class TareaComponent {
 
     this.taskServ.getTaskById(this.task_id).subscribe({
       next: (response) => {
-        console.log(response);
+        console.log(response.message);
         this.task = response.task!;
       },
       error: (err) => {
@@ -125,6 +125,7 @@ export class TareaComponent {
 
       this.taskServ.postTask(this.task).subscribe({
         next: res => {
+          console.log(res.message);
           this.task = res.task!;
           this.router.navigate([
             '/tarea',
@@ -141,6 +142,7 @@ export class TareaComponent {
 
     this.taskServ.updateTask(this.task).subscribe({
       next: (res) => {
+        console.log(res.message);
         this.task = res.task!;
       },
       error: (err) => {
@@ -152,7 +154,7 @@ export class TareaComponent {
   deleteTask(){
     this.taskServ.deleteTask(this.task_id).subscribe({
       next: (res) =>{
-        //console.log(res);
+        console.log(res.message);
         this.router.navigate(['/home']);
       },
       error: (err) => {

@@ -45,7 +45,7 @@
 
           <div class="avatar">
 
-            {{ user.username?.charAt(0)?.toUpperCase() }}
+            {{ user.username.charAt(0).toUpperCase() }}
 
           </div>
 
@@ -186,7 +186,7 @@
       @if(!editing){
 
         <button
-          class="btn-primary"
+          class="btn"
           (click)="editProfile()">
 
           Editar perfil
@@ -194,9 +194,16 @@
         </button>
 
         <button
-          class="btn-secondary">
+          class="btn">
 
           Cambiar contraseña
+
+        </button>
+
+        <button
+          class="btn-delete">
+
+          Borrar cuenta
 
         </button>
 
