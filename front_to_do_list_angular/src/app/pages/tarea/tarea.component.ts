@@ -2,7 +2,7 @@ import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser, DatePipe, NgClass, NgIf, CommonModule } from '@angular/common';
 import { TaskService } from '../../services/task.service';
-import { PRIORITIES, STATUS, Task, getPriorityLabel, getStatusLabel } from '../../models/tarea.model';
+import { PRIORITIES, STATUS, Task, VISIBILITY, getPriorityLabel, getStatusLabel, getVisibilityLabel } from '../../models/tarea.model';
 import { FormsModule } from '@angular/forms';
 import { CommentsComponent } from './comments/comments.component';
 import { CollaboratorsComponent } from './collaborators/collaborators.component';
@@ -41,6 +41,7 @@ export class TareaComponent {
 
   prioridades = PRIORITIES;
   estatus = STATUS;
+  privacidad = VISIBILITY;
 
   private platformId = inject(PLATFORM_ID);
 
@@ -90,7 +91,8 @@ export class TareaComponent {
         created_at: null,
         updated_at: null,
         username: null,
-        avatar_url: null
+        avatar_url: null,
+        visibility: "private"
       };
 
       return;
@@ -165,6 +167,7 @@ export class TareaComponent {
   getPriorityLabel = getPriorityLabel;
   getStatusLabel = getStatusLabel;
   getAvatarUrl = getAvatarUrl;
+  getVisibilityLabel = getVisibilityLabel;
 
   volverAlPadre(){
     this.router.navigate(['/tarea/',this.task.parent_task_id]);

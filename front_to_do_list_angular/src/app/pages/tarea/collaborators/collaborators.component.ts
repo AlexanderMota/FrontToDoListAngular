@@ -141,7 +141,10 @@ export class CollaboratorsComponent {
     this.openedMenu = null;
 
     this.userServ.updateSolicitudColaboracion(request_id.toString()).subscribe({
-      next : (res) => console.log(res.message),
+      next : (res) => {
+        console.log(res.message);
+        this.loadCollabs();
+      },
       error : (err) => console.log(err)
     });
   }

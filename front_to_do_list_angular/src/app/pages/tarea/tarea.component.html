@@ -134,6 +134,39 @@
 
             </ng-template>
           </div>
+          <div class="info-card">
+            <span class="label">Privacidad</span>
+
+            <ng-container *ngIf="!editing; else editVisibility">
+
+              <span
+                class="status"
+                [ngClass]="task.visibility">
+
+                {{ getVisibilityLabel(task.visibility) }}
+
+              </span>
+
+            </ng-container>
+
+            <ng-template #editVisibility>
+
+              <select
+                name="visibility"
+                title="visibility"
+                class="edit-select"
+                [(ngModel)]="task.visibility">
+
+                <option
+                  *ngFor="let visibility of privacidad"
+                  [value]="visibility.value">
+
+                  {{ visibility.label }}
+
+              </select>
+
+            </ng-template>
+          </div>
           <div class="info-card"  *ngIf="editing">
 
             <span class="label">Prioridad</span>
@@ -246,7 +279,8 @@
           <ng-template #muestraInvitado>
 
               <app-invitation
-                  [task_id]="task_id">
+                  [task_id]="task_id"
+                  [currentUserId]="currentUser">
 
               </app-invitation>
 

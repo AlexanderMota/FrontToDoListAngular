@@ -19,4 +19,11 @@
         [title]="title3"
         [paragraph]="paragraph3"
         [myTasks]="false"></app-tareas>
+    <app-tareas
+        *ngIf="publicTasks.length > 0"
+        class="app_tareas_cont"
+        [tasks]="publicTasks"
+        [title]="title4"
+        [paragraph]="paragraph4"
+        [myTasks]="false"></app-tareas>
 </div>

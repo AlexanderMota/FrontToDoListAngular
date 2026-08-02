@@ -27,6 +27,9 @@ export class TaskService {
   getInvitedTasks(): Observable<TaskResponse> {
     return this.http.get<TaskResponse>(`${this.apiUrl}invitaciones`, { withCredentials: true });
   }
+  getPublicTasks(): Observable<TaskResponse> {
+    return this.http.get<TaskResponse>(`${this.apiUrl}publicas`, { withCredentials: true });
+  }
   getTaskById(taskId: string): Observable<TaskResponse> {
     return this.http.get<TaskResponse>(`${this.apiUrl}tarea/${taskId}`, { withCredentials: true });
   }/*

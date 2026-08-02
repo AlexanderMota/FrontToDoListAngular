@@ -3,14 +3,28 @@
   <div class="profile-card">
 
     <div class="profile-header">
-      @if (editing) {
+      @if (!editing) {
         <div
             class="avatar-wrapper">
 
-            <img
+            @if(user.avatar_url){
+
+              <img
                 class="avatar"
                 [src]="getAvatarUrl(user.avatar_url)"
                 (click)="avatarInput.click()">
+
+            } @else {
+
+              <div
+                class="avatar"
+                (click)="avatarInput.click()">
+
+                {{ user.username.charAt(0).toUpperCase() }}
+
+              </div>
+
+            }
 
             <div
                 class="avatar-overlay"
@@ -60,6 +74,10 @@
 
           <h1>{{ user.username }}</h1>
 
+          <button class="btn-cancel"
+            (click)="eliminarFoto()">
+            Eliminar foto
+          </button>
         } @else {
 
           <input
@@ -68,10 +86,6 @@
             class="title-input"
             [(ngModel)]="user.username">
 
-          <button class="btn-cancel"
-            (click)="eliminarFoto()">
-            Eliminar foto
-          </button>
         }
 
       </div>

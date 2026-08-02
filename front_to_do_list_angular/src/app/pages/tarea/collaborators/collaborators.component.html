@@ -1,16 +1,16 @@
 
 <div class="collaborators" #searchContainer>
 
-        <input class="buscadorCol" name="Colaboradores"
-            [formControl]="searchControl"
-            (focus)="openSearch()"
-            placeholder="Buscar usuario...">
+    <input class="buscadorCol" name="Colaboradores"
+        [formControl]="searchControl"
+        (focus)="openSearch()"
+        placeholder="Buscar usuario...">
+
+    <div
+        class="search-results"
+        *ngIf="searchResultsVisible && results.length">
 
         <div
-            class="search-results"
-            *ngIf="searchResultsVisible && results.length">
-
-            <div
             class="search-user"
             *ngFor="let user of results"
             (click)="selectUser(user)">
@@ -37,125 +37,125 @@
 
             </div>
 
-            </div>
-
         </div>
 
-        
-        <div class="colList">
+    </div>
 
-            <ng-container *ngIf="colaboradores == undefined || (colaboradores.length < 1 && colaboradoresPendientes.length < 1); else muestraColaboradores">
+    
+    <div class="colList">
 
-                <h2>Sin colaboradores</h2>
+        <ng-container *ngIf="colaboradores == undefined || (colaboradores.length < 1 && colaboradoresPendientes.length < 1); else muestraColaboradores">
 
-            </ng-container>
+            <h2>Sin colaboradores</h2>
 
-            <ng-template #muestraColaboradores>
+        </ng-container>
 
-                <div class="colaborador"
-                    (click)="toggleMenuCollab($event,colab.request_task!.request_id)"
-                    *ngFor="let colab of colaboradores">
+        <ng-template #muestraColaboradores>
 
-                    @if (colab.user.avatar_url) {
+            <div class="colaborador"
+                (click)="toggleMenuCollab($event,colab.request_task!.request_id)"
+                *ngFor="let colab of colaboradores">
 
-                        <img
-                        [src]="getAvatarUrl(colab.user.avatar_url)"
-                        [alt]="colab.user.username"
-                        [title]="colab.user.username"
-                        class="avatar">
+                @if (colab.user.avatar_url) {
 
-                    } @else {
+                    <img
+                    [src]="getAvatarUrl(colab.user.avatar_url)"
+                    [alt]="colab.user.username"
+                    [title]="colab.user.username"
+                    class="avatar">
 
-                        <div class="avatar">
-                            {{ colab.user.username.charAt(0).toUpperCase() }}
-                        </div>
-                    }
-
-                    <span class="username">
-                        {{ colab.user.username }}
-                    </span>
-
-
-                    <div
-                        #menuColab
-                        class="menu_solicitud_colab"
-                        *ngIf="colab.request_task && openedMenu === colab.request_task.request_id"
-                        (click)="$event.stopPropagation()">
-
-                        <button  *ngIf="(colab.request_task.status == 'accepted')"
-                            [class.btn-visible]="(colab.request_task.status == 'accepted')"    
-                            class="btn-delete"
-                            (click)="eliminarColab(colab.request_task.request_id)">
-
-                            🗑 Eliminar colaboración
-
-                        </button>
-
-                    </div>
-                </div>
-
-                <div 
-                    *ngIf="colaboradoresPendientes.length > 0 && colaboradores.length > 0" 
-                    class="separadorPeding">
-                </div>
-
-                <div class="colaborador colaboradorPending"
-                    (click)="toggleMenuCollab($event,colab.request_task!.request_id)"
-                    *ngFor="let colab of colaboradoresPendientes">
-
-                    @if (colab.user.avatar_url) {
-
-                        <img
-                        [src]="getAvatarUrl(colab.user.avatar_url)"
-                        [alt]="colab.user.username"
-                        [title]="colab.user.username"
-                        class="avatar">
-
-                    } @else {
+                } @else {
 
                     <div class="avatar">
                         {{ colab.user.username.charAt(0).toUpperCase() }}
                     </div>
-                    }
+                }
+
+                <span class="username">
+                    {{ colab.user.username }}
+                </span>
 
 
+                <div
+                    #menuColab
+                    class="menu_solicitud_colab"
+                    *ngIf="colab.request_task && openedMenu === colab.request_task.request_id"
+                    (click)="$event.stopPropagation()">
 
-                    <span class="username">
-                        {{ colab.user.username }}
-                    </span>
-                        -
-                    <span class="etiquetaPend">
-                        {{"Pendiente"}}
-                    </span>
+                    <button  *ngIf="(colab.request_task.status == 'accepted')"
+                        [class.btn-visible]="(colab.request_task.status == 'accepted')"    
+                        class="btn-delete"
+                        (click)="eliminarColab(colab.request_task.request_id)">
 
-                    <div
-                        #menuColab
-                        class="menu_solicitud_colab"
-                        *ngIf="colab.request_task && openedMenu === colab.request_task.request_id"
-                        (click)="$event.stopPropagation()">
+                        🗑 Eliminar colaboración
 
-                        <button *ngIf="(colab.request_task!.sender_user_id && currentUser != colab.request_task.sender_user_id.toString()) || (!colab.request_task.sender_user_id && currentUser == colab.user.user_id)"
-                            [class.btn-visible]="(colab.request_task.sender_user_id && currentUser != colab.request_task.sender_user_id.toString()) || (!colab.request_task.sender_user_id && currentUser == colab.user.user_id)"
-                            class="btn-save"
-                            (click)="aceptarColab(colab.request_task.request_id)">
+                    </button>
 
-                            👈 Aprovar
-
-                        </button>
-
-                        <button  *ngIf="(currentUser == colab.request_task.sender_user_id!.toString()) || (colab.request_task.sender_user_id && currentUser == colab.user.user_id)"
-                            [class.btn-visible]="(currentUser == colab.request_task.sender_user_id!.toString()) || (colab.request_task.sender_user_id && currentUser == colab.user.user_id)"    
-                            class="btn-cancel"
-                            (click)="cancelarColab(colab.request_task.request_id)">
-
-                            🗑 Cancelar
-
-                        </button>
-
-                    </div>
                 </div>
+            </div>
 
-            </ng-template>
+            <div 
+                *ngIf="colaboradoresPendientes.length > 0 && colaboradores.length > 0" 
+                class="separadorPeding">
+            </div>
 
-        </div>
+            <div class="colaborador colaboradorPending"
+                (click)="toggleMenuCollab($event,colab.request_task!.request_id)"
+                *ngFor="let colab of colaboradoresPendientes">
+
+                @if (colab.user.avatar_url) {
+
+                    <img
+                    [src]="getAvatarUrl(colab.user.avatar_url)"
+                    [alt]="colab.user.username"
+                    [title]="colab.user.username"
+                    class="avatar">
+
+                } @else {
+
+                <div class="avatar">
+                    {{ colab.user.username.charAt(0).toUpperCase() }}
+                </div>
+                }
+
+
+
+                <span class="username">
+                    {{ colab.user.username }}
+                </span>
+                    -
+                <span class="etiquetaPend">
+                    {{"Pendiente"}}
+                </span>
+
+                <div
+                    #menuColab
+                    class="menu_solicitud_colab"
+                    *ngIf="colab.request_task && openedMenu === colab.request_task.request_id"
+                    (click)="$event.stopPropagation()">
+
+                    <button *ngIf="!colab.request_task.sender_user_id || (!colab.request_task.sender_user_id && currentUser == colab.user.user_id)"
+                        [class.btn-visible]="(colab.request_task.sender_user_id && currentUser != colab.request_task.sender_user_id.toString())"
+                        class="btn-save"
+                        (click)="aceptarColab(colab.request_task.request_id)">
+
+                        👈 Aprovar
+
+                    </button>
+
+                    <button  *ngIf="(!colab.request_task.sender_user_id || currentUser == colab.request_task.sender_user_id!.toString()) || (colab.request_task.sender_user_id && currentUser == colab.user.user_id)"
+                        [class.btn-visible]="(currentUser == colab.request_task.sender_user_id!.toString()) || (colab.request_task.sender_user_id && currentUser == colab.user.user_id)"    
+                        class="btn-cancel"
+                        (click)="cancelarColab(colab.request_task.request_id)">
+
+                        🗑 Cancelar
+
+                    </button>
+
+                </div>
+            </div>
+
+        </ng-template>
+
+    </div>
 </div>

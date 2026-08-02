@@ -3,6 +3,7 @@ import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/
 import { getAvatarUrl, Invitation } from '../../../models/user.model';
 import { UserService } from '../../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthStateService } from '../../../services/auth-state.service';
 
 @Component({
   selector: 'app-invitation',
@@ -14,8 +15,10 @@ export class InvitationComponent {
   
   @Input() 
   task_id!: string;
+  @Input() 
+  currentUserId!: string;
 
-  invitacion!: Invitation;
+  invitacion: Invitation | null = null;
   openedMenu = false;
 
   @ViewChild('menuContainer')
@@ -36,7 +39,6 @@ export class InvitationComponent {
   constructor( private userServ: UserService,
         private route: ActivatedRoute,
         private router: Router ){
-
   }
 
   ngOnInit(){
@@ -57,7 +59,14 @@ export class InvitationComponent {
   
   loadInvitation(){
     this.userServ.getInvitation(this.task_id).subscribe({
-      next : (res) => this.invitacion = res.invitation!,
+      next : (res) => {
+        console.log("loadInvitation",res);
+        if(res.invitation!.request_task){
+          this.invitacion = res.invitation!;
+        }else{
+          this.invitacion = null;
+        }
+      },
       error : (err) => console.log(err)
     });
   }
@@ -72,15 +81,33 @@ export class InvitationComponent {
     });
     this.openedMenu = false;
   }
+
+  solicitarColaboracion(){
+      if(this.currentUserId){
+        this.userServ.postSolicitudColaboracion(this.currentUserId, this.task_id).subscribe({
+          next : (res) => {
+            console.log(res);
+            this.loadInvitation();
+          },
+          error : (err) => console.log(err)
+        });
+      }
+  }
   
-  cancelarColab(request_id:number){
+  cancelarColab(request_id:number, sender_user_id: string | null){
     this.userServ.deleteSolicitudColaboracion(request_id.toString()).subscribe({
       next : (res) => {
         console.log(res.message);
-        this.router.navigate(['/home']);
+        if(sender_user_id != null){
+          this.router.navigate(['/home']);
+        }
+        
+        this.loadInvitation();
       },
       error : (err) => console.log(err)
     });
+
+    this.openedMenu = false;
   }
 
   eliminarColab(request_id:number){

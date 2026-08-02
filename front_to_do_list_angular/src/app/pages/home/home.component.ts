@@ -20,9 +20,13 @@ export class HomeComponent {
   title3 = "Tareas en las que solicitan tu colaboración";
   paragraph3 = "Entra en la tarea para decidir si colaboras en ella";
 
+  title4 = "Tareas públicas";
+  paragraph4 = "Explora y participa en tareas que están disponibles para todos";
+
   myTasks : Task[] = [];
   colTasks : Task[] = [];
   reqTasks : Task[] = [];
+  publicTasks : Task[] = [];
 
   private platformId = inject(PLATFORM_ID);
 
@@ -53,6 +57,14 @@ export class HomeComponent {
     this.tarServ.getInvitedTasks().subscribe({
       next: (response) => {
         this.reqTasks = response.tasks!; // Asignar las tareas obtenidas a la propiedad tareas
+      },
+      error: (err) => {
+        console.error('Error al obtener las tareas:', err);
+      }
+    }); 
+    this.tarServ.getPublicTasks().subscribe({
+      next: (response) => {
+        this.publicTasks = response.tasks!; // Asignar las tareas obtenidas a la propiedad tareas
       },
       error: (err) => {
         console.error('Error al obtener las tareas:', err);

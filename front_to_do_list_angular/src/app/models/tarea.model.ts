@@ -23,7 +23,13 @@ export type TaskStatus =
   | 'paused'
   | 'canceled';
 
+
+export type TaskVisibility =
+  | 'private'
+  | 'public';
+
 export interface Task {
+
   created_by?: string;
 
   task_id?: number; 
@@ -45,6 +51,8 @@ export interface Task {
   username: string | null;
 
   avatar_url: string | null;
+
+  visibility: TaskVisibility;
 }
 
 export interface TaskResponse {
@@ -80,6 +88,16 @@ export const STATUS: {
 
 ];
 
+export const VISIBILITY: {
+  value: TaskVisibility;
+  label: string;
+}[] = [
+
+  { value: 'private', label: 'Privada' },
+  { value: 'public', label: 'Pública' }
+
+];
+
 export function getPriorityLabel(
   value: TaskPriority
 ): string {
@@ -99,4 +117,14 @@ export function getStatusLabel(
     s => s.value === value
   )?.label ?? value;
 
+}
+
+
+
+export function getVisibilityLabel(
+  value: TaskVisibility
+): string {
+  return VISIBILITY.find(
+    v => v.value === value
+  )?.label ?? value;
 }

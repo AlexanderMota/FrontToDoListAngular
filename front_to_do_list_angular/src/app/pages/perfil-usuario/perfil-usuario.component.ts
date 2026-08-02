@@ -63,16 +63,19 @@ export class PerfilUsuarioComponent {
 
   }
   saveProfile() {
-    
-    this.userService.updatePerfil(this.user).subscribe({
 
-      next: response => {
+    if(this.user.username.length > 2 && this.user.username.length < 45){
+      
+      this.userService.updatePerfil(this.user).subscribe({
 
-        console.log(response.message);
-        this.editing = false;
-      },
-      error: err => console.error(err)
-    });
+        next: response => {
+
+          this.editing = false;
+          console.log(response.message);
+        },
+        error: err => console.error(err)
+      });
+    }
   }
 
   onAvatarSelected(event: Event) {
