@@ -134,8 +134,8 @@
                     *ngIf="colab.request_task && openedMenu === colab.request_task.request_id"
                     (click)="$event.stopPropagation()">
 
-                    <button *ngIf="!colab.request_task.sender_user_id || (!colab.request_task.sender_user_id && currentUser == colab.user.user_id)"
-                        [class.btn-visible]="(colab.request_task.sender_user_id && currentUser != colab.request_task.sender_user_id.toString())"
+                    <button *ngIf="(!colab.request_task.sender_user_id && currentUser != colab.request_task.user_id)"
+                        [class.btn-visible]="(!colab.request_task.sender_user_id && currentUser != colab.request_task.user_id)"
                         class="btn-save"
                         (click)="aceptarColab(colab.request_task.request_id)">
 
@@ -144,7 +144,7 @@
                     </button>
 
                     <button  *ngIf="(!colab.request_task.sender_user_id || currentUser == colab.request_task.sender_user_id!.toString()) || (colab.request_task.sender_user_id && currentUser == colab.user.user_id)"
-                        [class.btn-visible]="(currentUser == colab.request_task.sender_user_id!.toString()) || (colab.request_task.sender_user_id && currentUser == colab.user.user_id)"    
+                        [class.btn-visible]="(currentUser == colab.request_task.sender_user_id)"    
                         class="btn-cancel"
                         (click)="cancelarColab(colab.request_task.request_id)">
 

@@ -22,7 +22,7 @@ export class AuthService {
       `${this.apiUrl}register`, {user:user}, { withCredentials: true }
     );
   }
-  login(user: { email: string; password: string }): Observable<UserResponse> {
+  login(user: { email: string, password: string, rememberMe: boolean }): Observable<UserResponse> {
     return this.http.post<UserResponse>(
       `${this.apiUrl}login`, {user:user}, { withCredentials: true }
     );

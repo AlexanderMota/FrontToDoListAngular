@@ -91,14 +91,27 @@
   gap: .75rem;
   cursor: pointer;
 }
-.colaboradorPending{
-  position: relative;
-  opacity: .6;
-  cursor: pointer;
-  hover {
-    opacity: 1;
+.colaboradorPending{    background:#fffaf2;
 
-  }
+    border-left:4px solid #f0ad4e;
+
+    img.avatar,
+    .avatar{
+        filter:grayscale(100%);
+    }
+
+    .username{
+        color:#666;
+    }
+
+    .etiquetaPend{
+        background:#ffeeba;
+        color:#856404;
+        padding:2px 8px;
+        border-radius:12px;
+        font-size:.75rem;
+        font-weight:600;
+    }
 }
 .separadorPeding{
   margin: 5px 0px 10px 0px;

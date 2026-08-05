@@ -14,40 +14,27 @@ import { CreateCommentComponent } from "./create-comment/create-comment.componen
 })
 export class CommentsComponent {
 
+  private commentsFlat : Comment[]= [];
+  private platformId = inject(PLATFORM_ID);
+
   @Input()
   task_id : string = "";
 
-  private commentsFlat : Comment[]= [];
   comentarios: CommentTree[] = [];
   openedMenu: number | null = null;
   addingComment = false;
 
-  private platformId = inject(PLATFORM_ID);
-
   constructor(private comServ:CommentService){ }
 
   ngOnInit() {
-
-      if (!isPlatformBrowser(this.platformId)) {
-          return;
-      }
-
-      if (this.task_id) {
-
-          this.loadComments();
-
-      }
-
+      if (!isPlatformBrowser(this.platformId)) 
+          return; 
+      if (this.task_id) this.loadComments();
   }
 
   ngOnChanges() {
-
-      if (this.task_id) {
-
-          this.loadComments();
-
-      }
-
+    if (this.task_id) 
+      this.loadComments();
   }
 
   loadComments(){
@@ -60,30 +47,29 @@ export class CommentsComponent {
         console.log(err);
       }
     });
-
   }
+
   saveComment(commentToSend:{content:string, parent_comment_id: number | null}){ 
     this.openedMenu = null;
 
-    if (!commentToSend.content.trim()) {
+    if (!commentToSend.content.trim()) 
       return;
-    }
+    
 
     this.comServ.createComment(this.task_id, commentToSend).subscribe({
       next: (res) => {
+        console.log('Comentario creado:', res);
         this.commentsFlat.push(res.comment!);
         this.comentarios = buildTree(this.commentsFlat);
       },
-      error : (err) => {
-        console.log(err);
-      }
+      error : (err) => console.log(err)
+      
     });
 
     this.addingComment = false;
-    
   }
-  deleteComment(id:string){
 
+  deleteComment(id:string){
     this.commentsFlat =
         this.commentsFlat.filter(
             c => c.comment_id !== Number(id)

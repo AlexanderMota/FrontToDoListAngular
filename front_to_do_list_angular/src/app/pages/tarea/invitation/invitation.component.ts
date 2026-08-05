@@ -3,7 +3,6 @@ import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/
 import { getAvatarUrl, Invitation } from '../../../models/user.model';
 import { UserService } from '../../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthStateService } from '../../../services/auth-state.service';
 
 @Component({
   selector: 'app-invitation',

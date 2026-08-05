@@ -93,9 +93,10 @@
             *ngIf="openedMenu"
             (click)="$event.stopPropagation()">
 
-            <button *ngIf="(invitacion.request_task.status == 'pending' && invitacion.request_task.sender_user_id == currentUserId)"
-                [class.btn-visible]="(invitacion.request_task.status == 'pending')"
-                class="btn-save"
+            <button *ngIf="(invitacion.request_task.status == 'pending' && (
+                invitacion.request_task.sender_user_id && 
+                invitacion.request_task.user_id == currentUserId))"
+                class="btn-save btn-visible"
                 (click)="aceptarColab(invitacion.request_task.request_id)">
 
                 👈 Aceptar
@@ -104,6 +105,9 @@
 
             <button  *ngIf="(invitacion.request_task.status == 'pending')"  
                 class="btn-cancel"
+                [class.btn-visible]="(invitacion.request_task.status == 'pending' && (
+                    !invitacion.request_task.sender_user_id && 
+                    invitacion.request_task.user_id == currentUserId))"
                 (click)="cancelarColab(invitacion.request_task.request_id, invitacion.request_task.sender_user_id)">
 
                 🗑 Rechazar
@@ -111,8 +115,7 @@
             </button>
 
             <button  *ngIf="(invitacion.request_task.status == 'accepted')"  
-                [class.btn-visible]="(invitacion.request_task.status == 'accepted')"
-                class="btn-cancel"
+                class="btn-cancel btn-visible"
                 (click)="eliminarColab(invitacion.request_task.request_id)">
 
                 🗑 Terminar colaboración
