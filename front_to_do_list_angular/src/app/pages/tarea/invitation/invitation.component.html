@@ -96,7 +96,7 @@
             <button *ngIf="(invitacion.request_task.status == 'pending' && (
                 invitacion.request_task.sender_user_id && 
                 invitacion.request_task.user_id == currentUserId))"
-                class="btn-save btn-visible"
+                class="btn-save"
                 (click)="aceptarColab(invitacion.request_task.request_id)">
 
                 👈 Aceptar
@@ -105,9 +105,6 @@
 
             <button  *ngIf="(invitacion.request_task.status == 'pending')"  
                 class="btn-cancel"
-                [class.btn-visible]="(invitacion.request_task.status == 'pending' && (
-                    !invitacion.request_task.sender_user_id && 
-                    invitacion.request_task.user_id == currentUserId))"
                 (click)="cancelarColab(invitacion.request_task.request_id, invitacion.request_task.sender_user_id)">
 
                 🗑 Rechazar
@@ -115,7 +112,7 @@
             </button>
 
             <button  *ngIf="(invitacion.request_task.status == 'accepted')"  
-                class="btn-cancel btn-visible"
+                class="btn-cancel"
                 (click)="eliminarColab(invitacion.request_task.request_id)">
 
                 🗑 Terminar colaboración
@@ -126,9 +123,9 @@
     </div>
 
 } @else {
-        <button
-            (click)="solicitarColaboracion()"
-            class="btn-cancel">
-            Solicitar colaboración
-        </button>
+    <button
+        (click)="solicitarColaboracion()"
+        class="btn-soli">
+        ✉️ Solicitar colaboración
+    </button>
 }

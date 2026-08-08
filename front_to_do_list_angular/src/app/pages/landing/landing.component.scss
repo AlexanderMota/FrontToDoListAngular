@@ -1,25 +1,24 @@
 
-  main {
-    width: 100%;
-    min-height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    box-sizing: inherit;
-  }
+.main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: inherit;
+}
 
-  .angular-logo {
-    max-width: 9.2rem;
-  }
+.angular-logo {
+  max-width: 9.2rem;
+}
 
-  .content {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    max-width: 700px;
-    margin-bottom: 3rem;
-  }
+.content {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 700px;
+  margin-bottom: 3rem;
+}
 
 .left-side {
   width: 100%;
@@ -42,6 +41,7 @@
   border-radius: 20px;
   font-size: 10rem;
   font-weight: 700;
+  text-align: center;
   transition:
     transform .2s ease,
     box-shadow .2s ease;
@@ -144,4 +144,5 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  margin-right: 1rem;
 }

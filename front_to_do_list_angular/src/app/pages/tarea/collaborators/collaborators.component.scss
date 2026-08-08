@@ -1,5 +1,6 @@
 .collaborators{
-    position:relative;
+  width: 250px;
+  position:relative;
   display: flex;
   flex-direction: column;
   
@@ -152,11 +153,13 @@
 
   position:absolute;
 
-  top:20px;
+  top:0px;
 
   right:255px;
 
   z-index:100;
+
+  border-radius: 10px;
 
 }
 .menu_solicitud_colab button:hover{
@@ -212,8 +215,3 @@
 
 }
 
-.btn-visible{
-    
-  border-radius: 10px 0px 10px 10px;
-
-}

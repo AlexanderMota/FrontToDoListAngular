@@ -218,6 +218,34 @@
           </div>
         </div>
 
+      </div>
+
+      <div class="collaborators" 
+            *ngIf="!editing">
+
+          <p class="collabs_title" >
+              Colaboradores
+          </p>
+          <div class="collabs_container">
+            <ng-container *ngIf="currentUser == task.created_by; else muestraInvitado">
+              <app-collaborators
+                [task_id]="task_id"
+                [currentUser]="currentUser">
+              </app-collaborators>
+            </ng-container>
+
+            <ng-template #muestraInvitado>
+
+                <app-invitation
+                    [task_id]="task_id"
+                    [currentUserId]="currentUser">
+
+                </app-invitation>
+
+            </ng-template>
+          </div>
+      </div>
+      
             
         <div class="task-actions"
           *ngIf="task.created_by == currentUser || editing || modoCreacion">
@@ -261,32 +289,6 @@
           </button>
 
         </div>
-      </div>
-
-      <div class="collaborators" 
-            *ngIf="!editing">
-
-          <p class="collabs_title" >
-              Colaboradores
-          </p>
-          <ng-container *ngIf="currentUser == task.created_by; else muestraInvitado">
-            <app-collaborators
-              [task_id]="task_id"
-              [currentUser]="currentUser">
-            </app-collaborators>
-          </ng-container>
-
-          <ng-template #muestraInvitado>
-
-              <app-invitation
-                  [task_id]="task_id"
-                  [currentUserId]="currentUser">
-
-              </app-invitation>
-
-          </ng-template>
-      </div>
-
     </div>
 
   </div>

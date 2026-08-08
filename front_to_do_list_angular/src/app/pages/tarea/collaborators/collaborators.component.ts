@@ -4,7 +4,6 @@ import { Collaborator, getAvatarUrl, User } from '../../../models/user.model';
 import { UserService } from '../../../services/user.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { NgFor, NgIf } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-collaborators',
@@ -33,9 +32,7 @@ export class CollaboratorsComponent {
   colaboradores : Collaborator[] = [];
   colaboradoresPendientes : Collaborator[] = [];
   
-  constructor( private userServ: UserService,
-      private route: ActivatedRoute,
-      private router: Router ) { }
+  constructor( private userServ: UserService ) { }
   
   ngOnInit(){
     this.loadCollabs();
@@ -50,7 +47,7 @@ export class CollaboratorsComponent {
     this.userServ.getCollabsConfirmed(this.task_id).subscribe({
       next : (res) => {
 
-        console.log(res.message);
+        console.log("getCollabsConfirmed", res);
         this.colaboradores = res.collaborators!
       },
       error : (err) => console.log(err)
@@ -58,7 +55,7 @@ export class CollaboratorsComponent {
     
     this.userServ.getCollabsPending(this.task_id).subscribe({
       next : (res) => {
-        console.log(res.message);
+        console.log("getCollabsPending", res);
         this.colaboradoresPendientes = res.collaborators!;
 
         this.isCollaborator = this.colaboradoresPendientes.some(

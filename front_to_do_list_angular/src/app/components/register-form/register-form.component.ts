@@ -69,7 +69,7 @@ export class RegisterFormComponent {
       password: formValue.password,
       phone: formValue.phone?.trim() || null,
       avatar_url: null,
-      role_id: 5
+      role: 'Viewer'
     };
 
     this.authServ.register(newUser).pipe(
@@ -77,7 +77,8 @@ export class RegisterFormComponent {
       switchMap(() =>
         this.authServ.login({
           email: newUser.email,
-          password: newUser.password!
+          password: newUser.password!,
+          rememberMe: this.registerForm.value.rememberMe
         })
       )
 

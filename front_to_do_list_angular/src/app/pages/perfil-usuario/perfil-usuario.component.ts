@@ -1,13 +1,22 @@
 import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
-import { isPlatformBrowser, NgIf } from '@angular/common'
-import { FormsModule } from '@angular/forms';
+import { isPlatformBrowser } from '@angular/common'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { getAvatarUrl } from '../../models/user.model';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { CambioPasswordFormComponent } from './cambio-password-form/cambio-password-form.component';
 
 @Component({
   selector: 'app-perfil-usuario',
-  imports: [FormsModule],
+  imports: [FormsModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    CambioPasswordFormComponent],
   templateUrl: './perfil-usuario.component.html',
   styleUrl: './perfil-usuario.component.scss'
 })
@@ -16,7 +25,9 @@ export class PerfilUsuarioComponent {
   private platformId =  inject(PLATFORM_ID);
   user! : User;
   editing = false;
+  editingPass = false;
   backupUser!: User;
+
 
   constructor(private userService: UserService) { 
     this.user = {
@@ -25,11 +36,12 @@ export class PerfilUsuarioComponent {
       lastname: '',
       username: '',
       email: '',
-      role_id: 6,
+      role: "",
       phone: '',
       avatar_url: '',
       password: ""
     }
+    
   }
 
   ngOnInit(): void {
@@ -54,6 +66,9 @@ export class PerfilUsuarioComponent {
 
     this.editing = true;
 
+  }
+  openChangePassword(){
+    this.editingPass = true;
   }
   cancelEdit() {
 
@@ -100,7 +115,7 @@ export class PerfilUsuarioComponent {
       }
     });
   }
-  
+
   eliminarFoto(){
 
     this.userService.deleteFotoDePerfil().subscribe({
@@ -115,5 +130,10 @@ export class PerfilUsuarioComponent {
     });
   }
   
+  closeOnOutsideClick(event: Event) {
+    setTimeout(() => {
+      this.editingPass = false;
+    }, 40);
+  }
   getAvatarUrl = getAvatarUrl;
 }

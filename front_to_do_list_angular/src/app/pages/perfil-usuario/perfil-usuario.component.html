@@ -188,7 +188,7 @@
         </span>
 
         <span class="info-card-dato">
-          {{ user.role_id }}
+          {{ user.role }}
         </span>
 
       </div>
@@ -208,7 +208,8 @@
         </button>
 
         <button
-          class="btn">
+          class="btn"
+          (click)="editingPass = true">
 
           Cambiar contraseña
 
@@ -245,4 +246,21 @@
 
   </div>
 
+</div>
+
+<!--
+<app-cambio-password-form *ngIf="editingPass"
+  [editingPass]="editingPass">
+</app-cambio-password-form>
+-->
+
+
+<div [class.show]="editingPass" class="passForm" 
+  (click)="closeOnOutsideClick($event)">
+  
+  <app-cambio-password-form  class="appPassForm"
+    [class.show]="editingPass"
+    [editingPass]="editingPass"
+    (click)="$event.stopPropagation()">
+  </app-cambio-password-form>
 </div>

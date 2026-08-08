@@ -1,20 +1,23 @@
 
 .invitation-card{
-    position: relative;
 
-    background:#fff;
+  max-width: 250px;
 
-    border-radius:18px;
+  position: relative;
 
-    padding:1.5rem;
+  background:#fff;
 
-    box-shadow:0 8px 24px rgba(0,0,0,.08);
+  border-radius:18px;
 
-    display:flex;
+  padding:1.5rem;
 
-    flex-direction:column;
+  box-shadow:0 8px 24px rgba(0,0,0,.08);
 
-    gap:1.5rem;
+  display:flex;
+
+  flex-direction:column;
+
+  gap:1.5rem;
 }
 
 .invitation-header{
@@ -61,62 +64,56 @@
 }
 
 .menu-btn{
-    position: relative;
-    right: -180px;
-    top: -10px;
+  width:36px;
+  height:36px;
+  position: relative;
+  right: -180px;
+  top: -10px;
 
-    border:none;
+  background:none;
+  border:none;
+  border-radius: 50%;
 
-    background:none;
+  font-size:22px;
+  color:#666;
 
-    font-size:22px;
+  transition:.2s;
+  z-index: 2;
 
-    cursor:pointer;
+  cursor:pointer;
 
-    color:#666;
+  &:hover{
 
-    width:36px;
+    background:#f3f4f6;
 
-    height:36px;
-
-    border-radius:50%;
-
-    transition:.2s;
-
-    z-index: 2;
-
-    &:hover{
-
-        background:#f3f4f6;
-
-        color:#111;
-
-    }
-
+    color:#111;
+  }
 }
 .menu_solicitud_colab{
   display:flex;
+
   flex-direction:column;
 
-    position:absolute;
+  position:absolute;
 
-    top:45px;
+  top:45px;
 
-    right:40px;
+  right:40px;
 
-    overflow:hidden;
+  overflow:hidden;
 
-    z-index:10;
+  z-index:10;
 
+  border-radius: 10px 0px 10px 10px;
 }
 
 .invitation-body{
 
-    display:flex;
+  display:flex;
 
-    flex-direction:column;
+  flex-direction:column;
 
-    gap:.8rem;
+  gap:.8rem;
 }
 
 .info-row{
@@ -124,29 +121,27 @@
   flex-direction: row;
   justify-content: left;
   align-items: baseline;
-
 }
 
 .invitation-actions{
 
-    display:flex;
+  display:flex;
 
-    gap:1rem;
+  gap:1rem;
 
-    margin-top:.5rem;
+  margin-top:.5rem;
 }
 
 .label{
   width: 70px;
 
+  font-size:.8rem;
 
-    font-size:.8rem;
+  font-weight:600;
 
-    font-weight:600;
+  text-transform:uppercase;
 
-    text-transform:uppercase;
-
-    color:#777;
+  color:#777;
 }
 .info{
   width: 130px;
@@ -160,7 +155,6 @@
 
   border: none;
 
-
   padding: .8rem 1.3rem;
 
   cursor: pointer;
@@ -169,13 +163,9 @@
 
   transition: .2s;
   
-  border-radius: 10px;
-
   hover{
-
     background:#f5f5f5;
-
-}
+  }
 }
 
 
@@ -192,8 +182,23 @@
   color: white;
 
 }
-.btn-visible{
-    
-  border-radius: 10px 0px 10px 10px;
 
+.btn-soli {
+  background: #1976d2;
+  color: white;
+
+  border: none;
+  border-radius: 10px;
+
+  padding: .8rem 1.4rem;
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  transition: .2s;
+
+  &:hover {
+    background: #1565c0;
+  }
 }
