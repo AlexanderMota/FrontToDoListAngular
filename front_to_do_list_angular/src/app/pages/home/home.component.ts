@@ -17,11 +17,11 @@ export class HomeComponent {
   title2 = "Tareas en las que estas colaborando";
   paragraph2 = "Avanza en los proyectos en los que colaboras.";
 
-  title3 = "Tareas en las que solicitan tu colaboración";
-  paragraph3 = "Entra en la tarea para decidir si colaboras en ella";
+  title3 = "Colaboraciones pendientes de aprovación";
+  paragraph3 = "Entra en la tarea para decidir si colaboras en ella o para cancelar tu solicitud.";
 
   title4 = "Tareas públicas";
-  paragraph4 = "Explora y participa en tareas que están disponibles para todos";
+  paragraph4 = "Explora y participa en tareas que están disponibles para todos.";
 
   myTasks : Task[] = [];
   colTasks : Task[] = [];

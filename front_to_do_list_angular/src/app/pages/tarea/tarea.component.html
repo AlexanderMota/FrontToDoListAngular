@@ -246,49 +246,50 @@
           </div>
       </div>
       
+      <div></div>
             
-        <div class="task-actions"
-          *ngIf="task.created_by == currentUser || editing || modoCreacion">
+      <div class="task-actions"
+        *ngIf="task.created_by == currentUser || editing || modoCreacion">
+
+        <button
+          *ngIf="!editing"
+          class="btn-edit"
+          (click)="editTask()">
+
+          Editar
+
+        </button>
+
+        <ng-container *ngIf="editing">
 
           <button
-            *ngIf="!editing"
-            class="btn-edit"
-            (click)="editTask()">
+            class="btn-save"
+            (click)="saveTask()">
 
-            Editar
+            Guardar
 
           </button>
 
-          <ng-container *ngIf="editing">
-
-            <button
-              class="btn-save"
-              (click)="saveTask()">
-
-              Guardar
-
-            </button>
-
-            <button
-              class="btn-cancel"
-              (click)="cancelEdit()">
-
-              Cancelar
-
-            </button>
-
-          </ng-container>
-
           <button
-            *ngIf="!editing"
-            class="btn-delete"
-            (click)="deleteTask()">
+            class="btn-cancel"
+            (click)="cancelEdit()">
 
-            Eliminar
+            Cancelar
 
           </button>
 
-        </div>
+        </ng-container>
+
+        <button
+          *ngIf="!editing"
+          class="btn-delete"
+          (click)="deleteTask()">
+
+          Eliminar
+
+        </button>
+
+      </div>
     </div>
 
   </div>

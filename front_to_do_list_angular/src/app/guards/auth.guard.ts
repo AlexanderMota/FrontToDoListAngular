@@ -1,22 +1,23 @@
-/*export const authGuard: CanActivateFn = () => {
+
+import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
+import { catchError, map, of } from 'rxjs';
+import { AuthService } from '../services/auth.service';
+
+export const authGuard: CanActivateFn = () => {
 
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  return authService
-    .getCurrentUser()
-    .pipe(
+  return authService.getMe().pipe(
 
-      map(() => true),
+    map(() => true),
 
-      catchError(() => {
+    catchError(() => {
 
-        router.navigate(['/landing']);
+      return of(router.parseUrl('/'));
 
-        return of(false);
+    })
 
-      })
-
-    );
-
-};*/
+  );
+};
