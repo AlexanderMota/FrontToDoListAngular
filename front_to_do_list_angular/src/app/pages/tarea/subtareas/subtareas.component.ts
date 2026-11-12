@@ -4,6 +4,8 @@ import { TareaCardComponent } from '../../../components/tareas/tarea-card/tarea-
 import { NgIf, NgFor, isPlatformBrowser } from '@angular/common';
 import { TaskService } from '../../../services/task.service';
 import { Router } from '@angular/router';
+import { AuthStateService } from '../../../services/auth-state.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-subtareas',
@@ -13,15 +15,18 @@ import { Router } from '@angular/router';
 })
 export class SubtareasComponent {
 
+
+  private userSubscription?: Subscription;
   private platformId = inject(PLATFORM_ID);
 
   @Input()
   parent_task_id = "";
-
+  
+  currentUser = "";
   addingTask = false;
   subtasks : Task[] = [];
 
-  constructor( private taskServ: TaskService, private router: Router ) { }
+  constructor( private taskServ: TaskService, private router: Router, private authState: AuthStateService ) { }
 
 
   ngOnInit() {
@@ -30,6 +35,10 @@ export class SubtareasComponent {
           return;
       }
 
+     this.userSubscription = this.authState.user$.subscribe(user => {
+      this.currentUser = user?.user_id ?? '';
+    });
+    
       if (this.parent_task_id) {
 
           this.loadSubTasks();

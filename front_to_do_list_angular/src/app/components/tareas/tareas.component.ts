@@ -17,11 +17,14 @@ export class TareasComponent {
   @Input()
   paragraph = "";
   @Input()
+  currentUser = "";
+  @Input()
   myTasks = false;
   @Input()
   tasks : Task[] = [];
 
-  constructor( private router: Router ) { }
+  constructor( private router: Router ) { 
+  }
 
   newTask(){
     this.router.navigate(['/tarea/nueva']);

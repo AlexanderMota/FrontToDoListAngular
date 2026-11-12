@@ -27,7 +27,8 @@
 
                     <app-tarea-card
                         *ngFor="let task of subtasks"
-                        [task]="task">
+                        [task]="task"
+                        [currentUser]="currentUser">
                     </app-tarea-card>
 
                 </div>

@@ -73,7 +73,7 @@ export class UserService {
   updatePerfil(perfil:User): Observable<UserResponse> {
     return this.http.put<UserResponse>(
       `${this.apiUrl}`, 
-      { perfil: perfil },
+      { perfil: {name:perfil.name, lastname:perfil.lastname, username:perfil.username, phone:perfil.phone} },
       { withCredentials: true }
     );
   }

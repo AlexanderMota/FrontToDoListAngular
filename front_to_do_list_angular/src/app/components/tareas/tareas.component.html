@@ -20,7 +20,8 @@
   <div class="tasks-grid">
     <app-tarea-card
       *ngFor="let task of tasks"
-      [task]="task">
+      [task]="task"
+      [currentUser]="currentUser">
     </app-tarea-card>
   </div>
 </div>

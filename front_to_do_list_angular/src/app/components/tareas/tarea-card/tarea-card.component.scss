@@ -178,3 +178,58 @@
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+.task-card.invitation-pending {
+  background-color: #fff3d6;
+  border: 1px solid #edc36c;
+}
+
+.invitation-menu {
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  right: 0;
+  width: 230px;
+  padding: 15px;
+  background: #fff;
+  border: 1px solid #e5c77e;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  cursor: default;
+}
+
+.invitation-menu p {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: #444;
+}
+
+.invitation-menu button {
+  width: 100%;
+  padding: 9px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-accept {
+  background-color: #e7b94f;
+  color: #382900;
+  margin-bottom: 7px;
+}
+
+.btn-cancel {
+  background-color: #eee;
+  color: #444;
+}
+

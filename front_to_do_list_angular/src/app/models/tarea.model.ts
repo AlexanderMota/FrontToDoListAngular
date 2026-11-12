@@ -9,6 +9,8 @@
   parent_task_id?: string;
 }
 */
+
+import { RequestTask } from './user.model';
 export type TaskPriority =
   | 'very_low'
   | 'low'
@@ -49,6 +51,8 @@ export interface Task {
   parent_task_id: number | null;
 
   username: string | null;
+
+  request_task?: RequestTask | null;
 
   avatar_url: string | null;
 

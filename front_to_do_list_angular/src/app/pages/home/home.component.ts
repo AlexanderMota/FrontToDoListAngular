@@ -3,6 +3,8 @@ import { TareasComponent } from '../../components/tareas/tareas.component';
 import { isPlatformBrowser, NgIf } from '@angular/common';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/tarea.model';
+import { AuthStateService } from '../../services/auth-state.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -27,10 +29,13 @@ export class HomeComponent {
   colTasks : Task[] = [];
   reqTasks : Task[] = [];
   publicTasks : Task[] = [];
+  currentUser = '';
 
+  private userSubscription?: Subscription;
   private platformId = inject(PLATFORM_ID);
 
-  constructor( private tarServ: TaskService ) { }
+  constructor( private tarServ: TaskService,
+    private authState: AuthStateService ) { }
 
   ngOnInit() {
     
@@ -46,6 +51,9 @@ export class HomeComponent {
         console.error('Error al obtener las tareas:', err);
       }
     }); 
+     this.userSubscription = this.authState.user$.subscribe(user => {
+      this.currentUser = user?.user_id ?? '';
+    });
     this.tarServ.getCollabTasks().subscribe({
       next: (response) => {
         this.colTasks = response.tasks!; // Asignar las tareas obtenidas a la propiedad tareas
@@ -70,5 +78,8 @@ export class HomeComponent {
         console.error('Error al obtener las tareas:', err);
       }
     }); 
+  }
+  ngOnDestroy() {
+    this.userSubscription?.unsubscribe();
   }
 }

@@ -45,17 +45,12 @@ export class CollaboratorsComponent {
   loadCollabs(){
 
     this.userServ.getCollabsConfirmed(this.task_id).subscribe({
-      next : (res) => {
-
-        console.log("getCollabsConfirmed", res);
-        this.colaboradores = res.collaborators!
-      },
+      next : (res) => this.colaboradores = res.collaborators!,
       error : (err) => console.log(err)
     });
     
     this.userServ.getCollabsPending(this.task_id).subscribe({
       next : (res) => {
-        console.log("getCollabsPending", res);
         this.colaboradoresPendientes = res.collaborators!;
 
         this.isCollaborator = this.colaboradoresPendientes.some(
@@ -107,10 +102,7 @@ export class CollaboratorsComponent {
   selectUser(usuario: User) {
     
     this.userServ.postSolicitudColaboracion(usuario.user_id, this.task_id).subscribe({
-      next : (res) =>  {
-        console.log(res.message);
-        this.colaboradoresPendientes.push(res.collaborator!);
-      }, 
+      next : (res) => this.colaboradoresPendientes.push(res.collaborator!), 
       error : (err) => console.log(err)
     });
     this.searchResultsVisible = false;

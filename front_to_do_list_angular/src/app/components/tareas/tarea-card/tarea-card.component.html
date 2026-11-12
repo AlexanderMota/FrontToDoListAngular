@@ -1,22 +1,21 @@
-<div class="task-card" (click)="abrirTarea()">
 
-  <div class="task-container"
-      [class.expanded]="expanded">
+<div
+  class="task-card"
+  [class.invitation-pending]="hasPendingRequest"
+  (click)="abrirTarea()">
+
+  <div class="task-container" [class.expanded]="expanded">
+
     <div class="task-header">
-      
       <h3>{{ task.name }}</h3>
 
-      <span class="priority"
-        [ngClass]="task.priority">
+      <span class="priority" [ngClass]="task.priority">
         {{ getPriorityLabel(task.priority) }}
       </span>
-
     </div>
 
-    
-    <div class="description_container" >
-      <p class="description"
-      [class.expanded]="expanded">
+    <div class="description_container">
+      <p class="description" [class.expanded]="expanded">
         {{ task.description }}
       </p>
 
@@ -28,20 +27,66 @@
       </button>
     </div>
 
-
     <div class="task-footer">
-
-      <span 
-        class="status" 
-        [ngClass]="task.status">
+      <span class="status" [ngClass]="task.status">
         {{ getStatusLabel(task.status) }}
       </span>
 
       <span class="date">
         {{ task.updated_at | date:'dd/MM/yyyy' }}
       </span>
-
     </div>
 
   </div>
+<div
+  class="invitation-menu"
+  *ngIf="openedMenu && hasPendingRequest"
+  (click)="$event.stopPropagation()">
+
+  <!-- Solicitud recibida para aprobar -->
+  <ng-container *ngIf="isApprovalRequest">
+    <p>Un usuario ha solicitado colaborar en tu tarea.</p>
+
+    <button
+      class="btn-accept"
+      (click)="aceptarColab()">
+      Aprobar solicitud
+    </button>
+
+    <button
+      class="btn-cancel"
+      (click)="cancelarColab()">
+      Rechazar solicitud
+    </button>
+  </ng-container>
+
+  <!-- Invitación recibida -->
+  <ng-container *ngIf="isReceivedInvitation">
+    <p>Has recibido una invitación para colaborar.</p>
+
+    <button
+      class="btn-accept"
+      (click)="aceptarColab()">
+      Aceptar invitación
+    </button>
+
+    <button
+      class="btn-cancel"
+      (click)="cancelarColab()">
+      Rechazar invitación
+    </button>
+  </ng-container>
+
+  <!-- Solicitud enviada -->
+  <ng-container *ngIf="isOwnRequest">
+    <p>Tu solicitud de colaboración está pendiente.</p>
+
+    <button
+      class="btn-cancel"
+      (click)="cancelarColab()">
+      Cancelar solicitud
+    </button>
+  </ng-container>
+
+</div>
 </div>
