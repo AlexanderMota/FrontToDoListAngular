@@ -1,6 +1,6 @@
-import { AuthService } from '../../services/auth.service';
-import { AuthStateService } from '../../services/auth-state.service';
-import { Component } from '@angular/core';
+import { AuthService } from '../../../services/auth.service';
+import { AuthStateService } from '../../../services/auth-state.service';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,6 +24,9 @@ import { Router } from '@angular/router';
   styleUrl: './login-form.component.scss'
 })
 export class LoginFormComponent {
+
+  @Output() 
+  forgotPasswordRequested = new EventEmitter<string>();
 
   loginForm: FormGroup;
 
@@ -53,5 +56,8 @@ export class LoginFormComponent {
 
       }});
     }
+  }
+  onForgotPassword() {
+    this.forgotPasswordRequested.emit(this.loginForm.value.email ?? '');
   }
 }

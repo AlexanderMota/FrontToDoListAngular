@@ -1,16 +1,16 @@
 import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { isPlatformBrowser, DatePipe, NgClass, NgIf, CommonModule } from '@angular/common';
+import { DatePipe, NgClass, NgIf, CommonModule, isPlatformBrowser } from '@angular/common';
 import { TaskService } from '../../services/task.service';
 import { PRIORITIES, STATUS, Task, VISIBILITY, getPriorityLabel, getStatusLabel, getVisibilityLabel } from '../../models/tarea.model';
 import { FormsModule } from '@angular/forms';
-import { CommentsComponent } from './comments/comments.component';
-import { CollaboratorsComponent } from './collaborators/collaborators.component';
-import { SubtareasComponent } from './subtareas/subtareas.component';
+import { CommentsComponent } from '../../components/tareas/comments/comments.component';
+import { CollaboratorsComponent } from '../../components/task_requests/collaborators/collaborators.component'
+import { SubtareasComponent } from '../../components/tareas/subtareas/subtareas.component';
 import { AuthStateService } from '../../services/auth-state.service';
 import { getAvatarUrl, User } from '../../models/user.model';
 import { ReactiveFormsModule } from '@angular/forms';
-import { InvitationComponent } from './invitation/invitation.component';
+import { InvitationComponent } from '../../components/task_requests/invitation/invitation.component';
 
 @Component({
   selector: 'app-tarea',

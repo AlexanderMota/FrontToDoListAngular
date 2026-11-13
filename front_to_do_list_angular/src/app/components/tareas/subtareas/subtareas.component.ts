@@ -1,6 +1,6 @@
 import { Component, Input, inject,PLATFORM_ID } from '@angular/core';
 import { Task } from '../../../models/tarea.model';
-import { TareaCardComponent } from '../../../components/tareas/tarea-card/tarea-card.component';
+import { TareaCardComponent } from '../tarea-card/tarea-card.component';
 import { NgIf, NgFor, isPlatformBrowser } from '@angular/common';
 import { TaskService } from '../../../services/task.service';
 import { Router } from '@angular/router';

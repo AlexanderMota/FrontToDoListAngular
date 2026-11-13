@@ -32,4 +32,19 @@ export class AuthService {
       `${this.apiUrl}logout`, {}, { withCredentials: true }
     );
   }
+  forgotPassword(email: string) {
+    return this.http.post<{ message: string; user: object }>(
+      `${this.apiUrl}forgot-password`,
+      { email: email }
+    );
+  }
+  resetPassword(token: string, password: string) {
+    return this.http.post<{ message: string; user: object }>(
+      `${this.apiUrl}reset-password`,
+      {
+        token,
+        password
+      }
+    );
+  }
 }

@@ -77,6 +77,7 @@
       (click)="closeOnOutsideClick($event)">
 
       <app-login-form class="appLoginForm" [class.show]="boolFormLogIn" 
+        (forgotPasswordRequested)="toggleFormForgotPassword($event)"
         (click)="$event.stopPropagation()">
       </app-login-form>
     </div>
@@ -87,6 +88,16 @@
       <app-register-form class="appRegisterForm" [class.show]="boolFormRegister" 
         (click)="$event.stopPropagation()">
       </app-register-form>
+    </div>
+
+    <div [class.show]="boolFormForgotPassword" class="registerForm" 
+      (click)="closeOnOutsideClick($event)">
+      
+      <app-forgot-password class="appForgotPasswordForm" [class.show]="boolFormForgotPassword" 
+        [email]="emailToRecover"
+        (backToLogin)="toggleFormLogIn()"
+        (click)="$event.stopPropagation()">
+      </app-forgot-password>
     </div>
   </div>
 </div>

@@ -1,17 +1,23 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginFormComponent } from '../../components/login-form/login-form.component';
+import { LoginFormComponent } from '../../components/authentication/login-form/login-form.component';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router } from '@angular/router';
 import { AuthStateService } from '../../services/auth-state.service';
-import { RegisterFormComponent } from '../../components/register-form/register-form.component';
+import { RegisterFormComponent } from '../../components/authentication/register-form/register-form.component';
 import { MatButtonModule } from '@angular/material/button';
+import { ForgotPasswordComponent } from '../../components/authentication/forgot-password/forgot-password.component';
 
 
 @Component({
   selector: 'app-landing',
-  imports: [CommonModule, LoginFormComponent, RegisterFormComponent,
-      MatButtonModule],
+  imports: [
+    CommonModule, 
+    LoginFormComponent, 
+    RegisterFormComponent, 
+    ForgotPasswordComponent,
+    MatButtonModule
+  ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
   animations: [
@@ -30,17 +36,31 @@ export class LandingComponent {
 
   boolFormLogIn: boolean = false;
   boolFormRegister: boolean = false;
+  boolFormForgotPassword: boolean = false;
   title = 'ToDo List';
+  emailToRecover = '';
   
   constructor(private authState: AuthStateService, private router: Router) {}
 
 
   toggleFormLogIn(){
     this.boolFormLogIn = true;
+    this.boolFormRegister = false;
+    this.boolFormForgotPassword = false;
   }
 
   toggleFormRegister(){
     this.boolFormRegister = true;
+    this.boolFormForgotPassword = false;
+    this.boolFormLogIn = false;
+  }
+
+  toggleFormForgotPassword(email: string){
+    this.emailToRecover = email;
+
+    this.boolFormLogIn = false;
+    this.boolFormRegister = false;
+    this.boolFormForgotPassword = true;
   }
 
   ngOnInit(): void {
