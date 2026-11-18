@@ -65,8 +65,10 @@
       <h3>Descripción</h3>
 
       <ng-container *ngIf="!editing; else editDescription">
-
-        <p class="task-description">{{ task.description }}</p>
+      <div
+        class="task-description markdown-content"
+        [innerHTML]="task.description | markdown">
+      </div>
 
       </ng-container>
 

@@ -11,6 +11,7 @@ import { AuthStateService } from '../../services/auth-state.service';
 import { getAvatarUrl, User } from '../../models/user.model';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InvitationComponent } from '../../components/task_requests/invitation/invitation.component';
+import { MarkdownPipe } from '../../pipes/markdown.pipe';
 
 @Component({
   selector: 'app-tarea',
@@ -24,7 +25,8 @@ import { InvitationComponent } from '../../components/task_requests/invitation/i
     CommentsComponent, 
     SubtareasComponent,
     CollaboratorsComponent,
-    InvitationComponent
+    InvitationComponent,
+    MarkdownPipe
   ],
   templateUrl: './tarea.component.html',
   styleUrl: './tarea.component.scss'

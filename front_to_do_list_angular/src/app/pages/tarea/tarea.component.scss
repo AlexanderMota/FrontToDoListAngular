@@ -361,5 +361,37 @@
 }
 
 
+.markdown-content {
+  overflow-wrap: anywhere;
 
+  p {
+    margin: 0 0 10px;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  ul, ol {
+    padding-left: 24px;
+    margin: 8px 0;
+  }
+
+  h1, h2, h3 {
+    margin: 14px 0 8px;
+  }
+
+  blockquote {
+    border-left: 3px solid #888;
+    padding-left: 12px;
+    margin: 10px 0;
+  }
+
+  pre {
+    overflow-x: auto;
+    padding: 12px;
+    border-radius: 6px;
+    background: #f1f1f1;
+  }
+}
 

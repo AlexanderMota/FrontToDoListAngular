@@ -5,12 +5,13 @@ import { AuthStateService } from '../../../../services/auth-state.service';
 import { CommentService } from '../../../../services/comment.service';
 import { CreateCommentComponent } from '../create-comment/create-comment.component';
 import { FormsModule } from '@angular/forms';
+import { MarkdownPipe } from '../../../../pipes/markdown.pipe';
 
 import { getAvatarUrl } from '../../../../models/user.model';
 
 @Component({
   selector: 'app-comment-card',
-  imports: [DatePipe, NgIf, NgFor, FormsModule, CreateCommentComponent],
+  imports: [DatePipe, NgIf, NgFor, FormsModule, CreateCommentComponent,MarkdownPipe],
   templateUrl: './comment-card.component.html',
   styleUrl: './comment-card.component.scss'
 })

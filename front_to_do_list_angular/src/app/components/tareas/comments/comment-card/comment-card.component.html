@@ -38,14 +38,10 @@
 
     <ng-container *ngIf="!editingComment; else editMode">
 
-      <p
-        class="comentario-content"
-        [class.expanded]="expanded">
-
-        {{ comentario.comment.content }}
-
-      </p>
-
+      <div
+        class="comentario-content markdown-content"
+        [innerHTML]="comentario.comment.content | markdown">
+      </div>
     </ng-container>
 
     <ng-template #editMode>
