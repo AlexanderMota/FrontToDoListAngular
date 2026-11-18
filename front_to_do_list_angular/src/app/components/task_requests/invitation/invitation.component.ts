@@ -40,35 +40,27 @@ export class InvitationComponent {
         private router: Router ){
   }
 
-  ngOnInit(){
-    this.route.paramMap.subscribe(() => {
-      this.loadInvitation();
-    });
+ngOnChanges() {
+  if (this.task_id) {
+    this.invitacion = null;
+    this.openedMenu = false;
 
-  } 
-  ngOnChanges() {
-
-      if (this.task_id) {
-
-        this.loadInvitation();
-        
-      }
-
+    this.loadInvitation();
   }
+}
   
-  loadInvitation(){
-    this.userServ.getInvitation(this.task_id).subscribe({
-      next : (res) => {
-        console.log("loadInvitation",res);
-        if(res.invitation!.request_task){
-          this.invitacion = res.invitation!;
-        }else{
-          this.invitacion = null;
-        }
-      },
-      error : (err) => console.log(err)
-    });
-  }
+  loadInvitation() {
+  this.userServ.getInvitation(this.task_id).subscribe({
+    next: (res) => {
+      this.invitacion = res.invitation?.request_task
+        ? res.invitation : null;
+    },
+    error: (err) => {
+      console.error(err);
+      this.invitacion = null;
+    }
+  });
+}
 
   aceptarColab(request_id:number){
     this.userServ.updateSolicitudColaboracion(request_id.toString()).subscribe({

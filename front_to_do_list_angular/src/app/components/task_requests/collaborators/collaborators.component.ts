@@ -34,56 +34,61 @@ export class CollaboratorsComponent {
   
   constructor( private userServ: UserService ) { }
   
-  ngOnInit(){
-    this.loadCollabs();
-  }
+ngOnInit() {
+  this.searchControl.valueChanges.pipe(
+    debounceTime(300),
+    distinctUntilChanged()
+  ).subscribe(value => {
 
-  ngOnChanges() {
-    this.loadCollabs();
-  }
+    if (!value || value.trim().length < 1) {
+      this.results = [];
+      this.searchResultsVisible = false;
+      return;
+    }
 
-  loadCollabs(){
-
-    this.userServ.getCollabsConfirmed(this.task_id).subscribe({
-      next : (res) => this.colaboradores = res.collaborators!,
-      error : (err) => console.log(err)
-    });
-    
-    this.userServ.getCollabsPending(this.task_id).subscribe({
-      next : (res) => {
-        this.colaboradoresPendientes = res.collaborators!;
-
-        this.isCollaborator = this.colaboradoresPendientes.some(
-          c => c.user.user_id == this.currentUser
-        );
+    this.userServ.searchUsers(value, this.task_id).subscribe({
+      next: res => {
+        this.results = res.users ?? [];
+        this.searchResultsVisible = this.results.length > 0;
       },
-      error : (err) => console.log(err)
+      error: err => console.error(err)
     });
+  });
+}
 
-    this.searchControl.valueChanges.pipe(
+ngOnChanges() {
+  if (this.task_id) {
+    this.colaboradores = [];
+    this.colaboradoresPendientes = [];
+    this.isCollaborator = false;
+    this.openedMenu = null;
+    this.results = [];
+    this.searchResultsVisible = false;
+    this.searchControl.setValue('', { emitEvent: false });
 
-      debounceTime(300),
-
-      distinctUntilChanged()
-
-    ).subscribe(value => {
-
-      if (!value || value.trim().length < 1) {
-        this.results = [];
-        this.searchResultsVisible = false;
-        return;
-      }
-
-      this.userServ.searchUsers(value!, this.task_id).subscribe({
-
-        next: res => {
-          this.results = res.users!;
-          this.searchResultsVisible = this.results.length > 0;
-        },
-        error: err => console.error(err)
-      });
-    });
+    this.loadCollabs();
   }
+}
+loadCollabs() {
+
+  this.userServ.getCollabsConfirmed(this.task_id).subscribe({
+    next: (res) => {
+      this.colaboradores = res.collaborators ?? [];
+    },
+    error: (err) => console.error(err)
+  });
+
+  this.userServ.getCollabsPending(this.task_id).subscribe({
+    next: (res) => {
+      this.colaboradoresPendientes = res.collaborators ?? [];
+
+      this.isCollaborator = this.colaboradoresPendientes.some(
+        c => c.user.user_id === this.currentUser
+      );
+    },
+    error: (err) => console.error(err)
+  });
+}
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent){

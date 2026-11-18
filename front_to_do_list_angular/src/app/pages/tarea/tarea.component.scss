@@ -115,6 +115,10 @@
     justify-content: center;
   }
 }
+.task-description {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
 .task-info-grid {
   width: 100%;
   display: flex;

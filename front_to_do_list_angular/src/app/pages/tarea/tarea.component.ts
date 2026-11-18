@@ -72,11 +72,16 @@ export class TareaComponent {
     });
   }
   
-  loadTask(){
+  loadTask() {
 
     this.task_id = this.route.snapshot.paramMap.get('id')!;
 
     const parent = this.route.snapshot.queryParamMap.get('parent');
+
+    // Restablecer el estado al cambiar de tarea
+    this.modoCreacion = false;
+    this.editing = false;
+    this.canAccessParent = false;
 
     if (this.task_id === 'nueva') {
 
@@ -100,15 +105,16 @@ export class TareaComponent {
       return;
     }
 
-    this.canAccessParent = false;
+    // Evitar mostrar temporalmente los datos de la tarea anterior
+    this.task = undefined!;
 
     this.taskServ.getTaskById(this.task_id).subscribe({
       next: (response) => {
+
         console.log(response.message);
 
         this.task = response.task!;
 
-        // Comprobar acceso a la tarea padre.
         if (this.task.parent_task_id != null) {
           this.checkParentAccess(this.task.parent_task_id);
         }
@@ -131,21 +137,24 @@ export class TareaComponent {
   }
 
   saveTask() {
-    this.editing = false;
 
     if (this.modoCreacion) {
 
       this.taskServ.postTask(this.task).subscribe({
-        next: res => {
+        next: (res) => {
           console.log(res.message);
-          this.task = res.task!;
-          this.router.navigate([
-            '/tarea',
-            this.task.task_id
-          ]);
+
+          const newTaskId = res.task?.task_id;
+
+          if (newTaskId == null) {
+            console.error('La respuesta no contiene el identificador de la tarea');
+            return;
+          }
+
+          this.router.navigate(['/tarea', newTaskId]);
         },
-        error: err => {
-          console.log(err);
+        error: (err) => {
+          console.error(err);
         }
       });
 
@@ -154,8 +163,9 @@ export class TareaComponent {
 
     this.taskServ.updateTask(this.task).subscribe({
       next: (res) => {
-        console.log(res.message);
-        this.task = res.task!;
+        //console.log(res.message);
+        //this.task = res.task!;
+        this.editing = false;
       },
       error: (err) => {
         console.log(err);
