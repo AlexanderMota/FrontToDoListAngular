@@ -45,7 +45,7 @@ export class HomeComponent {
 
     this.tarServ.getParentTasks().subscribe({
       next: (response) => {
-        this.myTasks = response.tasks!; // Asignar las tareas obtenidas a la propiedad tareas
+        this.myTasks = response.tasks!; 
       },
       error: (err) => {
         console.error('Error al obtener las tareas:', err);
@@ -56,7 +56,7 @@ export class HomeComponent {
     });
     this.tarServ.getCollabTasks().subscribe({
       next: (response) => {
-        this.colTasks = response.tasks!; // Asignar las tareas obtenidas a la propiedad tareas
+        this.colTasks = response.tasks!;
       },
       error: (err) => {
         console.error('Error al obtener las tareas:', err);
@@ -64,7 +64,7 @@ export class HomeComponent {
     });
     this.tarServ.getInvitedTasks().subscribe({
       next: (response) => {
-        this.reqTasks = response.tasks!; // Asignar las tareas obtenidas a la propiedad tareas
+        this.reqTasks = response.tasks!;
       },
       error: (err) => {
         console.error('Error al obtener las tareas:', err);
@@ -72,7 +72,7 @@ export class HomeComponent {
     }); 
     this.tarServ.getPublicTasks().subscribe({
       next: (response) => {
-        this.publicTasks = response.tasks!; // Asignar las tareas obtenidas a la propiedad tareas
+        this.publicTasks = response.tasks!;
       },
       error: (err) => {
         console.error('Error al obtener las tareas:', err);

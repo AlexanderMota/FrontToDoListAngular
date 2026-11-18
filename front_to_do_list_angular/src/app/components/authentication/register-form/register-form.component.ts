@@ -26,32 +26,59 @@ import { switchMap } from 'rxjs';
 })
 export class RegisterFormComponent {
   registerForm: FormGroup;
+  //errorMessage = '';
+  loading = false;
 
-  constructor(private fb: FormBuilder, private authServ:AuthService, private router: Router ) {
+  constructor(
+    private fb: FormBuilder, 
+    private authServ:AuthService, 
+    private router: Router ) {
+
     this.registerForm = this.fb.group({
-  name: ['', [ Validators.maxLength(45) ]],
 
-  lastname: ['', [ Validators.maxLength(45) ]],
+      username: ['', [
+        Validators.required, 
+        Validators.minLength(3),
+        Validators.maxLength(30)
+      ]],
+      email: ['', [
+        Validators.required, 
+        Validators.email
+      ]],
 
-  username: ['', [
-    Validators.required, 
-    Validators.minLength(3),
-    Validators.maxLength(30)
-  ]],
+      name: ['', [ Validators.maxLength(45) ]],
+      lastname: ['', [ Validators.maxLength(45) ]],
 
-  email: ['', [
-    Validators.required, 
-    Validators.email
-  ]],
-
-  phone: ['', [ Validators.pattern(/^[0-9]{9}$/) ]],
-
-  password: ['', [Validators.required, Validators.minLength(6)]],
-
+      phone: ['', [ Validators.pattern(/^[0-9]{9}$/) ]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       rememberMe: [false]
     });
+
+    this.registerForm.get('email')?.valueChanges.subscribe(() => {
+      const emailControl = this.registerForm.get('email');
+
+      if (emailControl?.hasError('emailExists')) {
+        const errors = { ...emailControl.errors };
+        delete errors['emailExists'];
+
+        emailControl.setErrors(
+          Object.keys(errors).length ? Object.keys(errors) : null
+        );
+      }
+    });
+  /*  this.registerForm.get('email')?.valueChanges.subscribe(value => {
+  const control = this.registerForm.get('email');
+
+  console.log('Email:', value);
+  console.log('Válido:', control?.valid);
+  console.log('Errores:', control?.errors);
+});*/
   }
   onRegister(): void {
+    
+    /*this.registerForm.get('email')?.valueChanges.subscribe(() => {
+      this.errorMessage = '';
+    });*/
 
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
@@ -73,37 +100,30 @@ export class RegisterFormComponent {
     };
 
     this.authServ.register(newUser).pipe(
-
-      switchMap(() =>
-        this.authServ.login({
+      switchMap(() => {
+        this.loading = true;
+        return this.authServ.login({
           email: newUser.email,
           password: newUser.password!,
           rememberMe: this.registerForm.value.rememberMe
-        })
-      )
-
-    ).subscribe({
-
-      next: () => this.router.navigate(['/perfil']),
-      error: err => console.error(err)
-
-    });
-/*
-    this.authServ.register(newUser).subscribe({
-
-      next: response => {
-        console.log('Registro exitoso', response.user);
-
-        this.authServ.login({
-          email: newUser.email,
-          password: newUser.password
-        }).subscribe({
-          next: () => this.router.navigate(['/private']),
-          error: err => console.error('Error iniciando sesión automáticamente', err)
         });
-      },
-      error: err => console.error('Error en el registro', err)
+      })
+    ).subscribe({
+      next: () => this.router.navigate(['/perfil']),
+      error: err => {
+        //console.log(err.error.error);
+        const emailControl = this.registerForm.get('email');
+
+        //this.errorMessage = err.error.error;
+        if (err?.error) {
+          emailControl?.setErrors({
+            ...emailControl.errors,
+            emailExists: true
+          });
+
+          emailControl?.markAsTouched();
+        }
+      }
     });
-*/
   }
 }

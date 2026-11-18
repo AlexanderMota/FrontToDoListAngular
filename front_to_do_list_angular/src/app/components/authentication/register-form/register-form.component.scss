@@ -21,3 +21,18 @@
   justify-content:flex-end;
   margin-top:.5rem;
 }
+
+.error-message {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border-radius: 5px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #b3261e;
+  background-color: #fcebea;
+  border: 1px solid #f2c5c2;
+  position: relative;
+  top: -20px;
+  margin-bottom: -10px;
+}

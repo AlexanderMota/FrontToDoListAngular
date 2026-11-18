@@ -29,6 +29,8 @@ export class LoginFormComponent {
   forgotPasswordRequested = new EventEmitter<string>();
 
   loginForm: FormGroup;
+  errorMessage = '';
+  loading = false;
 
   constructor(private fb: FormBuilder, private authServ:AuthService, private router: Router, private authState: AuthStateService ) {
     this.loginForm = this.fb.group({
@@ -39,23 +41,38 @@ export class LoginFormComponent {
   }
 
   onLogin() {
-    if (this.loginForm.valid) {
+    this.errorMessage = '';
 
-      this.authServ.login({ 
-        email: this.loginForm.value.email, 
-        password: this.loginForm.value.password,
-        rememberMe: this.loginForm.value.rememberMe
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
+    }
 
-      }).subscribe({ next : response => {
+    this.loading = true;
+
+    this.authServ.login({
+      email: this.loginForm.value.email,
+      password: this.loginForm.value.password,
+      rememberMe: this.loginForm.value.rememberMe
+    }).subscribe({
+      next: response => {
+        this.loading = false;
+
         console.log('Login exitoso', response.user!.email);
+
         this.authState.loadUser();
         this.router.navigate(['/home']);
+      },
+      error: err => {
+        this.loading = false;
 
-      }, error: err => {
-        console.error('Error en el login', err);
+        this.errorMessage =
+          err?.error?.error ||
+          'No se ha podido iniciar sesión. Inténtalo de nuevo.';
 
-      }});
-    }
+        console.error('Error en el login:', err);
+      }
+    });
   }
   onForgotPassword() {
     this.forgotPasswordRequested.emit(this.loginForm.value.email ?? '');

@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { AbstractControl, AbstractControlOptions, FormBuilder, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,10 +18,13 @@ import { UserService } from '../../../services/user.service';
 })
 export class CambioPasswordFormComponent {
 
-  @Input()
-  editingPass = false;
+  @Output()
+  editingPass = new EventEmitter<void>();
 
   passwordForm: any;
+  errorMessage = '';
+  successMessage = '';
+  loading = false;
 
   private fb = inject(FormBuilder);
   
@@ -41,6 +44,8 @@ export class CambioPasswordFormComponent {
 
   
   onChangePassword(): void {
+    this.errorMessage = '';
+    this.successMessage = '';
 
     if (this.passwordForm.invalid) {
       this.passwordForm.markAllAsTouched();
@@ -49,25 +54,31 @@ export class CambioPasswordFormComponent {
 
     const form = this.passwordForm.getRawValue();
 
+    this.loading = true;
+
     this.userService.updatePassword({
       currentPassword: form.currentPassword,
       newPassword: form.newPassword
     }).subscribe({
 
       next: (res) => {
-
-        console.log(res);
-
-        this.passwordForm.reset();
-
-        this.editingPass = false;
+        this.loading = false;
+        this.successMessage = res.message || 'Contraseña actualizada correctamente.';
+        //this.passwordForm.reset();
       },
-      error: (err) => console.error(err)
+
+      error: (err) => {
+        this.loading = false;
+
+        this.errorMessage =
+          err?.error?.error ||
+          'No se ha podido cambiar la contraseña. Inténtalo de nuevo.';
+      }
     });
   }
 
   cancelChangePassword(){
-    this.editingPass = false;
+    this.editingPass.emit();
   }
   passwordsMatchValidator(
     control: AbstractControl

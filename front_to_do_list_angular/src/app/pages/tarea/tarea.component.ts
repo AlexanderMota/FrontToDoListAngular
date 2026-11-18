@@ -45,6 +45,8 @@ export class TareaComponent {
 
   private platformId = inject(PLATFORM_ID);
 
+  canAccessParent = false;
+
   constructor(private taskServ: TaskService, 
     private authState : AuthStateService,
     private router: Router, 
@@ -98,10 +100,18 @@ export class TareaComponent {
       return;
     }
 
+    this.canAccessParent = false;
+
     this.taskServ.getTaskById(this.task_id).subscribe({
       next: (response) => {
         console.log(response.message);
+
         this.task = response.task!;
+
+        // Comprobar acceso a la tarea padre.
+        if (this.task.parent_task_id != null) {
+          this.checkParentAccess(this.task.parent_task_id);
+        }
       },
       error: (err) => {
         console.error('Error al obtener la tarea:', err);
@@ -152,7 +162,29 @@ export class TareaComponent {
       }
     });
   }
+  checkParentAccess(parent_task_id: number) {
 
+    this.taskServ.getTaskById(parent_task_id.toString()).subscribe({
+
+      next: () => {
+        this.canAccessParent = true;
+      },
+
+      error: (err) => {
+
+        this.canAccessParent = false;
+
+        // Un 403 o 404 es un resultado esperado:
+        // el usuario no tiene acceso al padre.
+        if (err.status !== 403 && err.status !== 404) {
+          console.error('Error comprobando acceso a la tarea padre:', err);
+        }
+
+      }
+
+    });
+
+  }
   deleteTask(){
     this.taskServ.deleteTask(this.task_id).subscribe({
       next: (res) =>{
@@ -170,6 +202,11 @@ export class TareaComponent {
   getVisibilityLabel = getVisibilityLabel;
 
   volverAlPadre(){
-    this.router.navigate(['/tarea/',this.task.parent_task_id]);
+
+    if (!this.task.parent_task_id || !this.canAccessParent) {
+      return;
+    }
+
+    this.router.navigate(['/tarea', this.task.parent_task_id]);
   }
 }

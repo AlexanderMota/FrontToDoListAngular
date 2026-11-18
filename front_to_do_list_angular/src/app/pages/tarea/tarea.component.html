@@ -8,7 +8,7 @@
 
         <ng-container *ngIf="!editing; else editName">
 
-          <h1>{{ task.name }}</h1>
+            <h1>{{ task.name }}</h1>
 
         </ng-container>
 
@@ -22,7 +22,7 @@
 
         </ng-template>
 
-        
+          
         <div *ngIf="!editing"
             class="priority_label">
           <span>
@@ -38,34 +38,26 @@
 
           </span>
         </div>
+      </div>
 
+      <div class="comentario-usuario" *ngIf="!editing">
 
-    </div>
-
-        <div class="comentario-usuario" *ngIf="!editing">
-
-          @if (task.avatar_url) {
-
-            <img
-              [src]="getAvatarUrl(task.avatar_url)"
-              [alt]="task.username"
-              [title]="task.username"
-              class="avatar">
-
-          } @else {
-
+        @if (task.avatar_url) {
+          <img
+            [src]="getAvatarUrl(task.avatar_url)"
+            [alt]="task.username"
+            [title]="task.username"
+            class="avatar">
+        } @else {
           <div class="avatar">
             {{ task.username?.charAt(0)?.toUpperCase() }}
           </div>
-          }
+        }
+        <span class="username">
+          {{ task.username }}
+        </span>
 
-
-
-          <span class="username">
-            {{ task.username }}
-          </span>
-
-        </div>
+      </div>
     </div>
 
     <div class="task-section" [class.task-section-edicion]="editing">
@@ -208,7 +200,7 @@
 
           <div
             class="info-card parent_task_card"
-            *ngIf="task.parent_task_id"
+            *ngIf="task.parent_task_id != null && canAccessParent"
             (click)="volverAlPadre()">
 
             <span class="label">Tarea padre</span>
@@ -297,7 +289,8 @@
 
 <app-subtareas
   *ngIf="!editing && !modoCreacion && task"
-  [parent_task_id]="task_id">
+  [parent_task]="task"
+  [currentUser]="currentUser">
 </app-subtareas>
 
 <app-comments 

@@ -216,6 +216,7 @@
         </button>
 
         <button
+          (click)="confirmDeleteProfile()"
           class="btn-delete">
 
           Borrar cuenta
@@ -260,7 +261,9 @@
   
   <app-cambio-password-form  class="appPassForm"
     [class.show]="editingPass"
-    [editingPass]="editingPass"
+    
+    
+    (editingPass)="openChangePassword()"
     (click)="$event.stopPropagation()">
   </app-cambio-password-form>
 </div>

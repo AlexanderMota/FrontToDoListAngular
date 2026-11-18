@@ -7,7 +7,8 @@
                     Tareas derivadas
                 </p>
                 <button class="btn-new-task"
-                    (click)="createSubtask()">
+                    (click)="createSubtask()"
+                    *ngIf="parent_task?.created_by == currentUser">
 
                     + Añadir tarea derivada
                 </button>

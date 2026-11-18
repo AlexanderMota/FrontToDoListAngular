@@ -112,4 +112,10 @@ export class UserService {
       { withCredentials: true }
     );
   }
+  deleteProfile(): Observable<UserResponse> {
+    return this.http.delete<UserResponse>(
+      `${this.apiUrl}`, 
+      { withCredentials: true }
+    );
+  }
 }

@@ -22,7 +22,14 @@
         La contraseña es obligatoria y debe tener al menos 6 caracteres
       </mat-error>
     </mat-form-field>
+<div
+  class="error-message"
+  *ngIf="errorMessage"
+  role="alert">
 
+  {{ errorMessage }}
+
+</div>
     <div
       class="actions">
 
@@ -34,9 +41,15 @@
       </div>
 
       <!-- Botón de Enviar -->
-      <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
-        Acceder
-      </button>
+      <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="loginForm.invalid || loading">
+
+      {{ loading ? 'Accediendo...' : 'Acceder' }}
+
+    </button>
 
     </div>
   </form>

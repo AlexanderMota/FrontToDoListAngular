@@ -15,73 +15,40 @@ import { Subscription } from 'rxjs';
 })
 export class SubtareasComponent {
 
-
-  private userSubscription?: Subscription;
   private platformId = inject(PLATFORM_ID);
 
   @Input()
-  parent_task_id = "";
-  
+  parent_task: Task | null = null;
+  @Input()
   currentUser = "";
+  
   addingTask = false;
   subtasks : Task[] = [];
 
   constructor( private taskServ: TaskService, private router: Router, private authState: AuthStateService ) { }
 
-
   ngOnInit() {
-
-      if (!isPlatformBrowser(this.platformId)) {
-          return;
-      }
-
-     this.userSubscription = this.authState.user$.subscribe(user => {
-      this.currentUser = user?.user_id ?? '';
-    });
-    
-      if (this.parent_task_id) {
-
-          this.loadSubTasks();
-
-      }
-
+    if (!isPlatformBrowser(this.platformId)) return;
+    if (this.parent_task?.task_id) this.loadSubTasks();
   }
 
   ngOnChanges() {
-
-      if (this.parent_task_id) {
-
-          this.loadSubTasks();
-
-      }
-
+    if (this.parent_task?.task_id) this.loadSubTasks();
   }
   loadSubTasks() {
   
-      if (!isPlatformBrowser(this.platformId)) {
-        return;
-      }
+    if (!isPlatformBrowser(this.platformId)) return;
     
-    this.taskServ.getSubTasks(this.parent_task_id).subscribe({
-      next: (response) => {
-        this.subtasks = response.tasks!;
-      },
-      error: (err) => {
-        console.error('Error al obtener la tarea:', err);
-      }
+    this.taskServ.getSubTasks(String(this.parent_task?.task_id)).subscribe({
+      next: (response) => this.subtasks = response.tasks!,
+      error: (err) => console.error('Error al obtener la tarea:', err)
     });
   }
 
   createSubtask() {
-
     this.router.navigate(
       ['/tarea/nueva'],
-      {
-        queryParams: {
-          parent: this.parent_task_id
-        }
-      }
+      { queryParams: {parent: String(this.parent_task?.task_id)}}
     );
-
   }
 }

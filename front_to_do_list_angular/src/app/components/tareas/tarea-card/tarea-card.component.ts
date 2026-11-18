@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ElementRef, HostListener } from '@angular/core';
 import { getStatusLabel, getPriorityLabel, Task } from '../../../models/tarea.model';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
@@ -20,47 +20,56 @@ export class TareaCardComponent {
   expanded = false;
   openedMenu = false;
 
-  constructor(private router: Router,
-    private userServ: UserService) {
+  constructor(
+    private router: Router,
+    private userServ: UserService,
+    private elementRef: ElementRef<HTMLElement>) 
+  { }
+
+  @HostListener('document:click', ['$event'])
+  cerrarMenuFuera(event: MouseEvent) {
+
+    if (!this.openedMenu) return;
+
+    const target = event.target;
+
+    if (
+      target instanceof Node &&
+      !this.elementRef.nativeElement.contains(target)
+    ) {
+      this.openedMenu = false;
+    }
   }
+  get hasPendingRequest(): boolean { return this.task.request_task?.status === 'pending'; }
+  
+  get isApprovalRequest(): boolean {
+    return this.hasPendingRequest &&
+      this.task.created_by === this.currentUser &&
+      this.task.request_task?.sender_user_id === null &&
+      this.task.request_task?.user_id !== this.currentUser;}
+  
+  get isReceivedInvitation(): boolean {
+    return this.hasPendingRequest &&
+      this.task.request_task?.user_id === this.currentUser &&
+      this.task.request_task?.sender_user_id !== null &&
+      this.task.request_task?.sender_user_id !== this.currentUser;}
+  
+  get isOwnRequest(): boolean {
+    return this.hasPendingRequest &&
+      this.task.request_task?.user_id === this.currentUser &&
+      this.task.request_task?.sender_user_id === null;}
 
-get hasPendingRequest(): boolean {
-  return this.task.request_task?.status === 'pending';
-}
-
-get isApprovalRequest(): boolean {
-  const request = this.task.request_task;
-
-  return this.hasPendingRequest &&
-    this.task.created_by === this.currentUser &&
-    request?.sender_user_id === null &&
-    request?.user_id !== this.currentUser;
-}
-
-get isReceivedInvitation(): boolean {
-  const request = this.task.request_task;
-
-  return this.hasPendingRequest &&
-    request?.user_id === this.currentUser &&
-    request?.sender_user_id !== null &&
-    request?.sender_user_id !== this.currentUser;
-}
-
-get isOwnRequest(): boolean {
-  const request = this.task.request_task;
-
-  return this.hasPendingRequest &&
-    request?.user_id === this.currentUser &&
-    request?.sender_user_id === null;
-}
+  get isOwnInvitation(): boolean {
+    return this.hasPendingRequest &&
+      this.task.created_by === this.currentUser &&
+      this.task.request_task?.sender_user_id === this.currentUser &&
+      this.task.request_task?.user_id !== this.currentUser;
+  }
   abrirTarea() {
     if (this.hasPendingRequest) {
-      console.log('abrirTarea', this.task, this.hasPendingRequest, this.isReceivedInvitation, this.isOwnRequest);
-    
       this.openedMenu = !this.openedMenu;
       return;
     }
-
     this.router.navigate(['/tarea', this.task.task_id]);
   }
 

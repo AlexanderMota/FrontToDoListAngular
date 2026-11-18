@@ -1,5 +1,7 @@
 import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
+import { AuthStateService } from '../../services/auth-state.service';
 import { User } from '../../models/user.model';
 import { isPlatformBrowser } from '@angular/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -8,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CambioPasswordFormComponent } from './cambio-password-form/cambio-password-form.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-perfil-usuario',
@@ -29,7 +32,7 @@ export class PerfilUsuarioComponent {
   backupUser!: User;
 
 
-  constructor(private userService: UserService) { 
+  constructor(private userService: UserService, private authServ :AuthService, private authState: AuthStateService, private router: Router) { 
     this.user = {
       user_id:'',
       name: '',
@@ -67,8 +70,8 @@ export class PerfilUsuarioComponent {
     this.editing = true;
 
   }
-  openChangePassword(){
-    this.editingPass = true;
+  openChangePassword() {
+    this.editingPass = false;
   }
   cancelEdit() {
 
@@ -129,6 +132,30 @@ export class PerfilUsuarioComponent {
       }
     });
   }
+confirmDeleteProfile() {
+  const confirmar = window.confirm(
+    '¿Estás seguro de que quieres eliminar tu cuenta? Esta acción es irreversible y perderás todos tus datos.'
+  );
+
+  if (!confirmar) return;
+
+  this.userService.deleteProfile().subscribe({
+    next: () => {
+      this.authServ.logout().subscribe({
+        next: () => {
+          this.authState.clearUser();
+          this.router.navigate(['/']);
+        },
+        error: err => {
+          console.error('Error al cerrar la sesión:', err);
+        }
+      });
+    },
+    error: err => {
+      console.error('Error al eliminar la cuenta:', err);
+    }
+  });
+}
   
   closeOnOutsideClick(event: Event) {
     setTimeout(() => {

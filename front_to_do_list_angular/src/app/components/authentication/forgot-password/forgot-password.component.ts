@@ -30,6 +30,9 @@ export class ForgotPasswordComponent {
   backToLogin = new EventEmitter<void>();
 
   loginForm: FormGroup;
+  errorMessage = '';
+  successMessage = '';
+  loading = false;
 
   constructor(private fb: FormBuilder, 
     private authServ:AuthService ) {
@@ -39,16 +42,31 @@ export class ForgotPasswordComponent {
   }
 
   onForgotPassword() {
-    if (this.loginForm.valid) {
+    this.errorMessage = '';
+    this.successMessage = '';
 
-      this.authServ.forgotPassword(this.loginForm.value.email).subscribe({ next : response => {
-        console.log('Recuperación de contraseña exitosa', response);
-
-      }, error: err => {
-        console.error('Error en la recuperación de contraseña', err);
-
-      }});
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
     }
+
+    this.loading = true;
+
+    this.authServ.forgotPassword(
+      this.loginForm.value.email
+    ).subscribe({
+      next: response => {
+        this.loading = false;
+        this.successMessage = response.message;
+      },
+      error: err => {
+        this.loading = false;
+
+        this.errorMessage =
+          err?.error?.error ||
+          'No se ha podido enviar el correo. Inténtalo de nuevo.';
+      }
+    });
   }
   toggleFormLogIn(){
     this.backToLogin.emit();
