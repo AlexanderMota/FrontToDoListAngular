@@ -9,7 +9,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { User } from '../../../models/user.model';
-import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-register-form',
@@ -25,9 +24,11 @@ import { switchMap } from 'rxjs';
   styleUrl: './register-form.component.scss'
 })
 export class RegisterFormComponent {
+
   registerForm: FormGroup;
-  //errorMessage = '';
   loading = false;
+  errorMessage = '';
+  successMessage = '';
 
   constructor(
     private fb: FormBuilder, 
@@ -66,19 +67,10 @@ export class RegisterFormComponent {
         );
       }
     });
-  /*  this.registerForm.get('email')?.valueChanges.subscribe(value => {
-  const control = this.registerForm.get('email');
-
-  console.log('Email:', value);
-  console.log('Válido:', control?.valid);
-  console.log('Errores:', control?.errors);
-});*/
   }
   onRegister(): void {
-    
-    /*this.registerForm.get('email')?.valueChanges.subscribe(() => {
-      this.errorMessage = '';
-    });*/
+    this.errorMessage = '';
+    this.successMessage = '';
 
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
@@ -87,7 +79,7 @@ export class RegisterFormComponent {
 
     const formValue = this.registerForm.getRawValue();
 
-    const newUser : User = {
+    const newUser: User = {
       user_id: "",
       name: formValue.name?.trim() || null,
       lastname: formValue.lastname?.trim() || null,
@@ -99,29 +91,44 @@ export class RegisterFormComponent {
       role: 'Viewer'
     };
 
-    this.authServ.register(newUser).pipe(
-      switchMap(() => {
-        this.loading = true;
-        return this.authServ.login({
-          email: newUser.email,
-          password: newUser.password!,
-          rememberMe: this.registerForm.value.rememberMe
-        });
-      })
-    ).subscribe({
-      next: () => this.router.navigate(['/perfil']),
-      error: err => {
-        //console.log(err.error.error);
-        const emailControl = this.registerForm.get('email');
+    this.loading = true;
+    this.errorMessage = '';
 
-        //this.errorMessage = err.error.error;
-        if (err?.error) {
+    this.authServ.register(newUser).subscribe({
+      next: (response) => {
+
+        this.errorMessage = '';
+
+        this.successMessage = response.message;
+      },
+
+      error: (err) => {
+        this.loading = false;
+
+        const message = err.error?.error || 'Error al registrar el usuario';
+
+        if (message.includes('email ya se encuentra registrado')) {
+          const emailControl = this.registerForm.get('email');
+
           emailControl?.setErrors({
             ...emailControl.errors,
             emailExists: true
           });
 
           emailControl?.markAsTouched();
+
+        } else if (message.includes('nickname ya se encuentra registrado')) {
+          const usernameControl = this.registerForm.get('username');
+
+          usernameControl?.setErrors({
+            ...usernameControl.errors,
+            usernameExists: true
+          });
+
+          usernameControl?.markAsTouched();
+
+        } else {
+          this.errorMessage = message;
         }
       }
     });

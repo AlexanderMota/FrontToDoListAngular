@@ -22,6 +22,19 @@ export class AuthService {
       `${this.apiUrl}register`, {user:user}, { withCredentials: true }
     );
   }
+  verifyEmail(token: string): Observable<UserResponse> {
+    return this.http.post<UserResponse>(
+      `${this.apiUrl}verify-email`,
+      { token:token }
+    );
+  }
+
+  resendVerificationEmail(email: string): Observable<UserResponse> {
+    return this.http.post<UserResponse>(
+      `${this.apiUrl}resend-verification`,
+      { email:email }
+    );
+  }
   login(user: { email: string, password: string, rememberMe: boolean }): Observable<UserResponse> {
     return this.http.post<UserResponse>(
       `${this.apiUrl}login`, {user:user}, { withCredentials: true }

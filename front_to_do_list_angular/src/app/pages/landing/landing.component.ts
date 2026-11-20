@@ -43,6 +43,18 @@ export class LandingComponent {
   constructor(private authState: AuthStateService, private router: Router) {}
 
 
+  ngOnInit(): void {
+
+    this.authState.user$.subscribe(user => {
+
+      if (user) {
+        this.router.navigate(['/home']);
+      }
+
+    });
+  }
+
+
   toggleFormLogIn(){
     this.boolFormLogIn = true;
     this.boolFormRegister = false;
@@ -56,23 +68,12 @@ export class LandingComponent {
   }
 
   toggleFormForgotPassword(email: string){
+    console.log('emailToRecover',email);
     this.emailToRecover = email;
 
     this.boolFormLogIn = false;
     this.boolFormRegister = false;
     this.boolFormForgotPassword = true;
-  }
-
-  ngOnInit(): void {
-
-    this.authState.user$.subscribe(user => {
-
-      if (user) {
-        this.router.navigate(['/home']);
-      }
-
-    });
-
   }
 
   closeOnOutsideClick(event: Event) {

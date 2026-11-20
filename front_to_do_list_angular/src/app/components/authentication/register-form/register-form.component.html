@@ -48,6 +48,15 @@
         El nombre de usuario es obligatorio
       </mat-error>
     </mat-form-field>
+    
+    <div
+      class="error-message"
+      *ngIf="registerForm.get('username')?.hasError('usernameExists')"
+      role="alert">
+
+      Este nickname ya se encuentra registrado.
+
+    </div>
 
     <!-- Nombre -->
     <mat-form-field appearance="outline" class="full-width">
@@ -94,12 +103,15 @@
       </mat-error>
     </mat-form-field>
 
+      <p *ngIf="successMessage" class="success-message">
+        {{ successMessage }}
+      </p>
     <div class="actions">
       <button
         mat-raised-button
         color="primary"
         type="submit"
-        [disabled]="registerForm.invalid">
+        [disabled]="registerForm.invalid || loading">
 
         Registrarse
 

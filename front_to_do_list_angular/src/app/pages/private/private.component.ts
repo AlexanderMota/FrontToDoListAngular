@@ -1,35 +1,39 @@
-import {  Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID  } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { NgIf } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
+
 import { ResetPasswordComponent } from '../../components/authentication/reset-password/reset-password.component';
-/*import { isPlatformBrowser } from '@angular/common';
-import { User } from '../../models/user.model';
-import { UserService } from '../../services/user.service';*/
+import { VerifyEmailComponent } from '../../components/authentication/verify-email/verify-email.component';
 
 @Component({
   selector: 'app-private',
-  imports: [ResetPasswordComponent],
+  imports: [
+    NgIf,
+    ResetPasswordComponent,
+    VerifyEmailComponent
+  ],
   templateUrl: './private.component.html',
   styleUrl: './private.component.scss'
 })
 export class PrivateComponent {
-  //mensaje: string = 'Espacio privado del usuario';
-  //private platformId = inject(PLATFORM_ID);
-  /*public userData: User | undefined; // Variable para almacenar los datos del perfil
-  public mensaje: string = ''; // Variable para almacenar los datos del perfil
 
-  constructor( private userServ: UserService) {
+  constructor(private route: ActivatedRoute,
+    @Inject(PLATFORM_ID) private platformId: Object) {
+      
+    }
+    ngOnInit(){
+      if (!isPlatformBrowser(this.platformId)) {
+        return;
+      }
+
+    }
+
+  get isResetPassword(): boolean {
+    return this.route.snapshot.routeConfig?.path === 'reset-password';
   }
 
-  ngOnInit(): void {
-    this.userServ.getPerfil().subscribe(user => {
-      console.log('Datos del perfil:', user); // Muestra los datos del perfil en la consola
-      if (user) {
-        this.userData = user;
-        this.mensaje = 'Usuario autenticado';
-      } else {
-        this.userData = undefined;
-        this.mensaje = 'Usuario no autenticado';
-      }
-    });
-  }*/
-
+  get isVerifyEmail(): boolean {
+    return this.route.snapshot.routeConfig?.path === 'verify-email';
+  }
 }

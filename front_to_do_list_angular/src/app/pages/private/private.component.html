@@ -1,14 +1,21 @@
-
 <div class="main">
-  <div class="content" >
+  <div class="content">
 
+    <div [class.show]="true" class="loginForm">
 
-
-
-    <div [class.show]="true" class="loginForm" >
-      
-      <app-reset-password class="appLoginForm" [class.show]="true" >
+      <app-reset-password
+        *ngIf="isResetPassword"
+        class="appLoginForm"
+        [class.show]="true">
       </app-reset-password>
+
+      <app-verify-email
+        *ngIf="isVerifyEmail"
+        class="appLoginForm"
+        [class.show]="true">
+      </app-verify-email>
+
     </div>
+
   </div>
 </div>

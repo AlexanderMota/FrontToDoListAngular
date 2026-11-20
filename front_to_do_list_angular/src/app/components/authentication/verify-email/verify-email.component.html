@@ -1,0 +1,24 @@
+<div class="verification-card">
+
+  <ng-container *ngIf="loading">
+    <h2>Verificación de correo electrónico</h2>
+    <p>Verificando tu correo electrónico...</p>
+  </ng-container>
+
+  <ng-container *ngIf="!loading">
+
+    <h2>
+      {{ success
+        ? '¡Correo electrónico verificado!'
+        : 'No se pudo verificar el correo' }}
+    </h2>
+
+    <p>{{ message }}</p>
+
+    <a routerLink="/" class="back-button">
+      Volver al inicio
+    </a>
+
+  </ng-container>
+
+</div>

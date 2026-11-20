@@ -30,7 +30,11 @@ export class LoginFormComponent {
 
   loginForm: FormGroup;
   errorMessage = '';
+  successMessage = '';
   loading = false;
+  reverify = false;
+  resendingVerification = false;
+  //emailNotVerified = false;
 
   constructor(private fb: FormBuilder, private authServ:AuthService, private router: Router, private authState: AuthStateService ) {
     this.loginForm = this.fb.group({
@@ -42,6 +46,8 @@ export class LoginFormComponent {
 
   onLogin() {
     this.errorMessage = '';
+    this.successMessage = '';
+    this.reverify = false;
 
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
@@ -58,19 +64,45 @@ export class LoginFormComponent {
       next: response => {
         this.loading = false;
 
-        console.log('Login exitoso', response.user!.email);
+        //console.log('Login exitoso', response.user!.email);
 
         this.authState.loadUser();
         this.router.navigate(['/home']);
       },
       error: err => {
+        //console.log(err.status);
         this.loading = false;
 
         this.errorMessage =
           err?.error?.error ||
           'No se ha podido iniciar sesión. Inténtalo de nuevo.';
 
-        console.error('Error en el login:', err);
+        if(err.status === 403 && err?.error?.error.includes('Debes verificar tu correo')){
+          this.reverify = true;
+        }
+      }
+    });
+  }
+  resendVerificationEmail(): void {
+    const email = this.loginForm.get('email')?.value;
+
+    if (!email || this.resendingVerification) return;
+
+    this.resendingVerification = true;
+    this.successMessage = '';
+
+    this.authServ.resendVerificationEmail(email).subscribe({
+      next: (res) => {
+        this.errorMessage = '';
+        this.resendingVerification = false;
+        this.reverify = false;
+        this.successMessage = res.message;
+      },
+      error: (err) => {
+        this.resendingVerification = false;
+        this.errorMessage =
+          err?.error?.error ||
+          'No se pudo reenviar el correo de verificación.';
       }
     });
   }

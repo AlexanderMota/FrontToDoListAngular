@@ -22,14 +22,32 @@
         La contraseña es obligatoria y debe tener al menos 6 caracteres
       </mat-error>
     </mat-form-field>
-<div
-  class="error-message"
-  *ngIf="errorMessage"
-  role="alert">
+    <div
+      class="error-message"
+      *ngIf="errorMessage"
+      role="alert">
 
-  {{ errorMessage }}
+      {{ errorMessage }} 
+      <button
+        *ngIf="reverify"
+        type="button"
+        class="boton_link link_resend"
+        [disabled]="resendingVerification"
+        (click)="resendVerificationEmail()">
+        {{ resendingVerification
+            ? 'Enviando correo...'
+            : 'Volver a enviar correo de verificación.' }}
+      </button>
+    </div>
+    
+    <div
+      class="success-message"
+      *ngIf="successMessage"
+      role="status">
 
-</div>
+      {{ successMessage }}
+
+    </div>
     <div
       class="actions">
 
@@ -37,7 +55,7 @@
     
         <!-- Recordarme -->
         <mat-checkbox formControlName="rememberMe">Mantener sesión iniciada</mat-checkbox>
-        <a (click)="onForgotPassword()">¿Has olvidado tu contraseña?</a>
+        <a class="boton_link link_forgot" (click)="onForgotPassword()">¿Has olvidado tu contraseña?</a>
       </div>
 
       <!-- Botón de Enviar -->

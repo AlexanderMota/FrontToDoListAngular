@@ -31,22 +31,39 @@ mat-error{
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  margin-top: -10px;
 
-  a{
-    font-size: small;
-    text-decoration: none;
-    align-self: flex-start;
-    margin-left: 10px;
-    color: #3f51b5;
-    cursor: pointer;
+  
+}
+.boton_link{
+  font-size: small;
+  text-decoration: none;
+  align-self: flex-start;
+  color: #3f51b5;
+  cursor: pointer;
 
-    &:hover{
-      text-decoration: underline;
-    }
+  &:hover{
+    text-decoration: underline;
   }
 }
+.link_resend {
+  border: none;
+  padding: 0;
+  font: inherit;
 
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+.link_resend:focus:not(:focus-visible) {
+  outline: none;
+}
 
+.link_forgot{
+  margin-left: 10px;
+
+}
 
 .error-message,
 .success-message {

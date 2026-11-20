@@ -1,5 +1,11 @@
+import { 
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges  } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
-import { Component, Output, EventEmitter, Input  } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,12 +27,12 @@ import { ReactiveFormsModule } from '@angular/forms';
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss'
 })
-export class ForgotPasswordComponent {
+export class ForgotPasswordComponent implements OnChanges {
 
-  @Input() 
+  @Input()
   email = '';
 
-  @Output() 
+  @Output()
   backToLogin = new EventEmitter<void>();
 
   loginForm: FormGroup;
@@ -34,11 +40,21 @@ export class ForgotPasswordComponent {
   successMessage = '';
   loading = false;
 
-  constructor(private fb: FormBuilder, 
-    private authServ:AuthService ) {
+  constructor(
+    private fb: FormBuilder,
+    private authServ: AuthService
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['email']) {
+      this.loginForm.patchValue({
+        email: this.email
+      });
+    }
   }
 
   onForgotPassword() {
