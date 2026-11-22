@@ -30,7 +30,8 @@ export class PerfilUsuarioComponent {
   editing = false;
   editingPass = false;
   backupUser!: User;
-
+  errorMessage = '';
+  successMessage = '';
 
   constructor(private userService: UserService, private authServ :AuthService, private authState: AuthStateService, private router: Router) { 
     this.user = {
@@ -82,17 +83,26 @@ export class PerfilUsuarioComponent {
   }
   saveProfile() {
 
-    if(this.user.username.length > 2 && this.user.username.length < 45){
-      
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    if (this.user.username.length > 2 && this.user.username.length < 45) {
+
       this.userService.updatePerfil(this.user).subscribe({
-
         next: response => {
-
           this.editing = false;
-          console.log(response.message);
+          this.user = response.user!;
+          this.successMessage = response.message;
         },
-        error: err => console.error(err)
+        error: err => {
+          this.errorMessage =
+            err?.error?.error ||
+            'No se ha podido actualizar el perfil.';
+        }
       });
+
+    } else {
+      this.errorMessage = 'El nombre de usuario debe tener entre 3 y 44 caracteres.';
     }
   }
 
@@ -132,30 +142,25 @@ export class PerfilUsuarioComponent {
       }
     });
   }
-confirmDeleteProfile() {
-  const confirmar = window.confirm(
-    '¿Estás seguro de que quieres eliminar tu cuenta? Esta acción es irreversible y perderás todos tus datos.'
-  );
+  confirmDeleteProfile() {
+    const confirmar = window.confirm(
+      '¿Estás seguro de que quieres eliminar tu cuenta? Esta acción es irreversible y perderás todos tus datos.'
+    );
 
-  if (!confirmar) return;
+    if (!confirmar) return;
 
-  this.userService.deleteProfile().subscribe({
-    next: () => {
-      this.authServ.logout().subscribe({
-        next: () => {
-          this.authState.clearUser();
-          this.router.navigate(['/']);
-        },
-        error: err => {
-          console.error('Error al cerrar la sesión:', err);
-        }
-      });
-    },
-    error: err => {
-      console.error('Error al eliminar la cuenta:', err);
-    }
-  });
-}
+    this.userService.deleteProfile().subscribe({
+      next: () => {
+        this.authState.clearUser();
+        this.router.navigate(['/']);
+      },
+      error: err => {
+        this.errorMessage =
+          err?.error?.error ||
+          'No se ha podido eliminar la cuenta.';
+      }
+    });
+  }
   
   closeOnOutsideClick(event: Event) {
     setTimeout(() => {

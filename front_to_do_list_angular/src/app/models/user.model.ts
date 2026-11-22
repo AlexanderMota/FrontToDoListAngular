@@ -1,10 +1,6 @@
 import { environment } from '../../enviroments/enviroment';
-import { Task, TaskStatus } from './tarea.model';
-
-export type RequestTaskStatus =
-  | 'pending'
-  | 'accepted'
-  | 'declined';
+import { Task } from './tarea.model';
+import { RequestTask } from './request_task.model';
 
 export interface User {
   user_id:string;
@@ -38,36 +34,6 @@ export interface Invitation {
   request_task:RequestTask,
   user:User;
   task:Task;
-}
-
-export interface RequestTask {
-  request_id: number,
-  task_id: number,
-  user_id: string,
-  sender_user_id: string | null,
-  status: RequestTaskStatus;
-  created_at:  Date | null;
-  updated_at:  Date | null;
-
-}
-
-export const STATUS: {
-  value: RequestTaskStatus;
-  label: string;
-}[] = [
-  { value: 'pending', label: 'Pendiente' },
-  { value: 'accepted', label: 'Aceptada' },
-  { value: 'declined', label: 'Rechazada' }
-];
-
-export function getStatusLabel(
-  value: RequestTaskStatus
-): string {
-
-  return STATUS.find(
-    s => s.value === value
-  )?.label ?? value;
-
 }
 
 

@@ -5,16 +5,16 @@ import { Task, TaskResponse } from '../models/tarea.model';
 import { environment } from '../../enviroments/enviroment';
 
 @Injectable({
-  providedIn: 'root' // Hace que el servicio esté disponible en toda la aplicación
+  providedIn: 'root'
 })
 export class TaskService {
-  private apiUrl = `${environment.apiUrl}/tareas/`; // URL del backend
+  private apiUrl = `${environment.apiUrl}/tareas/`; 
 
   constructor(private http: HttpClient) { }
 
-  /*getAll(): Observable<TaskResponse> {
-    return this.http.get<TaskResponse>(`${this.apiUrl}all`, { withCredentials: true });
-  }*/
+  getTaskById(taskId: string): Observable<TaskResponse> {
+    return this.http.get<TaskResponse>(`${this.apiUrl}tarea/${taskId}`, { withCredentials: true });
+  }
   getParentTasks(): Observable<TaskResponse> {
     return this.http.get<TaskResponse>(`${this.apiUrl}principales`, { withCredentials: true });
   }
@@ -29,9 +29,6 @@ export class TaskService {
   }
   getPublicTasks(): Observable<TaskResponse> {
     return this.http.get<TaskResponse>(`${this.apiUrl}publicas`, { withCredentials: true });
-  }
-  getTaskById(taskId: string): Observable<TaskResponse> {
-    return this.http.get<TaskResponse>(`${this.apiUrl}tarea/${taskId}`, { withCredentials: true });
   }/*
   private getTaskPriorities(): Observable<TareaResponse> {
     return this.http.get<TareaResponse>(`${this.apiUrl}prioridades`, { withCredentials: true });
@@ -48,22 +45,4 @@ export class TaskService {
   deleteTask(taskId: string): Observable<TaskResponse> {
     return this.http.delete<TaskResponse>(`${this.apiUrl}tarea/${taskId}`, { withCredentials: true });
   }
-  /*private loadOptions(){
-    this.getTaskPriorities().subscribe({
-      next: (res) => {
-        this.prioridadesSubject.next(res.options!);
-      }, 
-      error: (err) => {
-        console.log(err);
-      }
-    });
-    this.getTaskStatus().subscribe({
-      next: (res) => {
-        this.estatusSubject.next(res.options!);
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    });
-  }*/
 }

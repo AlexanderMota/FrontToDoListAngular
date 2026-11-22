@@ -51,7 +51,7 @@ export class RegisterFormComponent {
       lastname: ['', [ Validators.maxLength(45) ]],
 
       phone: ['', [ Validators.pattern(/^[0-9]{9}$/) ]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       rememberMe: [false]
     });
 

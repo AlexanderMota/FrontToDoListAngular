@@ -77,7 +77,7 @@ export class LoginFormComponent {
           err?.error?.error ||
           'No se ha podido iniciar sesión. Inténtalo de nuevo.';
 
-        if(err.status === 403 && err?.error?.error.includes('Debes verificar tu correo')){
+        if(err.status === 403 && err?.error?.error?.includes('Debes verificar tu correo')){
           this.reverify = true;
         }
       }

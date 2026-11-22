@@ -10,7 +10,7 @@
 }
 */
 
-import { RequestTask } from './user.model';
+import { RequestTask } from './request_task.model';
 export type TaskPriority =
   | 'very_low'
   | 'low'
