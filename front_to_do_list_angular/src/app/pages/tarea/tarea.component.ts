@@ -113,7 +113,7 @@ export class TareaComponent {
     this.taskServ.getTaskById(this.task_id).subscribe({
       next: (response) => {
 
-        console.log(response.message);
+        //console.log(response.message);
 
         this.task = response.task!;
 
@@ -144,7 +144,7 @@ export class TareaComponent {
 
       this.taskServ.postTask(this.task).subscribe({
         next: (res) => {
-          console.log(res.message);
+          //console.log(res.message);
 
           const newTaskId = res.task?.task_id;
 

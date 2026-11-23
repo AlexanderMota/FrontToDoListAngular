@@ -1,4 +1,4 @@
-import { environment } from '../../enviroments/enviroment';
+import { environment } from '../../environments/environment';
 import { Task } from './tarea.model';
 import { RequestTask } from './request_task.model';
 
@@ -24,7 +24,7 @@ export interface UserResponse {
   invitation: Invitation | null;
 }
 
-
+//se debe eliminar
 export interface Collaborator {
   user:User;
   request_task : RequestTask;

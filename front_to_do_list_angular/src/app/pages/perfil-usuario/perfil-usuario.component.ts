@@ -9,7 +9,7 @@ import { getAvatarUrl } from '../../models/user.model';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { CambioPasswordFormComponent } from './cambio-password-form/cambio-password-form.component';
+import { CambioPasswordFormComponent } from '../../components/authentication/cambio-password-form/cambio-password-form.component';
 import { Router } from '@angular/router';
 
 @Component({
@@ -56,7 +56,7 @@ export class PerfilUsuarioComponent {
 
     this.userService.getPerfil().subscribe({
       next: (response) => {
-        console.log(response.message);
+        //console.log(response.message);
         this.user = response.user!;
       },
       error: (error) => {
@@ -134,7 +134,7 @@ export class PerfilUsuarioComponent {
     this.userService.deleteFotoDePerfil().subscribe({
 
       next: res => {
-        console.log(res.message);
+        //console.log(res.message);
         this.user.avatar_url = null;
       },
       error: err => {

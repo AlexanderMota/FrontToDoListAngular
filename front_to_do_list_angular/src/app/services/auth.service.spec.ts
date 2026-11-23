@@ -8,7 +8,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { AuthService } from './auth.service';
-import { environment } from '../../enviroments/enviroment';
+import { environment } from '../../environments/environment';
 import { User } from '../models/user.model';
 
 describe('AuthService', () => {

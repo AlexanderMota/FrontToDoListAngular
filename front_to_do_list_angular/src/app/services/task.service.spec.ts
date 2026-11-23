@@ -7,7 +7,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { TaskService } from './task.service';
-import { environment } from '../../enviroments/enviroment';
+import { environment } from '../../environments/environment';
 import { Task } from '../models/tarea.model';
 import { RequestTask } from '../models/request_task.model';
 
@@ -41,9 +41,6 @@ describe('TaskService', () => {
   });
 
   describe('getTaskById', () => {
-
-    it('Debe obtener la tarea con un ID especifico', () => {
-
       const mockResponse = {
         message: 'Tarea encontrada.',
         task: {
@@ -55,6 +52,9 @@ describe('TaskService', () => {
           visibility:'private'
         } as Task
       };
+
+    it('Debe obtener la tarea con un ID especifico', () => {
+
 
       service.getTaskById(String(3)).subscribe(response => {
         expect(response.message).toBe('Tarea encontrada.');
@@ -68,6 +68,61 @@ describe('TaskService', () => {
 
       req.flush(mockResponse);
     });
+    
+
+    it('Debe propagar un error 403 si no tiene permisos para acceder a una tarea', () => {
+
+      let receivedError: HttpErrorResponse | undefined;
+
+      service.getTaskById(String(mockResponse.task.task_id)).subscribe({
+        next: () => fail('No tienes permiso para acceder a esta tarea.'),
+        error: error => receivedError = error
+      });
+
+      const req = httpMock.expectOne(`${apiUrl}tarea/${mockResponse.task.task_id}`);
+
+      req.flush(
+        {
+          error: 'No tienes permiso para acceder a esta tarea.'
+        },
+        {
+          status: 403,
+          statusText: 'Forbidden'
+        }
+      );
+
+      expect(receivedError?.status).toBe(403);
+      expect(receivedError?.error.error).toContain(
+        'No tienes permiso para acceder a esta tarea.'
+      );
+    });
+
+    it('Debe propagar un error 404 si no encuentra la tarea', () => {
+
+      let receivedError: HttpErrorResponse | undefined;
+
+      service.getTaskById(String(mockResponse.task.task_id)).subscribe({
+        next: () => fail('Tarea no encontrada.'),
+        error: error => receivedError = error
+      });
+
+      const req = httpMock.expectOne(`${apiUrl}tarea/${mockResponse.task.task_id}`);
+
+      req.flush(
+        {
+          error: 'Tarea no encontrada.'
+        },
+        {
+          status: 404,
+          statusText: ''
+        }
+      );
+
+      expect(receivedError?.status).toBe(404);
+      expect(receivedError?.error.error).toContain(
+        'Tarea no encontrada.'
+      );
+    });
   });
   
   describe('getParentTasks', () => {
@@ -79,7 +134,7 @@ describe('TaskService', () => {
         tasks: [{
           task_id: 3,
           name: 'tarea_test',
-          description: 'tarea  hecho por un test',
+          description: 'tarea  hecha por un test',
           parent_task_id: null,
           created_by: "user_id_test",
           visibility:'private'
@@ -252,7 +307,6 @@ describe('TaskService', () => {
   });
   describe('postTask', () => {
 
-    it('Debe enviar una tarea al back.', () => {
 
       const mockResponse = {
         message: 'Tarea creada exitosamente.',
@@ -267,6 +321,7 @@ describe('TaskService', () => {
       };
 
 
+    it('Debe enviar una tarea al back.', () => {
       service.postTask(mockResponse.task).subscribe(response => {
         expect(response.message).toBe('Tarea creada exitosamente.');
         expect(response.task).toEqual(mockResponse.task);
@@ -281,6 +336,34 @@ describe('TaskService', () => {
       expect(req.request.withCredentials).toBeTrue();
 
       req.flush(mockResponse);
+    });
+    
+
+    it('Debe propagar un error 403 si no tiene permisos para crear una subtarea', () => {
+      mockResponse.task.parent_task_id = 22;
+      let receivedError: HttpErrorResponse | undefined;
+
+      service.postTask(mockResponse.task).subscribe({
+        next: () => fail('El login debería fallar'),
+        error: error => receivedError = error
+      });
+
+      const req = httpMock.expectOne(`${apiUrl}`);
+
+      req.flush(
+        {
+          error: 'No tienes permiso para crear subtareas en esta tarea.'
+        },
+        {
+          status: 403,
+          statusText: 'Forbidden'
+        }
+      );
+
+      expect(receivedError?.status).toBe(403);
+      expect(receivedError?.error.error).toContain(
+        'No tienes permiso para crear subtareas en esta tarea.'
+      );
     });
   });
   describe('updateTask', () => {

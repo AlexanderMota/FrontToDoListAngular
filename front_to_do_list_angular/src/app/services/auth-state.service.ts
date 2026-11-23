@@ -1,7 +1,6 @@
 import { AuthService } from "./auth.service";
 import { BehaviorSubject } from "rxjs";
 import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
-import { Router } from "@angular/router";
 import { User } from "../models/user.model";
 import { isPlatformBrowser } from "@angular/common";
 
@@ -15,7 +14,7 @@ export class AuthStateService {
 
   user$ = this.userSubject.asObservable();
 
-  constructor(private authService: AuthService, private router: Router,
+  constructor(private authService: AuthService,
   @Inject(PLATFORM_ID) private platformId: Object) {}
 
   loadUser() {

@@ -47,7 +47,7 @@ export class VerifyEmailComponent implements OnInit {
         this.loading = false;
         this.success = false;
         this.message =
-          error.error?.error ||
+          error?.error?.error ||
           'No se pudo verificar el correo electrónico.';
       }
     });
